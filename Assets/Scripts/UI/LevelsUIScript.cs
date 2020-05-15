@@ -12,6 +12,7 @@ public class LevelsUIScript : MonoBehaviour
     public GameObject buildButton;
     public SelectedLevelPanelScript selectedLevelPanelScript;
     public Text cashText;
+    public Text completedLevelsText;
 
     private void Awake()
     {
@@ -52,6 +53,10 @@ public class LevelsUIScript : MonoBehaviour
         selectedLevelPanelScript.gameObject.SetActive(true);
     }
 
+    public void UpdateCompletedLevels(int value)
+    {
+        completedLevelsText.text = "Level " + value;
+    }
 
     public void UpdateFunds(int value)
     {

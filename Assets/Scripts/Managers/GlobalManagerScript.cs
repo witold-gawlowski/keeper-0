@@ -19,6 +19,8 @@ public class GlobalManagerScript : MonoBehaviour
     public ButtonSortScript buttonSortScript;
     public int startingReward = 50;
 
+    int levelNumber;
+
     private void Awake()
     {
         buildingUIScript.FinishedBuildingEvent += OnLevelFinish;
@@ -28,6 +30,7 @@ public class GlobalManagerScript : MonoBehaviour
 
     private void Start()
     {
+        levelNumber = 1;
         StartNewRoundEvent();
     }
 
@@ -63,5 +66,12 @@ public class GlobalManagerScript : MonoBehaviour
         levelMoneyManagerScript.ClearReward();
         StartNewRoundEvent();
         blockManagerScript.UpdateInventoryUI();
+        levelNumber++;
+        levelsUIScript.UpdateCompletedLevels(levelNumber);
+    }
+
+    public int GetCurrentLevel()
+    {
+        return levelNumber;
     }
 }

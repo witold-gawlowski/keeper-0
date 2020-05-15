@@ -24,9 +24,11 @@ public class LevelManagerScript : MonoBehaviour
     List<LevelData> levels;
     public LevelsUIScript levelsUIScript;
     public accountManager accountManager;
+    public LevelSchedulerScript levelScheduler;
 
     private void Awake()
     {
+        levelScheduler.GetComponentInChildren<LevelSchedulerScript>();
         levelsUIScript.SetLevelBoughtEventHandler(BuyLevel);
         levels = new List<LevelData>();
     }
