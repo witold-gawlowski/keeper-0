@@ -2281,6 +2281,7 @@ MonoBehaviour:
   blocksUIScript: {fileID: 1054924737}
   blockShuffleContainer: {fileID: 2024050008}
   blockUIQueue: {fileID: 1992855447}
+  levelManagerScript: {fileID: 2041774212}
   defaultOfferPrice: 300
   offersPerRound: 0
 --- !u!1 &1535976127
@@ -3055,6 +3056,31 @@ MonoBehaviour:
     type: 3}
   levelsUIScript: {fileID: 1054924736}
   accountManager: {fileID: 2002959902}
+  globalManager: {fileID: 2041666676}
+  levelDifficultyMultiplierCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0.031925146
+      value: 0.98154104
+      inSlope: 0.16385223
+      outSlope: 0.16385223
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.08743013
+    - serializedVersion: 3
+      time: 19.914856
+      value: 2.9615173
+      inSlope: 0.0068025677
+      outSlope: 0.0068025677
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.14460061
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &2066045905
 GameObject:
   m_ObjectHideFlags: 0

@@ -45,7 +45,7 @@ public class GlobalManagerScript : MonoBehaviour
     private void OnLevelRun(GameObject level)
     {
         buildingUIScript.FinishedBuildingEvent += ()=>levelManagerScript.DestroyLevel(level);
-        blockManagerScript.OnStartBuilding();
+        blockManagerScript.OnStartBuilding( level);
         blockSpawnerScript.OnStartBuilding();
         dragScript.gameObject.SetActive(true);
         dragScript.OnStartBuilding();

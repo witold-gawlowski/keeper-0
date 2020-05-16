@@ -6,27 +6,40 @@ using UnityEngine.UI;
 
 public class BlockUIQueue : MonoBehaviour
 {
+    public class BlockUIData{
+        public Sprite sprite;
+        public int valueToDisplay;
+        public BlockUIData(Sprite spriteArg, int valueToDisplayArg)
+        {
+            sprite = spriteArg;
+            valueToDisplay = valueToDisplayArg;
+        }
+    }
+
     public int numberOfDisplayedBlocks;
     public GameObject blockImageObjectPrefab;
-    List<Sprite> spriteQueue;
+    List<BlockUIData> blockUIDataQueue;
 
-    public void  Init(List<Sprite> spriteQueueArg)
+    public void  Init(List<BlockUIData> blockUIDataList)
     {
         foreach(Transform t in transform)
         {
             Destroy(t.gameObject);
         }
-        spriteQueue = spriteQueueArg;
+        blockUIDataQueue = blockUIDataList;
         CreateDisplayQueue();
     }
 
     public void CreateDisplayQueue()
     {
         int counter = 0;
-        foreach(Sprite tempSprite in spriteQueue)
+        foreach(BlockUIData tempBlockUIData in blockUIDataQueue)
         {
+            Sprite tempSprite = tempBlockUIData.sprite;
             GameObject newImageGO = Instantiate(blockImageObjectPrefab, transform);
             Image newImage = newImageGO.GetComponent<Image>();
+            UIBlockScript tempUIBlockScript = newImageGO.GetComponent<UIBlockScript>();
+            tempUIBlockScript.UpdateNominalValueText(tempBlockUIData.valueToDisplay);
             newImage.sprite = tempSprite;
             if (counter < numberOfDisplayedBlocks)
             {

@@ -24,7 +24,7 @@ public class LevelSchedulerScript : MonoBehaviour
             }
         }
 
-        float randomFloat = Random.RandomRange(0, probabilityWeightTotal);
+        float randomFloat = Random.Range(0, probabilityWeightTotal);
         float counter = 0;
         for(int i=0; i<roster.Count; i++)
         {

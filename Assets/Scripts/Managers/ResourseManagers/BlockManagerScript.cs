@@ -28,6 +28,7 @@ public class BlockManagerScript : MonoBehaviour
     public BlockShuffleContainer blockShuffleContainer;
     Dictionary<GameObject, int> blockInventory;
     public BlockUIQueue blockUIQueue;
+    public LevelManagerScript levelManagerScript;
 
     public int defaultOfferPrice = 300;
     public int offersPerRound;
@@ -38,17 +39,20 @@ public class BlockManagerScript : MonoBehaviour
         UpdateInventoryUI();
     }
 
-    public void OnStartBuilding()
+    public void OnStartBuilding(GameObject level)
     {
         blockShuffleContainer.Initialize();
         List<GameObject> blocksQueue = blockShuffleContainer.GetBlocks();
-        List<Sprite> blockSpriteQueue = new List<Sprite>();
+        List<BlockUIQueue.BlockUIData> blockUIData = new List<BlockUIQueue.BlockUIData>();
         foreach(GameObject blockQueueObject in blocksQueue)
         {
             Sprite tempSprite = GetSpriteForPrefab(blockQueueObject);
-            blockSpriteQueue.Add(tempSprite);
+            BlockScript blockQueueObjectScript = blockQueueObject.GetComponent<BlockScript>();
+            int blockRewardValue = Mathf.RoundToInt(levelManagerScript.GetReturnValue(level) * blockQueueObjectScript.value);
+            BlockUIQueue.BlockUIData tempBlockUIData = new BlockUIQueue.BlockUIData(tempSprite, blockRewardValue);
+            blockUIData.Add(tempBlockUIData);
         }
-        blockUIQueue.Init(blockSpriteQueue);
+        blockUIQueue.Init(blockUIData);
 
     }
 

@@ -27,6 +27,8 @@ public class LevelManagerScript : MonoBehaviour
     public LevelsUIScript levelsUIScript;
     public accountManager accountManager;
     LevelSchedulerScript levelScheduler;
+    public GlobalManagerScript globalManager;
+    public AnimationCurve levelDifficultyMultiplierCurve;
 
     private void Awake()
     {
@@ -77,7 +79,7 @@ public class LevelManagerScript : MonoBehaviour
             LevelScript levelScript = newLevel.GetComponent<LevelScript>();
             ProceduralMap proceduralMap = newLevel.GetComponent<ProceduralMap>();
             LevelTypeScriptableObjectScript nextLevelParams = levelScheduler.GetNextLevelParams();
-            int newLevelCost = nextLevelParams.GetCost();
+            int newLevelCost = Mathf.RoundToInt(nextLevelParams.GetCost() * GetProgressionCostMultiplier()/10)*10;
             float newReturnValue = nextLevelParams.GetReturnValue();
             levels.Add(new LevelData(newLevel, newLevelCost, newReturnValue, false));
             GameObject newLevelButton = levelsUIScript.SpawnLevelButton(newLevel, newLevelCost, newReturnValue);
@@ -85,6 +87,14 @@ public class LevelManagerScript : MonoBehaviour
             snapshotCreatorScript.finishedGeneratingSnapshotEvent += newLevelButtonScript.SetSprite;
             proceduralMap.Initialize(nextLevelParams);
         }
+    }
+
+    
+
+    private float GetProgressionCostMultiplier()
+    {
+        int currentLevel = globalManager.GetCurrentLevel();
+        return levelDifficultyMultiplierCurve.Evaluate(currentLevel);
     }
 
     public float GetReturnValue(GameObject level)
