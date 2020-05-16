@@ -6,6 +6,7 @@ public class BlockShuffleContainer : MonoBehaviour
 {
     private List<GameObject> blocks;
     public BlockManagerScript blockManagerScript;
+    public BlockUIQueue blockUIQueue;
     
     public void Initialize()
     {
@@ -28,18 +29,14 @@ public class BlockShuffleContainer : MonoBehaviour
     {
         blockManagerScript.RemoveBlock(Top());
         blocks.RemoveAt(0);
+        blockUIQueue.Next();
         return;
     }
 
-    public List<GameObject> Top(int count)
+    public List<GameObject> GetBlocks()
     {
-        List<GameObject> result = new List<GameObject>();
-        for(int i=0; i<count && i < result.Count; i++)
-        {
-            result.Add(blocks[i]);
-        }
-        return result;
-    }
+        return blocks;
+    } 
 
     public GameObject Top()
     { 

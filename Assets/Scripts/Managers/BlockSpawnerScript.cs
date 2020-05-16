@@ -7,9 +7,10 @@ public class BlockSpawnerScript : MonoBehaviour
     public BlockShuffleContainer blockFeeder;
     [HideInInspector]
     public GameObject nextBlock;
+    public BlockManagerScript blockManager;
 
     public void OnStartBuilding() {
-        
+ 
     }
 
     public void ClearAllBlocks()

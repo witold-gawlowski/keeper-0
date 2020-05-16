@@ -81,6 +81,7 @@ public class DragScript : MonoBehaviour
             }
             else
             {
+                Destroy(draggedBlockScript.gameObject);
                 draggedBlockScript.transform.position = blockSpawnerScript.transform.position;
                 draggedBlockScript = null;
             }
