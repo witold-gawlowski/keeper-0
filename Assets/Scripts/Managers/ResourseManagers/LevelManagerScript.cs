@@ -11,11 +11,13 @@ public class LevelManagerScript : MonoBehaviour
         public GameObject levelObject;
         public int price;
         public bool isBought;
-        public LevelData(GameObject levelObjectArg, int priceArg, bool isBoughtArg)
+        public float returnValue;
+        public LevelData(GameObject levelObjectArg, int priceArg, float returnValueArg, bool isBoughtArg)
         {
             levelObject = levelObjectArg;
             price = priceArg;
             isBought = isBoughtArg;
+            returnValue = returnValueArg;
         }
     }
 
@@ -24,11 +26,11 @@ public class LevelManagerScript : MonoBehaviour
     List<LevelData> levels;
     public LevelsUIScript levelsUIScript;
     public accountManager accountManager;
-    public LevelSchedulerScript levelScheduler;
+    LevelSchedulerScript levelScheduler;
 
     private void Awake()
     {
-        levelScheduler.GetComponentInChildren<LevelSchedulerScript>();
+        levelScheduler = GetComponentInChildren<LevelSchedulerScript>();
         levelsUIScript.SetLevelBoughtEventHandler(BuyLevel);
         levels = new List<LevelData>();
     }
@@ -37,6 +39,7 @@ public class LevelManagerScript : MonoBehaviour
     {
         RerollRoster();
     }
+
 
     public void HideNotOwnedLevels()
     {
@@ -70,17 +73,46 @@ public class LevelManagerScript : MonoBehaviour
         for (int i = 0; i < numbersOfLevelsInRoster; i++)
         {
             GameObject newLevel = Instantiate(levelPrefab, Vector3.zero, Quaternion.identity);
-            levels.Add(new LevelData(newLevel, 100, false));
             SnapshotCreatorScript snapshotCreatorScript = newLevel.GetComponent<SnapshotCreatorScript>();
             LevelScript levelScript = newLevel.GetComponent<LevelScript>();
             ProceduralMap proceduralMap = newLevel.GetComponent<ProceduralMap>();
-            GameObject newLevelButton = levelsUIScript.SpawnLevelButton(newLevel, levelScript.cost, true);
+            LevelTypeScriptableObjectScript nextLevelParams = levelScheduler.GetNextLevelParams();
+            int newLevelCost = nextLevelParams.GetCost();
+            float newReturnValue = nextLevelParams.GetReturnValue();
+            levels.Add(new LevelData(newLevel, newLevelCost, newReturnValue, false));
+            GameObject newLevelButton = levelsUIScript.SpawnLevelButton(newLevel, newLevelCost, newReturnValue);
             LevelButtonScript newLevelButtonScript = newLevelButton.GetComponent<LevelButtonScript>();
             snapshotCreatorScript.finishedGeneratingSnapshotEvent += newLevelButtonScript.SetSprite;
-            proceduralMap.Initialize();
+            proceduralMap.Initialize(nextLevelParams);
         }
     }
-    
+
+    public float GetReturnValue(GameObject level)
+    {
+        float result = 0;
+        foreach (LevelData levelDataObjeect in levels)
+        {
+            if (levelDataObjeect.levelObject == level)
+            {
+                result = levelDataObjeect.returnValue;
+            }
+        }
+        return result;
+    }
+
+    public void DestroyLevel(GameObject level)
+    {
+        foreach (LevelData levelDataObjeect in levels)
+        {
+            if(levelDataObjeect.levelObject == level)
+            {
+                levels.Remove(levelDataObjeect);
+                break;
+            }
+        }
+        Destroy(level);
+    }
+
     public void BuyLevel(GameObject level)
     {
         int levelCost = 0;

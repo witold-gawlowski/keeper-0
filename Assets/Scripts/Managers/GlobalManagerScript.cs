@@ -44,6 +44,7 @@ public class GlobalManagerScript : MonoBehaviour
 
     private void OnLevelRun(GameObject level)
     {
+        buildingUIScript.FinishedBuildingEvent += ()=>levelManagerScript.DestroyLevel(level);
         blockManagerScript.OnStartBuilding();
         blockSpawnerScript.OnStartBuilding();
         dragScript.gameObject.SetActive(true);
@@ -51,6 +52,7 @@ public class GlobalManagerScript : MonoBehaviour
         LevelScript levelScritp = level.GetComponent<LevelScript>();
         levelScritp.SetDisplayed(true);
         levelMoneyManagerScript.ClearReward();
+        levelMoneyManagerScript.SetReturnValue(levelManagerScript.GetReturnValue(level));
         levelMoneyManagerScript.AddReward(startingReward);
         levelsUIScript.DeleteButtonForLevel(level);
         dragScript.SetProceduralMap(level);

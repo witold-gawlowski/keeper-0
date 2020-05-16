@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class LevelButtonScript : MonoBehaviour
 {
     private System.Action<GameObject> onTapHandler;
+    private System.Action<GameObject> runTapHandler;
     public GameObject associatedLevel;
     public delegate void LevelTapDelegate(GameObject levelToRun);
     public delegate void TryBuyDelegate(int price);
@@ -13,6 +14,7 @@ public class LevelButtonScript : MonoBehaviour
     public LevelTapDelegate LevelTapEvent;
     public GameObject padlock;
     public GameObject priceText;
+    public GameObject returnValueText;
     public Image levelImage;
 
     public void OnTap()
@@ -30,23 +32,23 @@ public class LevelButtonScript : MonoBehaviour
         levelImage.sprite = spriteArg;
     }
 
-
-
-    public void Initialize(int cost, GameObject level, System.Action<GameObject> onTapHandlerArg, bool locked)
+    public void OnBuy()
     {
-        if (locked)
-        {
-            padlock.SetActive(true);
-            priceText.SetActive(true);
-        }
-        else
-        {
-            padlock.SetActive(false);
-            priceText.SetActive(false);
-        }
+        onTapHandler = runTapHandler;
+        padlock.SetActive(false);
+        priceText.SetActive(false);
+    }
+
+    public void Initialize(int cost, float returnValueArg, GameObject level, System.Action<GameObject> buyTapHandlerArg,
+        System.Action<GameObject> runTapHandlerArg)
+    {
+        padlock.SetActive(true);
+        priceText.SetActive(true);
+        returnValueText.GetComponent<Text>().text = "x" + returnValueArg.ToString();
         associatedLevel = level;
         priceText.GetComponent<Text>().text = "$"+cost.ToString();
-        onTapHandler = onTapHandlerArg;
+        onTapHandler = buyTapHandlerArg;
+        runTapHandler = runTapHandlerArg;
     }
     
    

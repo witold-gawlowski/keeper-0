@@ -17,15 +17,14 @@ public class ProceduralMap : MonoBehaviour
     int dieLimit;
     int spawnLimit;
 
-    public void Initialize(int widthArg = 20, int heightArg = 40, int stepsArg = 3, float initialDensityArg = 0.5f,
-        int dieLimitArg = 4, int spawnLimitArg = 2)
+    public void Initialize(LevelTypeScriptableObjectScript levelParamsArg)
     {
-        dieLimit = dieLimitArg;
-        spawnLimit = spawnLimitArg;
-        initialDensity = initialDensityArg;
-        steps = stepsArg;
-        width = widthArg;
-        height = heightArg;
+        dieLimit = levelParamsArg.deathLimit;
+        spawnLimit = levelParamsArg.lifeLimit;
+        initialDensity = levelParamsArg.initialDensity;
+        steps = levelParamsArg.steps;
+        width = levelParamsArg.width;
+        height = levelParamsArg.height;
         Generate();
         Vector3 levelCenterPosition = new Vector3(width / 2.0f - 0.5f, height / 2.0f - 0.5f, 0);
         levelSpriteObject.transform.localPosition = levelCenterPosition;

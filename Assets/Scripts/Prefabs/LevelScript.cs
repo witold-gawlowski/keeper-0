@@ -10,5 +10,4 @@ public class LevelScript : MonoBehaviour
     {
         spriteRenderer.enabled = value;
     }
-    public int cost = 100;
 }

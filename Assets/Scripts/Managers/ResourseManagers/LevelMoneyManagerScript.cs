@@ -10,7 +10,13 @@ public class LevelMoneyManagerScript : MonoBehaviour
     private int reward;
     public DragScript dragScript;
     public accountManager accountManager;
+    private float returnValue;
     
+    public void SetReturnValue(float returnValueArg)
+    {
+        returnValue = returnValueArg;
+    }
+
     private void Awake()
     { 
         RewardChangeEvent += buildingUIScript.UpdateUI;
@@ -24,7 +30,7 @@ public class LevelMoneyManagerScript : MonoBehaviour
 
     public void AddReward(int value)
     {
-        reward += value;
+        reward += Mathf.RoundToInt(returnValue * value);
         RewardChangeEvent(reward);
     }
 

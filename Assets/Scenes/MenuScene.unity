@@ -1470,6 +1470,7 @@ MonoBehaviour:
   buildButton: {fileID: 113898649}
   selectedLevelPanelScript: {fileID: 238501847}
   cashText: {fileID: 1242169702}
+  completedLevelsText: {fileID: 990108983}
 --- !u!114 &1054924737
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1867,7 +1868,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   types:
   - {fileID: 11400000, guid: 615c655bc20dcc843aaa80d45304b1de, type: 2}
+  - {fileID: 11400000, guid: 33c0ebd7990281a43ae8b7c3a58cfd2d, type: 2}
   levelManagerScript: {fileID: 2041774212}
+  globalManager: {fileID: 2041666676}
 --- !u!1 &1147324695
 GameObject:
   m_ObjectHideFlags: 0
@@ -2971,7 +2974,6 @@ MonoBehaviour:
     type: 3}
   levelsUIScript: {fileID: 1054924736}
   accountManager: {fileID: 2002959902}
-  levelScheduler: {fileID: 1147298682}
 --- !u!1 &2066045905
 GameObject:
   m_ObjectHideFlags: 0

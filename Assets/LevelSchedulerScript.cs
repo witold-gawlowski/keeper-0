@@ -9,8 +9,9 @@ public class LevelSchedulerScript : MonoBehaviour
     public LevelManagerScript levelManagerScript;
     public GlobalManagerScript globalManager;
 
-    public LevelTypeScriptableObjectScript GetLevel()
+    public LevelTypeScriptableObjectScript GetNextLevelParams()
     {
+        LevelTypeScriptableObjectScript result = null;
         int currentLevel = globalManager.GetCurrentLevel();
         float probabilityWeightTotal = 0;
         List<LevelTypeScriptableObjectScript> roster = new List<LevelTypeScriptableObjectScript>();
@@ -23,15 +24,19 @@ public class LevelSchedulerScript : MonoBehaviour
             }
         }
 
-
+        float randomFloat = Random.RandomRange(0, probabilityWeightTotal);
+        float counter = 0;
         for(int i=0; i<roster.Count; i++)
         {
-
+            counter += roster[i].probabilityWeight;
+            if(counter > randomFloat)
+            {
+                result = roster[i];
+                break;
+            }
         }
 
-
-
-        return null;
+        return result;
     }
 
 }

@@ -83,24 +83,17 @@ public class LevelsUIScript : MonoBehaviour
             LevelButtonScript levelButtonScriptTemp = t.GetComponent<LevelButtonScript>();
             if (levelButtonScriptTemp != null && levelButtonScriptTemp.GetAssociatedLevel().Equals(level))
             {
-                levelButtonScriptTemp.Initialize(0, level, OnBoughtLevelTapEvent, false);
+                levelButtonScriptTemp.OnBuy();
             }
         }
     }
 
-    public GameObject SpawnLevelButton(GameObject level, int cost, bool locked)
+    public GameObject SpawnLevelButton(GameObject level, int cost, float returnValueArg)
     { 
         GameObject newLevelButton = Instantiate(levelButtonPrefab, levelButtonsParent.transform);
         newLevelButton.transform.SetParent(levelButtonsParent.transform);
         LevelButtonScript levelButtonScript = newLevelButton.GetComponent<LevelButtonScript>();
-        if (locked)
-        {
-            levelButtonScript.Initialize(cost, level, OnNonBoughtLevelTapEvent, locked);
-        }
-        else
-        {
-            levelButtonScript.Initialize(cost, level, OnBoughtLevelTapEvent, locked);
-        }
+        levelButtonScript.Initialize(cost, returnValueArg, level, OnNonBoughtLevelTapEvent, OnBoughtLevelTapEvent);
         return newLevelButton;
     }
 
