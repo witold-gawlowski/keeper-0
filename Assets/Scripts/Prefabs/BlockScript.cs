@@ -6,7 +6,7 @@ public class BlockScript : MonoBehaviour
 {
     public List<Vector2Int> relativeTilePositions;
     public GameObject tile;
-    public int value = 100;
+    public int value;
     // Start is called before the first frame update
     void Start()
     {
@@ -16,7 +16,7 @@ public class BlockScript : MonoBehaviour
         }
         foreach(Vector2 v2 in relativeTilePositions)
         {
-            Instantiate(tile, new Vector3(v2.x, v2.y, 0)+transform.position, Quaternion.identity, transform);
+            Instantiate(tile, new Vector3(v2.x, v2.y, 0) + transform.position, Quaternion.identity, transform);
         }
     }
 

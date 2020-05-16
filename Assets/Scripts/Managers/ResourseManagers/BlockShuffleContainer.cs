@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BlockFeederScript : MonoBehaviour
+public class BlockShuffleContainer : MonoBehaviour
 {
     private List<GameObject> blocks;
     public BlockManagerScript blockManagerScript;
@@ -29,6 +29,16 @@ public class BlockFeederScript : MonoBehaviour
         blockManagerScript.RemoveBlock(Top());
         blocks.RemoveAt(0);
         return;
+    }
+
+    public List<GameObject> Top(int count)
+    {
+        List<GameObject> result = new List<GameObject>();
+        for(int i=0; i<count && i < result.Count; i++)
+        {
+            result.Add(blocks[i]);
+        }
+        return result;
     }
 
     public GameObject Top()

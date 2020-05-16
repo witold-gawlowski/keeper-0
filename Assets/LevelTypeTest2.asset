@@ -22,6 +22,6 @@ MonoBehaviour:
   probabilityWeight: 1
   firstAppearanceLevel: 1
   priceMean: 349
-  priceStandardDeviation: 107
-  returnValueMean: 0
-  returnValueDeviation: 0
+  priceStandardDeviation: 43
+  returnValueMean: 1.699
+  returnValueDeviation: 0.124

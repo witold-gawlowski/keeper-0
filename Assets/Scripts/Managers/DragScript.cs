@@ -11,7 +11,7 @@ public class DragScript : MonoBehaviour
 
     // Start is called before the first frame update
     BlockScript draggedBlockScript;
-    public BlockFeederScript blockFeederScript;
+    public BlockShuffleContainer blockFeederScript;
     public BlockSpawnerScript blockSpawnerScript;
     public LevelMoneyManagerScript levelMoneyManagerScript;
 
@@ -40,6 +40,7 @@ public class DragScript : MonoBehaviour
             {
                 GameObject draggedBlock = null;
                 if (blockFeederScript.Top() != null) {
+                    blockSpawnerScript.SpawnNextBlock();
                     draggedBlock = blockSpawnerScript.nextBlock;
                     draggedBlockScript = draggedBlock.GetComponent<BlockScript>();
                 }                
@@ -77,7 +78,6 @@ public class DragScript : MonoBehaviour
                 blockPlacedEvent(draggedBlockScript.value);
                 draggedBlockScript = null;
                 blockFeederScript.Pop();
-                blockSpawnerScript.SpawnNextBlock();
             }
             else
             {

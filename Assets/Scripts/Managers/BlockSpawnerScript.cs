@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class BlockSpawnerScript : MonoBehaviour
 {
-    public BlockFeederScript blockFeeder;
+    public BlockShuffleContainer blockFeeder;
     [HideInInspector]
     public GameObject nextBlock;
 
     public void OnStartBuilding() {
-        SpawnNextBlock();
+        
     }
 
     public void ClearAllBlocks()

@@ -25,7 +25,7 @@ public class BlockManagerScript : MonoBehaviour
     public List<InitialBlockConfigData> blockConfig;
     public BlockShopScript blockShopScript;
     public BlocksUIScript blocksUIScript;
-    public BlockFeederScript blockFeederScript;
+    public BlockShuffleContainer blockFeederScript;
     Dictionary<GameObject, int> blockInventory;
     
 
@@ -40,6 +40,7 @@ public class BlockManagerScript : MonoBehaviour
 
     public void OnStartBuilding()
     {
+        print("blockmananager on start building");
         blockFeederScript.Initialize();
     }
 
