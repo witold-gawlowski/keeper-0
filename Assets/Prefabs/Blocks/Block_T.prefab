@@ -49,4 +49,4 @@ MonoBehaviour:
   - {x: 2, y: 0}
   - {x: 1, y: 1}
   tile: {fileID: 8562417976350379660, guid: a33eca05f65bcb54cb9097a587b37edf, type: 3}
-  value: 100
+  value: 150

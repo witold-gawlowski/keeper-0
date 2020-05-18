@@ -26,11 +26,13 @@ public class ProceduralMap : MonoBehaviour
         width = levelParamsArg.width;
         height = levelParamsArg.height;
         Generate();
-        Vector3 levelCenterPosition = new Vector3(width / 2.0f - 0.5f, height / 2.0f - 0.5f, 0);
-        levelSpriteObject.transform.localPosition = levelCenterPosition;
-        Vector3 cameraPosition = levelCenterPosition + Vector3.back * 10;
-        Camera.main.transform.position = cameraPosition;
+        levelSpriteObject.transform.localPosition = GetLevelCenterPosition();
         finishedGeneratingMapEvent();
+    }
+
+    public Vector3 GetLevelCenterPosition()
+    {
+        return new Vector3(width / 2.0f - 0.5f, height / 2.0f - 0.5f, 0);
     }
 
     public int GetWidth()

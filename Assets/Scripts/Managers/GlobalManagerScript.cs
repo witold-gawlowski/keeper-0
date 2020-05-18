@@ -56,6 +56,8 @@ public class GlobalManagerScript : MonoBehaviour
         levelMoneyManagerScript.AddReward(startingReward);
         levelsUIScript.DeleteButtonForLevel(level);
         dragScript.SetProceduralMap(level);
+        ProceduralMap levelMap = level.GetComponent<ProceduralMap>();
+        Camera.main.transform.position = levelMap.GetLevelCenterPosition() - new Vector3(0, 3, 10);
     }
 
 
@@ -71,6 +73,8 @@ public class GlobalManagerScript : MonoBehaviour
         levelNumber++;
         levelsUIScript.UpdateCompletedLevels(levelNumber);
     }
+
+
 
     public int GetCurrentLevel()
     {

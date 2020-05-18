@@ -30,7 +30,6 @@ public class BlockManagerScript : MonoBehaviour
     public BlockUIQueue blockUIQueue;
     public LevelManagerScript levelManagerScript;
 
-    public int defaultOfferPrice = 300;
     public int offersPerRound;
 
     public void Start()
