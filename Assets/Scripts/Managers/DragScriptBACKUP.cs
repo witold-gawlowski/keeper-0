@@ -2,16 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DragScript : MonoBehaviour
+public class DragScriptBACKUP : MonoBehaviour
 {
 
-    public delegate void BlockPlacedDelegate(int blockValue, int blockArea);
+    public delegate void BlockPlacedDelegate(int blockValue);
     public BlockPlacedDelegate blockPlacedEvent;
-
+    
 
     // Start is called before the first frame update
     BlockScript draggedBlockScript;
-    public BlockShuffleContainer blockFeederScript;
+    public BlockShuffleContainer blockShuffleContainer;
     public BlockSpawnerScript blockSpawnerScript;
     public LevelMoneyManagerScript levelMoneyManagerScript;
     public BuildingUIScript buildingUI;
@@ -32,32 +32,32 @@ public class DragScript : MonoBehaviour
 
     public void HandleRotButtonTap()
     {
-        if (draggedBlockScript != null)
+        if (Input.GetMouseButton(0))
         {
-            draggedBlockScript.Rotate();
-            snapped = false;
+            if(draggedBlockScript != null)
+            {
+                draggedBlockScript.Rotate();
+                snapped = false;
+            }
         }
     }
 
     // Update is called once per frame
     void Update()
     {
-        Touch[] touches = Input.touches;
-        if (touches.Length > 0)
+        if (Input.GetMouseButton(0))
         {
-            Touch mainTouch = touches[0];
-            Vector3 newPosition = Camera.main.ScreenToWorldPoint(mainTouch.position);
+            Vector3 newPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             newPosition.z = 0;
-            if (mainTouch.phase == TouchPhase.Began)
+            if (Input.GetMouseButtonDown(0))
             {
                 GameObject draggedBlock = null;
-                if (blockFeederScript.Top() != null)
-                {
+                if (blockShuffleContainer.Top() != null) {
                     buildingUI.SetRotateButtonEnabled(true);
                     blockSpawnerScript.SpawnNextBlock();
                     draggedBlock = blockSpawnerScript.nextBlock;
                     draggedBlockScript = draggedBlock.GetComponent<BlockScript>();
-                }
+                }                
             }
 
             snapped = false;
@@ -73,7 +73,7 @@ public class DragScript : MonoBehaviour
                 }
             }
         }
-        if (touches.Length > 0 && touches[0].phase == TouchPhase.Ended && draggedBlockScript != null)
+        if (Input.GetMouseButtonUp(0) && draggedBlockScript != null)
         {
             buildingUI.SetRotateButtonEnabled(false);
             if (snapped)
@@ -86,9 +86,9 @@ public class DragScript : MonoBehaviour
                 {
                     firstBlockPlaced = true;
                 }
-                blockPlacedEvent(draggedBlockScript.value, draggedBlockScript.GetArea());
+                blockPlacedEvent(draggedBlockScript.value);
                 draggedBlockScript = null;
-                blockFeederScript.Pop();
+                blockShuffleContainer.Pop();
             }
             else
             {

@@ -45,6 +45,22 @@ public class ProceduralMap : MonoBehaviour
         return height;
     }
 
+    public int GetFreeArea()
+    {
+        int result = 0;
+        for(int i=0; i<width; i++)
+        {
+            for(int j=0; j<height; j++)
+            {
+                if(map[i, j] == 0)
+                {
+                    result++;
+                }
+            }
+        }
+        return result;
+    }
+
     public void Generate()
     {
         map = new int[width, height];

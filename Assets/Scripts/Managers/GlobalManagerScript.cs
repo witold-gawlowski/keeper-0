@@ -17,15 +17,17 @@ public class GlobalManagerScript : MonoBehaviour
     public BlockShopScript blockShopScript;
     public BlocksUIScript blockUIScript;
     public ButtonSortScript buttonSortScript;
+    public SummaryUIScript summaryUIScript;
     public int startingReward = 50;
 
     int levelNumber;
 
     private void Awake()
     {
-        buildingUIScript.FinishedBuildingEvent += OnLevelFinish;
+        summaryUIScript.LevelQuitEvent += OnLevelFinish;
         levelsUIScript.AddRunLevelEventHandler(OnLevelRun);
         StartNewRoundEvent += OnStartNewRound;
+        buildingUIScript.RotateButtonTapEvent += dragScript.HandleRotButtonTap;
     }
 
     private void Start()
@@ -44,19 +46,19 @@ public class GlobalManagerScript : MonoBehaviour
 
     private void OnLevelRun(GameObject level)
     {
-        buildingUIScript.FinishedBuildingEvent += ()=>levelManagerScript.DestroyLevel(level);
+        summaryUIScript.LevelQuitEvent += ()=>levelManagerScript.DestroyLevel(level);
         blockManagerScript.OnStartBuilding( level);
         blockSpawnerScript.OnStartBuilding();
         dragScript.gameObject.SetActive(true);
         dragScript.OnStartBuilding();
         LevelScript levelScritp = level.GetComponent<LevelScript>();
         levelScritp.SetDisplayed(true);
-        levelMoneyManagerScript.ClearReward();
+        ProceduralMap levelMap = level.GetComponent<ProceduralMap>();
+        levelMoneyManagerScript.Initialize(levelMap.GetFreeArea());
         levelMoneyManagerScript.SetReturnValue(levelManagerScript.GetReturnValue(level));
-        levelMoneyManagerScript.AddReward(startingReward);
+        levelMoneyManagerScript.AddReward(startingReward, 0);
         levelsUIScript.DeleteButtonForLevel(level);
         dragScript.SetProceduralMap(level);
-        ProceduralMap levelMap = level.GetComponent<ProceduralMap>();
         Camera.main.transform.position = levelMap.GetLevelCenterPosition() - new Vector3(0, 3, 10);
     }
 
@@ -67,7 +69,6 @@ public class GlobalManagerScript : MonoBehaviour
         dragScript.gameObject.SetActive(false);
         levelManagerScript.HideNotOwnedLevels();
         accountManager.AddFunds(levelMoneyManagerScript.Reward());
-        levelMoneyManagerScript.ClearReward();
         StartNewRoundEvent();
         blockManagerScript.UpdateInventoryUI();
         levelNumber++;

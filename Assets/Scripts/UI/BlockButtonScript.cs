@@ -36,7 +36,7 @@ public class BlockButtonScript : MonoBehaviour
 
     public void UpdateCount(int newCount)
     {
-        countText.text = newCount.ToString();
+        countText.text = "x" + newCount.ToString();
     }
 
     public void SetTapHandler(System.Action<BlockShopScript.Item> tapHandler)

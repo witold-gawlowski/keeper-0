@@ -32,6 +32,11 @@ public class BlockScript : MonoBehaviour
         UpdateLooks();
     }
 
+    public int GetArea()
+    {
+        return relativeTilePositions.Count;
+    }
+
     public void UpdateLooks()
     {
         for(int i =0;  i<relativeTilePositions.Count; i++)

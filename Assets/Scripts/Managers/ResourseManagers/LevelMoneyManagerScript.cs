@@ -7,10 +7,14 @@ public class LevelMoneyManagerScript : MonoBehaviour
     public BuildingUIScript buildingUIScript;
     public delegate void RewardChangeDelegate(int value);
     RewardChangeDelegate RewardChangeEvent;
-    private int reward;
+    private int totalBlockValue;
     public DragScript dragScript;
     public accountManager accountManager;
     private float returnValue;
+    private int totalBlockArea;
+    public SummaryUIScript summaryUIScript;
+    private int mapTotalFreeArea;
+    public AnimationCurve completionPercentToRewardMultiplier;
     
     public void SetReturnValue(float returnValueArg)
     {
@@ -21,21 +25,33 @@ public class LevelMoneyManagerScript : MonoBehaviour
     { 
         RewardChangeEvent += buildingUIScript.UpdateUI;
         dragScript.blockPlacedEvent += AddReward;
+        buildingUIScript.FinishedBuildingEvent += InitializeSummaryUI;
     }
 
-    public void ClearReward()
+    public void Initialize(int mapTotalFreeAreaArg)
     {
-        reward = 0;
+        mapTotalFreeArea = mapTotalFreeAreaArg;
+        totalBlockValue = 0;
+        totalBlockArea = 0;
     }
 
-    public void AddReward(int value)
+    public void InitializeSummaryUI()
     {
-        reward += Mathf.RoundToInt(returnValue * value);
-        RewardChangeEvent(reward);
+        int completedPercent = Mathf.RoundToInt(1.0f * totalBlockArea / mapTotalFreeArea);
+        float rewardMultiplier = completionPercentToRewardMultiplier.Evaluate(completedPercent);
+        int totalReward = Mathf.RoundToInt(totalBlockValue * rewardMultiplier);
+        summaryUIScript.Init(totalBlockValue, completedPercent, rewardMultiplier, totalReward);
+    }
+
+    public void AddReward(int rewardValueArg, int blockAreaArg)
+    {
+        totalBlockValue += rewardValueArg;
+        totalBlockArea += blockAreaArg;
+        RewardChangeEvent(totalBlockValue);
     }
 
     public int Reward()
     {
-        return reward;
+        return totalBlockValue;
     }
 }

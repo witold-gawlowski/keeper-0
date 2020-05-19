@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelName: LevelName
   width: 20
-  height: 30
+  height: 10
   steps: 3
   deathLimit: 4
   lifeLimit: 2
