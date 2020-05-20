@@ -18,6 +18,7 @@ public class GlobalManagerScript : MonoBehaviour
     public BlocksUIScript blockUIScript;
     public ButtonSortScript buttonSortScript;
     public SummaryUIScript summaryUIScript;
+    public BlockUIQueue blockUIQueue;
 
     int levelNumber;
 
@@ -26,7 +27,9 @@ public class GlobalManagerScript : MonoBehaviour
         summaryUIScript.LevelQuitEvent += OnLevelFinish;
         levelsUIScript.AddRunLevelEventHandler(OnLevelRun);
         StartNewRoundEvent += OnStartNewRound;
-        buildingUIScript.RotateButtonTapEvent += dragScript.HandleRotButtonTap;
+        buildingUIScript.RotateButtonTapEvent += blockSpawnerScript.HandleRotEvent;
+        buildingUIScript.RotateButtonTapEvent += blockUIQueue.RotateTop;
+        dragScript.blockPlacedEvent += blockSpawnerScript.ResetRotation;
     }
 
     private void Start()
@@ -38,6 +41,7 @@ public class GlobalManagerScript : MonoBehaviour
     private void OnStartNewRound()
     {
         blockShopScript.OnNewRoundStart();
+        blockManagerScript.UpdateInventoryUI();
         levelManagerScript.OnStartNewRound();
         globalUIScript.OnStartOfNewRound();
         buttonSortScript.Sort();
@@ -47,7 +51,6 @@ public class GlobalManagerScript : MonoBehaviour
     {
         summaryUIScript.LevelQuitEvent += ()=>levelManagerScript.DestroyLevel(level);
         blockManagerScript.OnStartBuilding( level);
-        blockSpawnerScript.OnStartBuilding();
         dragScript.gameObject.SetActive(true);
         dragScript.OnStartBuilding();
         LevelScript levelScritp = level.GetComponent<LevelScript>();

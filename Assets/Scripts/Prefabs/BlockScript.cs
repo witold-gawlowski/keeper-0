@@ -29,7 +29,6 @@ public class BlockScript : MonoBehaviour
             newPos.y = relativeTilePositions[i].x;
             relativeTilePositions[i] = newPos;
         }
-        UpdateLooks();
     }
 
     public int GetArea()

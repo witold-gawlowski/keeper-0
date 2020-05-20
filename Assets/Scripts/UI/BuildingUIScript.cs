@@ -13,6 +13,7 @@ public class BuildingUIScript : MonoBehaviour
     public GameObject summaryPanel;
     public GameObject sellButton;
     public SummaryUIScript summaryUIScript;
+    public BlockUIQueue blockUIQueue;
 
     public void OnSellButtonTap()
     {

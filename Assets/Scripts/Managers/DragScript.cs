@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class DragScript : MonoBehaviour
 {
@@ -15,6 +16,7 @@ public class DragScript : MonoBehaviour
     public BlockSpawnerScript blockSpawnerScript;
     public LevelMoneyManagerScript levelMoneyManagerScript;
     public BuildingUIScript buildingUI;
+    public BlockUIQueue blockUIQueue;
 
     bool snapped;
     private ProceduralMap map;
@@ -30,14 +32,6 @@ public class DragScript : MonoBehaviour
         firstBlockPlaced = false;
     }
 
-    public void HandleRotButtonTap()
-    {
-        if (draggedBlockScript != null)
-        {
-            draggedBlockScript.Rotate();
-            snapped = false;
-        }
-    }
 
     // Update is called once per frame
     void Update()
@@ -50,13 +44,16 @@ public class DragScript : MonoBehaviour
             newPosition.z = 0;
             if (mainTouch.phase == TouchPhase.Began)
             {
-                GameObject draggedBlock = null;
-                if (blockFeederScript.Top() != null)
+                if (!EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))
                 {
-                    buildingUI.SetRotateButtonEnabled(true);
-                    blockSpawnerScript.SpawnNextBlock();
-                    draggedBlock = blockSpawnerScript.nextBlock;
-                    draggedBlockScript = draggedBlock.GetComponent<BlockScript>();
+                    GameObject draggedBlock = null;
+                    if (blockFeederScript.Top() != null)
+                    {
+                        blockUIQueue.SetTopVisible(false);
+                        blockSpawnerScript.SpawnNextBlock();
+                        draggedBlock = blockSpawnerScript.nextBlock;
+                        draggedBlockScript = draggedBlock.GetComponent<BlockScript>();
+                    }
                 }
             }
 
@@ -75,7 +72,6 @@ public class DragScript : MonoBehaviour
         }
         if (touches.Length > 0 && touches[0].phase == TouchPhase.Ended && draggedBlockScript != null)
         {
-            buildingUI.SetRotateButtonEnabled(false);
             if (snapped)
             {
                 Vector2Int snappedBlockPosition = new Vector2Int(
@@ -92,6 +88,7 @@ public class DragScript : MonoBehaviour
             }
             else
             {
+                blockUIQueue.SetTopVisible(true);
                 Destroy(draggedBlockScript.gameObject);
                 draggedBlockScript.transform.position = blockSpawnerScript.transform.position;
                 draggedBlockScript = null;

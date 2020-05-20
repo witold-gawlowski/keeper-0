@@ -32,10 +32,9 @@ public class BlockManagerScript : MonoBehaviour
 
     public int offersPerRound;
 
-    public void Start()
+    public void Awake()
     {
         InitializeInventory();
-        UpdateInventoryUI();
     }
 
     public void OnStartBuilding(GameObject level)

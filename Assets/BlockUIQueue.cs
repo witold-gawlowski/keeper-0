@@ -30,6 +30,14 @@ public class BlockUIQueue : MonoBehaviour
         CreateDisplayQueue();
     }
 
+    public void RotateTop()
+    {
+        int lastChildIndex = transform.childCount - 1;
+        Transform lastChild = transform.GetChild(lastChildIndex);
+        RectTransform lastChildRectTransform = lastChild.GetComponent<RectTransform>();
+        lastChildRectTransform.Rotate(Vector3.back, -90);
+    }
+
     public void CreateDisplayQueue()
     {
         int counter = 0;
@@ -37,10 +45,10 @@ public class BlockUIQueue : MonoBehaviour
         {
             Sprite tempSprite = tempBlockUIData.sprite;
             GameObject newImageGO = Instantiate(blockImageObjectPrefab, transform);
-            Image newImage = newImageGO.GetComponent<Image>();
             UIBlockScript tempUIBlockScript = newImageGO.GetComponent<UIBlockScript>();
             tempUIBlockScript.UpdateNominalValueText(tempBlockUIData.valueToDisplay);
-            newImage.sprite = tempSprite;
+            tempUIBlockScript.SetBlockSprite(tempSprite);
+
             if (counter < numberOfDisplayedBlocks)
             {
                 newImageGO.SetActive(true);
@@ -53,6 +61,12 @@ public class BlockUIQueue : MonoBehaviour
             counter++;
         }
     }
+    public void SetTopVisible(bool valueArg)
+    {
+        int lastChildIndex = transform.childCount - 1;
+        transform.GetChild(lastChildIndex).gameObject.SetActive(valueArg);
+    }
+
 
     public void Next()
     {
