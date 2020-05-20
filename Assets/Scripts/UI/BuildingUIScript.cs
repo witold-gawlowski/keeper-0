@@ -16,7 +16,6 @@ public class BuildingUIScript : MonoBehaviour
 
     public void OnSellButtonTap()
     {
-        sellButton.SetActive(false);
         summaryPanel.SetActive(true);
         FinishedBuildingEvent();
     }
@@ -31,8 +30,4 @@ public class BuildingUIScript : MonoBehaviour
         rotateButton.SetActive(value);
     }
 
-    public void UpdateUI(int value)
-    {
-        rewardValueText.text = "+$" + value.ToString();
-    }
 }

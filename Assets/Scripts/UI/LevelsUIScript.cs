@@ -2,17 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+
 public class LevelsUIScript : MonoBehaviour
 {
     public Image levelMinimapImage;
     public GameObject LevelMinimapPanel;
     public GameObject levelButtonPrefab;
-    public GameObject levelButtonsParent;
+    public GameObject shopItemsParent;
+    public GameObject inventoryItemsParent;
     public GameObject buyButton;
     public GameObject buildButton;
     public SelectedLevelPanelScript selectedLevelPanelScript;
     public Text cashText;
     public Text completedLevelsText;
+
 
     private void Awake()
     {
@@ -63,12 +66,12 @@ public class LevelsUIScript : MonoBehaviour
         cashText.text = "$" + value;
     }
 
-    public void DeleteButtonForLevel(GameObject level)
+    public void DeleteButtonForLevelFromParent(GameObject level, Transform parent)
     {
-        foreach(Transform t in levelButtonsParent.transform)
+        foreach (Transform t in parent)
         {
             LevelButtonScript levelButtonScriptTemp = t.GetComponent<LevelButtonScript>();
-            if (levelButtonScriptTemp!=null && levelButtonScriptTemp.GetAssociatedLevel().Equals(level))
+            if (levelButtonScriptTemp != null && levelButtonScriptTemp.GetAssociatedLevel().Equals(level))
             {
                 Destroy(t.gameObject);
                 return;
@@ -76,22 +79,31 @@ public class LevelsUIScript : MonoBehaviour
         }
     }
 
+    public void DeleteButtonForLevel(GameObject level)
+    {
+        DeleteButtonForLevelFromParent(level, shopItemsParent.transform);
+        DeleteButtonForLevelFromParent(level, inventoryItemsParent.transform);
+    }
+
     public void TransformBuyButtonToBuildButton(GameObject level)
     {
-        foreach (Transform t in levelButtonsParent.transform)
+        foreach (Transform t in shopItemsParent.transform)
         {
             LevelButtonScript levelButtonScriptTemp = t.GetComponent<LevelButtonScript>();
             if (levelButtonScriptTemp != null && levelButtonScriptTemp.GetAssociatedLevel().Equals(level))
             {
                 levelButtonScriptTemp.OnBuy();
+                levelButtonScriptTemp.transform.SetParent(inventoryItemsParent.transform);
+                levelButtonScriptTemp.transform.SetAsFirstSibling();
             }
         }
     }
 
-    public GameObject SpawnLevelButton(GameObject level, int cost, float returnValueArg)
+    public GameObject SpawnShopLevelButton(GameObject level, int cost, float returnValueArg)
     { 
-        GameObject newLevelButton = Instantiate(levelButtonPrefab, levelButtonsParent.transform);
-        newLevelButton.transform.SetParent(levelButtonsParent.transform);
+        GameObject newLevelButton = Instantiate(levelButtonPrefab, shopItemsParent.transform);
+        newLevelButton.transform.SetAsFirstSibling();
+        newLevelButton.transform.SetParent(shopItemsParent.transform);
         LevelButtonScript levelButtonScript = newLevelButton.GetComponent<LevelButtonScript>();
         levelButtonScript.Initialize(cost, returnValueArg, level, OnNonBoughtLevelTapEvent, OnBoughtLevelTapEvent);
         return newLevelButton;

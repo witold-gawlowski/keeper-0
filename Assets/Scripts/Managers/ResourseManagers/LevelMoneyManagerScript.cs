@@ -16,6 +16,7 @@ public class LevelMoneyManagerScript : MonoBehaviour
     private int mapTotalFreeArea;
     public AnimationCurve completionPercentToRewardMultiplier;
     
+    
     public void SetReturnValue(float returnValueArg)
     {
         returnValue = returnValueArg;
@@ -23,8 +24,7 @@ public class LevelMoneyManagerScript : MonoBehaviour
 
     private void Awake()
     { 
-        RewardChangeEvent += buildingUIScript.UpdateUI;
-        dragScript.blockPlacedEvent += AddReward;
+        dragScript.blockPlacedEvent += AddBlockValue;
         buildingUIScript.FinishedBuildingEvent += InitializeSummaryUI;
     }
 
@@ -35,22 +35,34 @@ public class LevelMoneyManagerScript : MonoBehaviour
         totalBlockArea = 0;
     }
 
-    public void InitializeSummaryUI()
+    public float GetCompletedFraction()
     {
-        int completedPercent = Mathf.RoundToInt(1.0f * totalBlockArea / mapTotalFreeArea);
-        float rewardMultiplier = completionPercentToRewardMultiplier.Evaluate(completedPercent);
-        int totalReward = Mathf.RoundToInt(totalBlockValue * rewardMultiplier);
-        summaryUIScript.Init(totalBlockValue, completedPercent, rewardMultiplier, totalReward);
+        return 1.0f * totalBlockArea / mapTotalFreeArea;
+    }
+    
+    public float GetRewardMultiplier()
+    {
+        return completionPercentToRewardMultiplier.Evaluate(GetCompletedFraction());
     }
 
-    public void AddReward(int rewardValueArg, int blockAreaArg)
+    public int GetTotalReward()
+    {
+        return Mathf.RoundToInt(totalBlockValue * GetRewardMultiplier());
+    }
+
+    public void InitializeSummaryUI()
+    {
+        int percentCompleted = Mathf.RoundToInt(GetCompletedFraction() * 100);
+        summaryUIScript.Init(totalBlockValue, percentCompleted, GetRewardMultiplier(), GetTotalReward());
+    }
+
+    public void AddBlockValue(int rewardValueArg, int blockAreaArg)
     {
         totalBlockValue += rewardValueArg;
         totalBlockArea += blockAreaArg;
-        RewardChangeEvent(totalBlockValue);
     }
 
-    public int Reward()
+    public int GetReward()
     {
         return totalBlockValue;
     }

@@ -29,6 +29,7 @@ public class BlocksUIScript : MonoBehaviour
     }
     public GameObject blockButtonPrefab;
     public GameObject shopItemsParent;
+    public GameObject inventoryItemsParent;
     public SelectedBlockPanelScript selectedBlockPanelScript;
     public BlockManagerScript blockManagerScript;
     public BlockShopScript blockShopScript;
@@ -115,7 +116,9 @@ public class BlocksUIScript : MonoBehaviour
         BlockShopScript.Item shopItem = null,
         int priceArg = 0)
     {
-        GameObject newBlockButton = Instantiate(blockButtonPrefab, shopItemsParent.transform);
+        GameObject newBlockButton = Instantiate(
+            blockButtonPrefab,
+            shopItem != null ? shopItemsParent.transform : inventoryItemsParent.transform);
         BlockButtonScript newBlockButtonScript = newBlockButton.GetComponent<BlockButtonScript>();
         newBlockButtonScript.Initialize(
               spriteArg,

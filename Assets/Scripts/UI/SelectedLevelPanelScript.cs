@@ -12,12 +12,12 @@ public class SelectedLevelPanelScript : MonoBehaviour
     public GameObject buildbutton;
     public Image levelMinimap;
 
-    public void Initialize(GameObject levelArg, bool isBought)
+    public void Initialize(GameObject levelArg, bool isBoughtArg)
     {
         SnapshotCreatorScript snapshotCreatorScript = levelArg.GetComponent<SnapshotCreatorScript>();
         levelMinimap.sprite = snapshotCreatorScript.GetLevelSprite();
         selectedLevel = levelArg;
-        if (isBought)
+        if (isBoughtArg)
         {
             buyButton.SetActive(false);
             buildbutton.SetActive(true);

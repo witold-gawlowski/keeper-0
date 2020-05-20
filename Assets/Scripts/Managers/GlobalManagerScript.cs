@@ -18,7 +18,6 @@ public class GlobalManagerScript : MonoBehaviour
     public BlocksUIScript blockUIScript;
     public ButtonSortScript buttonSortScript;
     public SummaryUIScript summaryUIScript;
-    public int startingReward = 50;
 
     int levelNumber;
 
@@ -56,7 +55,6 @@ public class GlobalManagerScript : MonoBehaviour
         ProceduralMap levelMap = level.GetComponent<ProceduralMap>();
         levelMoneyManagerScript.Initialize(levelMap.GetFreeArea());
         levelMoneyManagerScript.SetReturnValue(levelManagerScript.GetReturnValue(level));
-        levelMoneyManagerScript.AddReward(startingReward, 0);
         levelsUIScript.DeleteButtonForLevel(level);
         dragScript.SetProceduralMap(level);
         Camera.main.transform.position = levelMap.GetLevelCenterPosition() - new Vector3(0, 3, 10);
@@ -68,14 +66,26 @@ public class GlobalManagerScript : MonoBehaviour
         blockSpawnerScript.ClearAllBlocks();
         dragScript.gameObject.SetActive(false);
         levelManagerScript.HideNotOwnedLevels();
-        accountManager.AddFunds(levelMoneyManagerScript.Reward());
+        accountManager.AddFunds(levelMoneyManagerScript.GetTotalReward());
         StartNewRoundEvent();
         blockManagerScript.UpdateInventoryUI();
         levelNumber++;
         levelsUIScript.UpdateCompletedLevels(levelNumber);
     }
 
-
+    private bool CanPlayerContinue()
+    {
+        int funds = accountManager.GetMoney();
+        int MinRosterPrice = levelManagerScript.GetMinRosterPrice();
+        if(levelManagerScript.GetOwnedLevelsNumber() ==0)
+        {
+            if(funds < MinRosterPrice)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
 
     public int GetCurrentLevel()
     {

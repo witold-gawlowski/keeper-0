@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class ButtonSortScript : MonoBehaviour
 {
-    public GameObject buttonsParent;
+    public GameObject inventoryButtonsParent;
     public void Sort()
     {
-        foreach (Transform buttonTransform in buttonsParent.transform)
+        foreach (Transform buttonTransform in inventoryButtonsParent.transform)
         {
             BlockButtonScript blockButtonScript = buttonTransform.GetComponent<BlockButtonScript>();
             if (blockButtonScript)
@@ -18,7 +18,7 @@ public class ButtonSortScript : MonoBehaviour
                 }
             }
         }
-        foreach (Transform buttonTransform in buttonsParent.transform)
+        foreach (Transform buttonTransform in inventoryButtonsParent.transform)
         {
             if (buttonTransform.GetComponent<LevelButtonScript>())
             {

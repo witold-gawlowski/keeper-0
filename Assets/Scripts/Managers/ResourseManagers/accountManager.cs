@@ -23,15 +23,14 @@ public class accountManager : MonoBehaviour
         return false;
     }
 
+    public int GetMoney()
+    {
+        return money;
+    }
+
     public void AddFunds(int value)
     {
         money += value;
-        levelsUIScript.UpdateFunds(money);
-    }
-
-    public void GetCash(int price)
-    {
-        money += price;
         levelsUIScript.UpdateFunds(money);
     }
 }

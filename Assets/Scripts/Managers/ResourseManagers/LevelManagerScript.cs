@@ -42,6 +42,31 @@ public class LevelManagerScript : MonoBehaviour
         RerollRoster();
     }
 
+    public int GetMinRosterPrice()
+    {
+        int result = levels[0].price;
+        for(int i=1; i<levels.Count; i++)
+        {
+            if (result > levels[i].price)
+            {
+                result = levels[i].price;
+            }
+        }
+        return result;
+    }
+
+    public int GetOwnedLevelsNumber()
+    {
+        int result = 0;
+        for(int i=0; i<levels.Count; i++)
+        {
+            if (levels[i].isBought)
+            {
+                result++;
+            }
+        }
+        return result;
+    }
 
     public void HideNotOwnedLevels()
     {
@@ -82,7 +107,7 @@ public class LevelManagerScript : MonoBehaviour
             int newLevelCost = Mathf.RoundToInt(nextLevelParams.GetCost() * GetProgressionCostMultiplier()/10)*10;
             float newReturnValue = nextLevelParams.GetReturnValue();
             levels.Add(new LevelData(newLevel, newLevelCost, newReturnValue, false));
-            GameObject newLevelButton = levelsUIScript.SpawnLevelButton(newLevel, newLevelCost, newReturnValue);
+            GameObject newLevelButton = levelsUIScript.SpawnShopLevelButton(newLevel, newLevelCost, newReturnValue);
             LevelButtonScript newLevelButtonScript = newLevelButton.GetComponent<LevelButtonScript>();
             snapshotCreatorScript.finishedGeneratingSnapshotEvent += newLevelButtonScript.SetSprite;
             proceduralMap.Initialize(nextLevelParams);

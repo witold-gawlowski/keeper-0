@@ -5,24 +5,40 @@ using UnityEngine;
 public class GlobalUIScript : MonoBehaviour
 {
     LevelsUIScript levelUIScript;
+    public GameObject briefing;
+    public GameObject inventoryUI;
     public GameObject shopUI;
     public GameObject buildingUI;
 
     private void Awake()
     {
-        levelUIScript = shopUI.GetComponent<LevelsUIScript>();
+        levelUIScript = briefing.GetComponent<LevelsUIScript>();
         levelUIScript.AddRunLevelEventHandler(OnLevelRun);
+        inventoryUI.SetActive(false);
+        shopUI.SetActive(true);
+    }
+    
+    public void OnShopButtonTap()
+    {
+        inventoryUI.SetActive(false);
+        shopUI.SetActive(true);
+    }
+
+    public void OnInventoryButtonTap()
+    {
+        inventoryUI.SetActive(true);
+        shopUI.SetActive(false);
     }
 
     void OnLevelRun(GameObject level)
     {
         buildingUI.SetActive(true);
-        shopUI.SetActive(false);
+        briefing.SetActive(false);
     }
 
     public void OnStartOfNewRound()
     {
         buildingUI.SetActive(false);
-        shopUI.SetActive(true);
+        briefing.SetActive(true);
     }
 }
