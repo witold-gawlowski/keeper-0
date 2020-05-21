@@ -12,7 +12,6 @@ public class LevelButtonScript : MonoBehaviour
     public delegate void TryBuyDelegate(int price);
     public TryBuyDelegate TryBuyEvent;
     public LevelTapDelegate LevelTapEvent;
-    public GameObject padlock;
     public GameObject priceText;
     public GameObject returnValueText;
     public Image levelImage;
@@ -35,14 +34,12 @@ public class LevelButtonScript : MonoBehaviour
     public void OnBuy()
     {
         onTapHandler = runTapHandler;
-        padlock.SetActive(false);
         priceText.SetActive(false);
     }
 
     public void Initialize(int cost, float returnValueArg, GameObject level, System.Action<GameObject> buyTapHandlerArg,
         System.Action<GameObject> runTapHandlerArg)
     {
-        padlock.SetActive(true);
         priceText.SetActive(true);
         returnValueText.GetComponent<Text>().text = "x" + returnValueArg.ToString();
         associatedLevel = level;

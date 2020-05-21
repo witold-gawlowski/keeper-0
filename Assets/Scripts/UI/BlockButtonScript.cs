@@ -6,11 +6,13 @@ using UnityEngine.UI;
 public class BlockButtonScript : MonoBehaviour
 {
     public System.Action<BlockShopScript.Item> buttonTapEvent;
-    public Image blockImage;
     public BlockShopScript.Item associatedItem;
     public Text costText;
     public Text countText;
-    public Image padlock;
+    public GameObject blockImagePrefab;
+    public GameObject imagesParent;
+
+    Sprite blockSprite;
 
     public void Initialize(
         Sprite spriteArg,
@@ -18,25 +20,40 @@ public class BlockButtonScript : MonoBehaviour
         BlockShopScript.Item itemArg = null,
         int costArg = 0)
     {
-        blockImage.sprite = spriteArg;
+        blockSprite = spriteArg;
         UpdateCount(countArg);
         if (itemArg == null)
         {
-            padlock.enabled = false;
             costText.enabled = false;
         }
         else
         {
             associatedItem = itemArg;
             costText.text = "$" + costArg.ToString();
-            padlock.enabled = true;
             costText.enabled = true;
         }
     }
 
     public void UpdateCount(int newCount)
     {
-        countText.text = "x" + newCount.ToString();
+        foreach(Transform childTransform in imagesParent.transform)
+        {
+            Destroy(childTransform.gameObject);
+        }
+
+        for(int i=0; i<newCount; i++)
+        {
+            GameObject newImageObject = Instantiate(blockImagePrefab, imagesParent.transform);
+            newImageObject.transform.SetAsFirstSibling();
+            Image blockImage = newImageObject.GetComponent<Image>();
+            blockImage.sprite = blockSprite;
+            RectTransform newImagerectTransform = newImageObject.GetComponent<RectTransform>();
+            newImagerectTransform.pivot = Vector2.one * (0.5f + 0.1f * (i-newCount/2));
+            Color baseColor = blockImage.color;
+            float baseColorHue, basecolorSaturation, baseColorBrightness;
+            Color.RGBToHSV(baseColor, out baseColorHue, out basecolorSaturation, out baseColorBrightness);
+            blockImage.color = Color.HSVToRGB(baseColorHue, basecolorSaturation, baseColorBrightness/(i+1));
+        }
     }
 
     public void SetTapHandler(System.Action<BlockShopScript.Item> tapHandler)
