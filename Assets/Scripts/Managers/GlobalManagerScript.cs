@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GlobalManagerScript : MonoBehaviour
 {
@@ -36,6 +37,19 @@ public class GlobalManagerScript : MonoBehaviour
     {
         levelNumber = 1;
         StartNewRoundEvent();
+    }
+
+    public void HandleBackButtonTap()
+    {
+        SceneManager.LoadScene("MainMenuScene", LoadSceneMode.Additive);
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            HandleBackButtonTap();
+        }
     }
 
     private void OnStartNewRound()
