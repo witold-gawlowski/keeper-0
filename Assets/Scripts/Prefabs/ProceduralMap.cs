@@ -8,6 +8,8 @@ public class ProceduralMap : MonoBehaviour
     public GameObject square;
     public GameObject levelSpriteObject;
     public int[,] map;
+    public ProceduralMap boundaryMap;
+    public ProceduralMap contentsMap;
     int[,] tempMap;
 
     int width;
@@ -28,6 +30,12 @@ public class ProceduralMap : MonoBehaviour
         Generate();
         levelSpriteObject.transform.localPosition = GetLevelCenterPosition();
         finishedGeneratingMapEvent();
+        if (contentsMap != null)
+        {
+            levelParamsArg.steps = 1;
+            levelParamsArg.initialDensity = 0.1f;
+            contentsMap.Initialize(levelParamsArg);
+        }
     }
 
     public Vector3 GetLevelCenterPosition()
@@ -69,8 +77,8 @@ public class ProceduralMap : MonoBehaviour
         {
             for (int j = 0; j < height; j++)
             {
-                map[i, j] = Random.value > initialDensity ? 0 : 1;
                 tempMap[i, j] = 0;
+                map[i, j] = Random.value > initialDensity ? 0 : 1;
             }
         }
         for (int i = 0; i < width; i++)
@@ -101,7 +109,10 @@ public class ProceduralMap : MonoBehaviour
                             }
                             if (map[i + k, j + q] == 0)
                             {
-                                deadCells++;
+                                if (boundaryMap == null || boundaryMap.map[i + k, j + q] == 0)
+                                {
+                                    deadCells++;
+                                }
                             }
                         }
                     }
@@ -155,6 +166,20 @@ public class ProceduralMap : MonoBehaviour
                 }
             }
         }
+    }
+
+    public int OverlapCount(List<Vector2Int> blockGeometry, Vector2Int blockPosition)
+    {
+        int result = 0;
+        for (int i = 0; i < blockGeometry.Count; i++)
+        {
+            Vector2Int tilePosition = blockGeometry[i] + blockPosition;
+            if (map[tilePosition.x, tilePosition.y] == 1)
+            {
+                result++;
+            }
+        }
+        return result;
     }
 
 

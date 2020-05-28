@@ -24,7 +24,10 @@ public class SnapshotCreatorScript : MonoBehaviour
     {
         CreateTexture();
         spriteRenderer.sprite = Sprite.Create(mapTexture, new Rect(0, 0, map.GetWidth(), map.GetHeight()), new Vector2(0.5f, 0.5f));
-        finishedGeneratingSnapshotEvent(spriteRenderer.sprite);
+        if (finishedGeneratingSnapshotEvent != null)
+        {
+            finishedGeneratingSnapshotEvent(spriteRenderer.sprite);
+        }
     }
 
     public void CreateTexture()
