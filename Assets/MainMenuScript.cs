@@ -17,7 +17,7 @@ public class MainMenuScript : MonoBehaviour
             continueButton.SetActive(false);
         }
     }
-    
+
     bool IsMenuSceneLoaded()
     {
         Scene menuSceneCandidate = SceneManager.GetSceneByName("MenuScene");
@@ -32,11 +32,6 @@ public class MainMenuScript : MonoBehaviour
     public void OnContinueButtonTap()
     {
         SceneManager.UnloadSceneAsync("MainMenuScene");
-    }
-
-    public void OnExitButtonTap()
-    {
-        Application.Quit();
     }
 
 }
