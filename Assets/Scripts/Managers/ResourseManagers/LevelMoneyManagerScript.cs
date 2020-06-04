@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class LevelMoneyManagerScript : MonoBehaviour
 {
+    public System.Action<float> progressUpdatedEvent;
     public BuildingUIScript buildingUIScript;
+    public System.Action levelCompletedEvent;
     public delegate void RewardChangeDelegate(int value);
     RewardChangeDelegate RewardChangeEvent;
     private int totalBlockValue;
@@ -15,6 +17,7 @@ public class LevelMoneyManagerScript : MonoBehaviour
     public SummaryUIScript summaryUIScript;
     private int mapTotalFreeArea;
     public AnimationCurve completionPercentToRewardMultiplier;
+    private float completionThreshold;
     
     
     public void SetReturnValue(float returnValueArg)
@@ -24,15 +27,33 @@ public class LevelMoneyManagerScript : MonoBehaviour
 
     private void Awake()
     { 
-        dragScript.blockPlacedEvent += AddBlockValue;
-        buildingUIScript.FinishedBuildingEvent += InitializeSummaryUI;
+        dragScript.blockPlacedEvent += BlockPlacedEventHandler;
+        levelCompletedEvent += InitializeSummaryUI;
+        levelCompletedEvent += buildingUIScript.OnLevelCompleteEvent;
     }
 
-    public void Initialize(int mapTotalFreeAreaArg)
+    public void Initialize(int mapTotalFreeAreaArg, float completionThresholdArg)
     {
+        completionThreshold = completionThresholdArg;
         mapTotalFreeArea = mapTotalFreeAreaArg;
         totalBlockValue = 0;
         totalBlockArea = 0;
+    }
+
+    public void BlockPlacedEventHandler(int rewardValueArg, int blockAreaArg)
+    {
+        AddBlockValue(rewardValueArg, blockAreaArg);
+        progressUpdatedEvent(GetCompletedFraction()/completionThreshold);
+        CheckCompleteness();
+    }
+
+    private void CheckCompleteness()
+    {
+        print("comp. thres:  " + completionThreshold);
+        if(GetCompletedFraction() >= completionThreshold)
+        {
+            levelCompletedEvent();
+        }
     }
 
     public float GetCompletedFraction()

@@ -18,10 +18,12 @@ MonoBehaviour:
   steps: 1
   deathLimit: 2
   lifeLimit: 3
-  initialDensity: 0.3
+  initialDensity: 0.1
   probabilityWeight: 1
   firstAppearanceLevel: 1
   priceMean: 349
   priceStandardDeviation: 43
   returnValueMean: 1.699
   returnValueDeviation: 0.124
+  completionsFractionMean: 0.852
+  completionFractionDispersion: 0.094

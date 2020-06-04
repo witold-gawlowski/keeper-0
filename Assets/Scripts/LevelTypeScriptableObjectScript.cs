@@ -31,7 +31,13 @@ public class LevelTypeScriptableObjectScript: ScriptableObject
     public float returnValueMean;
     [Range(0.05f, 0.4f)]
     public float returnValueDeviation;
+    [Space(20)]
 
+    [Header("Completion")]
+    [Range(0, 1)]
+    public float completionsFractionMean;
+    [Range(0, 0.5f)]
+    public float completionFractionDispersion;
 
     public static float NextGaussian()
     {
@@ -66,6 +72,12 @@ public class LevelTypeScriptableObjectScript: ScriptableObject
             unrefinedPrice = 0;
         }
         return Mathf.RoundToInt(unrefinedPrice/10)*10;
+    }
+
+    public float GetCompletionThresholdFraction()
+    {
+        float unrefinedFraction = NextGaussian() * completionFractionDispersion + completionsFractionMean;
+        return Mathf.Clamp01(unrefinedFraction);
     }
     
 }

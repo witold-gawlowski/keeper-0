@@ -12,12 +12,14 @@ public class LevelManagerScript : MonoBehaviour
         public int price;
         public bool isBought;
         public float returnValue;
-        public LevelData(GameObject levelObjectArg, int priceArg, float returnValueArg, bool isBoughtArg)
+        public float completionThreshold;
+        public LevelData(GameObject levelObjectArg, int priceArg, float returnValueArg, bool isBoughtArg, float completionThresholdArg)
         {
             levelObject = levelObjectArg;
             price = priceArg;
             isBought = isBoughtArg;
             returnValue = returnValueArg;
+            completionThreshold = completionThresholdArg;
         }
     }
 
@@ -96,7 +98,8 @@ public class LevelManagerScript : MonoBehaviour
                 levels.RemoveAt(i);
             }
         }
-        
+
+        //TODO: split to separate functions
         for (int i = 0; i < numbersOfLevelsInRoster; i++)
         {
             GameObject newLevel = Instantiate(levelPrefab, Vector3.zero, Quaternion.identity);
@@ -104,10 +107,12 @@ public class LevelManagerScript : MonoBehaviour
             LevelScript levelScript = newLevel.GetComponent<LevelScript>();
             ProceduralMap proceduralMap = newLevel.GetComponent<ProceduralMap>();
             LevelTypeScriptableObjectScript nextLevelParams = levelScheduler.GetNextLevelParams();
+
             int newLevelCost = Mathf.RoundToInt(nextLevelParams.GetCost() * GetProgressionCostMultiplier()/10)*10;
             float newReturnValue = nextLevelParams.GetReturnValue();
-            levels.Add(new LevelData(newLevel, newLevelCost, newReturnValue, false));
-            GameObject newLevelButton = levelsUIScript.SpawnShopLevelButton(newLevel, newLevelCost, newReturnValue);
+            float newLevelCompletionThresholdFraction = nextLevelParams.GetCompletionThresholdFraction();
+            levels.Add(new LevelData(newLevel, newLevelCost, newReturnValue, false, newLevelCompletionThresholdFraction));
+            GameObject newLevelButton = levelsUIScript.SpawnShopLevelButton(newLevel, newLevelCost, newReturnValue, newLevelCompletionThresholdFraction);
             LevelButtonScript newLevelButtonScript = newLevelButton.GetComponent<LevelButtonScript>();
             snapshotCreatorScript.finishedGeneratingSnapshotEvent += newLevelButtonScript.SetSprite;
             proceduralMap.Initialize(nextLevelParams);
@@ -120,6 +125,19 @@ public class LevelManagerScript : MonoBehaviour
     {
         int currentLevel = globalManager.GetCurrentLevel();
         return levelDifficultyMultiplierCurve.Evaluate(currentLevel);
+    }
+
+    public float GetCompletionThreshold(GameObject level)
+    {
+        float result = 0;
+        foreach (LevelData levelDataObjeect in levels)
+        {
+            if (levelDataObjeect.levelObject == level)
+            {
+                result = levelDataObjeect.completionThreshold;
+            }
+        }
+        return result;
     }
 
     public float GetReturnValue(GameObject level)

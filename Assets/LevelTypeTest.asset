@@ -15,13 +15,15 @@ MonoBehaviour:
   levelName: LevelName
   width: 20
   height: 10
-  steps: 3
+  steps: 1
   deathLimit: 4
   lifeLimit: 2
-  initialDensity: 0.5
+  initialDensity: 0.1
   probabilityWeight: 1
   firstAppearanceLevel: 0
   priceMean: 615
   priceStandardDeviation: 80
   returnValueMean: 1.136
   returnValueDeviation: 0.137
+  completionsFractionMean: 0.55
+  completionFractionDispersion: 0.077

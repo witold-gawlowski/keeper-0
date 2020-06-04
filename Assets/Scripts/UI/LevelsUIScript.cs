@@ -99,13 +99,13 @@ public class LevelsUIScript : MonoBehaviour
         }
     }
 
-    public GameObject SpawnShopLevelButton(GameObject level, int cost, float returnValueArg)
+    public GameObject SpawnShopLevelButton(GameObject level, int cost, float returnValueArg, float completionThresholdArg)
     { 
         GameObject newLevelButton = Instantiate(levelButtonPrefab, shopItemsParent.transform);
         newLevelButton.transform.SetAsFirstSibling();
         newLevelButton.transform.SetParent(shopItemsParent.transform);
         LevelButtonScript levelButtonScript = newLevelButton.GetComponent<LevelButtonScript>();
-        levelButtonScript.Initialize(cost, returnValueArg, level, OnNonBoughtLevelTapEvent, OnBoughtLevelTapEvent);
+        levelButtonScript.Initialize(cost, returnValueArg, completionThresholdArg, level, OnNonBoughtLevelTapEvent, OnBoughtLevelTapEvent);
         return newLevelButton;
     }
 

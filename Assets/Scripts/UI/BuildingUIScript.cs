@@ -7,25 +7,28 @@ public class BuildingUIScript : MonoBehaviour
 {
     public System.Action RotateButtonTapEvent;
     public Text rewardValueText;
-
-    public System.Action FinishedBuildingEvent;
+    public System.Action BuildingCanceledEvent;
     public GameObject rotateButton;
     public GameObject summaryPanel;
     public GameObject sellButton;
     public SummaryUIScript summaryUIScript;
     public BlockUIQueue blockUIQueue;
+    public Image progressBarImage;
 
     public void TriggerRotateEvent()
     {
         RotateButtonTapEvent();
     }
-
-    public void OnSellButtonTap()
+    
+    public void OnLevelCompleteEvent()
     {
         summaryPanel.SetActive(true);
-        FinishedBuildingEvent();
     }
 
+    public void OnProgressUpdate(float fractionArg)
+    {
+        progressBarImage.fillAmount = fractionArg;
+    }
 
     public void SetRotateButtonEnabled(bool value)
     { 

@@ -13,6 +13,7 @@ public class LevelButtonScript : MonoBehaviour
     public TryBuyDelegate TryBuyEvent;
     public LevelTapDelegate LevelTapEvent;
     public GameObject priceText;
+    public GameObject completionThresholdText;
     public GameObject returnValueText;
     public Image levelImage;
 
@@ -37,11 +38,12 @@ public class LevelButtonScript : MonoBehaviour
         priceText.SetActive(false);
     }
 
-    public void Initialize(int cost, float returnValueArg, GameObject level, System.Action<GameObject> buyTapHandlerArg,
+    public void Initialize(int cost, float returnValueArg, float completionThresholdArg, GameObject level, System.Action<GameObject> buyTapHandlerArg,
         System.Action<GameObject> runTapHandlerArg)
     {
         priceText.SetActive(true);
         returnValueText.GetComponent<Text>().text = "x" + returnValueArg.ToString();
+        completionThresholdText.GetComponent<Text>().text = completionThresholdArg.ToString();
         associatedLevel = level;
         priceText.GetComponent<Text>().text = "$"+cost.ToString();
         onTapHandler = buyTapHandlerArg;

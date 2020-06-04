@@ -31,6 +31,7 @@ public class GlobalManagerScript : MonoBehaviour
         buildingUIScript.RotateButtonTapEvent += blockSpawnerScript.HandleRotEvent;
         buildingUIScript.RotateButtonTapEvent += blockUIQueue.RotateTop;
         dragScript.blockPlacedEvent += blockSpawnerScript.ResetRotation;
+        levelMoneyManagerScript.progressUpdatedEvent += buildingUIScript.OnProgressUpdate;
     }
 
     private void Start()
@@ -70,7 +71,7 @@ public class GlobalManagerScript : MonoBehaviour
         LevelScript levelScritp = level.GetComponent<LevelScript>();
         levelScritp.SetDisplayed(true);
         ProceduralMap levelMap = level.GetComponent<ProceduralMap>();
-        levelMoneyManagerScript.Initialize(levelMap.GetFreeArea());
+        levelMoneyManagerScript.Initialize(levelMap.GetFreeArea(), levelManagerScript.GetCompletionThreshold(level));
         levelMoneyManagerScript.SetReturnValue(levelManagerScript.GetReturnValue(level));
         levelsUIScript.DeleteButtonForLevel(level);
         dragScript.SetProceduralMap(level);
