@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Firebase.Auth;
+using Firebase;
+using Firebase.Unity.Editor;
 public class FirebaseManagerScript : MonoBehaviour
 {
     // Start is called before the first frame update
     Firebase.FirebaseApp app;
     public bool isReadyToUse;
+    Firebase.Database.DatabaseReference DBreference;
 
     private void Awake()
     {
@@ -28,6 +31,9 @@ public class FirebaseManagerScript : MonoBehaviour
                   "Could not resolve all Firebase dependencies: {0}", dependencyStatus));
             }
         });
+
+        Firebase.FirebaseApp.DefaultInstance.SetEditorDatabaseUrl("https://keeper-zero-99404430.firebaseio.com/");
+        DBreference = Firebase.Database.FirebaseDatabase.DefaultInstance.RootReference;
     }
 
     IEnumerator Register()
@@ -43,14 +49,14 @@ public class FirebaseManagerScript : MonoBehaviour
         {
             print("everything is fine");
         }
+        
     }
 
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            print("space down");
-            StartCoroutine(Register());
+            
         }
     }
 

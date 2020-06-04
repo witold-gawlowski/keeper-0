@@ -92,6 +92,7 @@ public class DragScript : MonoBehaviour
             }
             else
             {
+                buildingUI.TriggerRotateEvent();
                 blockUIQueue.SetTopVisible(true);
                 Destroy(draggedBlockScript.gameObject);
                 draggedBlockScript.transform.position = blockSpawnerScript.transform.position;

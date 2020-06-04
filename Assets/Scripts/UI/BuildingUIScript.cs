@@ -15,16 +15,17 @@ public class BuildingUIScript : MonoBehaviour
     public SummaryUIScript summaryUIScript;
     public BlockUIQueue blockUIQueue;
 
+    public void TriggerRotateEvent()
+    {
+        RotateButtonTapEvent();
+    }
+
     public void OnSellButtonTap()
     {
         summaryPanel.SetActive(true);
         FinishedBuildingEvent();
     }
 
-    public void OnRotateButtonTap()
-    {
-        RotateButtonTapEvent();
-    }
 
     public void SetRotateButtonEnabled(bool value)
     { 
