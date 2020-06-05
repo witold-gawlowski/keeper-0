@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 public class SummaryUIScript : MonoBehaviour
 {
-    public System.Action LevelQuitEvent;
+    public System.Action LevelCompletedEvent;
     public Text baseValueText;
     public Text completedPercentText;
     public Text rewardMultiplierText;
@@ -12,7 +12,7 @@ public class SummaryUIScript : MonoBehaviour
 
     public void OnAcceptButtonTap()
     {
-        LevelQuitEvent();
+        LevelCompletedEvent();
         gameObject.SetActive(false);
     }
 

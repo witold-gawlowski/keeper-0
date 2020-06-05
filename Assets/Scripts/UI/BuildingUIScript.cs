@@ -20,9 +20,19 @@ public class BuildingUIScript : MonoBehaviour
         RotateButtonTapEvent();
     }
     
+    public void OnStartBuilding()
+    {
+        progressBarImage.fillAmount = 0;
+    }
+
     public void OnLevelCompleteEvent()
     {
         summaryPanel.SetActive(true);
+    }
+
+    public void OnExitButtonTap()
+    {
+        BuildingCanceledEvent();
     }
 
     public void OnProgressUpdate(float fractionArg)

@@ -101,6 +101,7 @@ public class BlocksUIScript : MonoBehaviour
 
     public void CreateInventoryButtons()
     {
+        print("create inventory buttons");
         inventoryButtons = new Dictionary<GameObject, BlockButtonScript>();
         foreach(BlockManagerScript.InitialBlockConfigData blockData in blockManagerScript.blockConfig)
         {

@@ -106,6 +106,7 @@ public class LevelsUIScript : MonoBehaviour
         newLevelButton.transform.SetParent(shopItemsParent.transform);
         LevelButtonScript levelButtonScript = newLevelButton.GetComponent<LevelButtonScript>();
         levelButtonScript.Initialize(cost, returnValueArg, completionThresholdArg, level, OnNonBoughtLevelTapEvent, OnBoughtLevelTapEvent);
+        levelButtonScript.OnBuy();
         return newLevelButton;
     }
 

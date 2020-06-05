@@ -21,11 +21,12 @@ public class GlobalManagerScript : MonoBehaviour
     public SummaryUIScript summaryUIScript;
     public BlockUIQueue blockUIQueue;
 
-    int levelNumber;
+    int roundCount;
 
     private void Awake()
     {
-        summaryUIScript.LevelQuitEvent += OnLevelFinish;
+        summaryUIScript.LevelCompletedEvent += OnLevelCompleted;
+        buildingUIScript.BuildingCanceledEvent += OnLevelFinish;
         levelsUIScript.AddRunLevelEventHandler(OnLevelRun);
         StartNewRoundEvent += OnStartNewRound;
         buildingUIScript.RotateButtonTapEvent += blockSpawnerScript.HandleRotEvent;
@@ -36,7 +37,7 @@ public class GlobalManagerScript : MonoBehaviour
 
     private void Start()
     {
-        levelNumber = 1;
+        roundCount = 1;
         StartNewRoundEvent();
     }
 
@@ -64,8 +65,9 @@ public class GlobalManagerScript : MonoBehaviour
 
     private void OnLevelRun(GameObject level)
     {
-        summaryUIScript.LevelQuitEvent += ()=>levelManagerScript.DestroyLevel(level);
-        blockManagerScript.OnStartBuilding( level);
+        summaryUIScript.LevelCompletedEvent += ()=>levelManagerScript.DestroyLevel(level);
+        buildingUIScript.BuildingCanceledEvent += () => levelManagerScript.DestroyLevel(level);
+        blockManagerScript.OnStartBuilding(level);
         dragScript.gameObject.SetActive(true);
         dragScript.OnStartBuilding();
         LevelScript levelScritp = level.GetComponent<LevelScript>();
@@ -76,19 +78,24 @@ public class GlobalManagerScript : MonoBehaviour
         levelsUIScript.DeleteButtonForLevel(level);
         dragScript.SetProceduralMap(level);
         Camera.main.transform.position = levelMap.GetLevelCenterPosition() - new Vector3(0, 3, 10);
+        buildingUIScript.OnStartBuilding();
     }
 
+    private void OnLevelCompleted()
+    {
+        OnLevelFinish();
+        accountManager.AddFunds(levelMoneyManagerScript.GetTotalReward());
+    }
 
     private void OnLevelFinish()
     { 
         blockSpawnerScript.ClearAllBlocks();
         dragScript.gameObject.SetActive(false);
         levelManagerScript.HideNotOwnedLevels();
-        accountManager.AddFunds(levelMoneyManagerScript.GetTotalReward());
         StartNewRoundEvent();
         blockManagerScript.UpdateInventoryUI();
-        levelNumber++;
-        levelsUIScript.UpdateCompletedLevels(levelNumber);
+        roundCount++;
+        levelsUIScript.UpdateCompletedLevels(roundCount);
     }
 
     private bool CanPlayerContinue()
@@ -107,6 +114,6 @@ public class GlobalManagerScript : MonoBehaviour
 
     public int GetCurrentLevel()
     {
-        return levelNumber;
+        return roundCount;
     }
 }

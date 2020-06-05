@@ -25,5 +25,5 @@ MonoBehaviour:
   priceStandardDeviation: 80
   returnValueMean: 1.136
   returnValueDeviation: 0.137
-  completionsFractionMean: 0.55
-  completionFractionDispersion: 0.077
+  completionsFractionMean: 0.249
+  completionFractionDispersion: 0.048
