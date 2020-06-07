@@ -17,6 +17,7 @@ public class LevelTypeScriptableObjectScript: ScriptableObject
     [Header("Occurence Parameters")]
     public float probabilityWeight = 1;
     public int firstAppearanceLevel = 1;
+    public AnimationCurve weightVsLevelCurve;
     [Space(20)]
 
     [Header("Price")]
@@ -31,6 +32,8 @@ public class LevelTypeScriptableObjectScript: ScriptableObject
     public float returnValueMean;
     [Range(0.05f, 0.4f)]
     public float returnValueDeviation;
+    [Range(200, 5000)]
+    public int rewardValue;
     [Space(20)]
 
     [Header("Completion")]
@@ -38,6 +41,16 @@ public class LevelTypeScriptableObjectScript: ScriptableObject
     public float completionsFractionMean;
     [Range(0, 0.5f)]
     public float completionFractionDispersion;
+    [Space(20)]
+
+    [Header("Persistence")]
+    [Range(1, 15)]
+    public int persistenceInterval;
+    [Space(20)]
+
+    [Header("Special  Options")]
+    public int minimalMaxCaveSize;
+    public bool removeSecondaryCaves;
 
     public static float NextGaussian()
     {
@@ -79,5 +92,7 @@ public class LevelTypeScriptableObjectScript: ScriptableObject
         float unrefinedFraction = NextGaussian() * completionFractionDispersion + completionsFractionMean;
         return Mathf.Clamp01(unrefinedFraction);
     }
-    
+
+   
+
 }

@@ -85,6 +85,18 @@ public class LevelsUIScript : MonoBehaviour
         DeleteButtonForLevelFromParent(level, inventoryItemsParent.transform);
     }
 
+    public void UpdatePersistence(GameObject level, int valueArg)
+    {
+        foreach (Transform t in shopItemsParent.transform)
+        {
+            LevelButtonScript levelButtonScriptTemp = t.GetComponent<LevelButtonScript>();
+            if (levelButtonScriptTemp != null && levelButtonScriptTemp.GetAssociatedLevel().Equals(level))
+            {
+                levelButtonScriptTemp.UpdatePersistence(valueArg);
+            }
+        }
+    }
+
     public void TransformBuyButtonToBuildButton(GameObject level)
     {
         foreach (Transform t in shopItemsParent.transform)
@@ -99,13 +111,20 @@ public class LevelsUIScript : MonoBehaviour
         }
     }
 
-    public GameObject SpawnShopLevelButton(GameObject level, int cost, float returnValueArg, float completionThresholdArg)
+    public GameObject SpawnShopLevelButton(GameObject level, int cost, float returnValueArg, float completionThresholdArg, int rawRewardArg, int persistenceArg)
     { 
         GameObject newLevelButton = Instantiate(levelButtonPrefab, shopItemsParent.transform);
         newLevelButton.transform.SetAsFirstSibling();
         newLevelButton.transform.SetParent(shopItemsParent.transform);
         LevelButtonScript levelButtonScript = newLevelButton.GetComponent<LevelButtonScript>();
-        levelButtonScript.Initialize(cost, returnValueArg, completionThresholdArg, level, OnNonBoughtLevelTapEvent, OnBoughtLevelTapEvent);
+        levelButtonScript.Initialize(cost,
+            returnValueArg,
+            completionThresholdArg,
+            level,
+            OnNonBoughtLevelTapEvent,
+            OnBoughtLevelTapEvent,
+            rawRewardArg,
+            persistenceArg);
         levelButtonScript.OnBuy();
         return newLevelButton;
     }

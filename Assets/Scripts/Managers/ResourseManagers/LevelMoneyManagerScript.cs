@@ -18,6 +18,7 @@ public class LevelMoneyManagerScript : MonoBehaviour
     private int mapTotalFreeArea;
     public AnimationCurve completionPercentToRewardMultiplier;
     private float completionThreshold;
+    int rawReward;
     
     
     public void SetReturnValue(float returnValueArg)
@@ -32,10 +33,11 @@ public class LevelMoneyManagerScript : MonoBehaviour
         levelCompletedEvent += buildingUIScript.OnLevelCompleteEvent;
     }
 
-    public void Initialize(int mapTotalFreeAreaArg, float completionThresholdArg)
+    public void Initialize(int mapTotalFreeAreaArg, float completionThresholdArg, int rawRewardArg)
     {
         completionThreshold = completionThresholdArg;
         mapTotalFreeArea = mapTotalFreeAreaArg;
+        rawReward = rawRewardArg;
         totalBlockValue = 0;
         totalBlockArea = 0;
     }
@@ -68,7 +70,8 @@ public class LevelMoneyManagerScript : MonoBehaviour
 
     public int GetTotalReward()
     {
-        return Mathf.RoundToInt(totalBlockValue * GetRewardMultiplier());
+        return rawReward;
+        //return Mathf.RoundToInt(totalBlockValue * GetRewardMultiplier());
     }
 
     public void InitializeSummaryUI()

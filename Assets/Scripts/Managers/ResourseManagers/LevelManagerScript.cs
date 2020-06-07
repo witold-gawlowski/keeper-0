@@ -13,13 +13,23 @@ public class LevelManagerScript : MonoBehaviour
         public bool isBought;
         public float returnValue;
         public float completionThreshold;
-        public LevelData(GameObject levelObjectArg, int priceArg, float returnValueArg, bool isBoughtArg, float completionThresholdArg)
+        public int rawReward;
+        public int persistence;
+        public LevelData(GameObject levelObjectArg,
+            int priceArg,
+            float returnValueArg,
+            bool isBoughtArg,
+            float completionThresholdArg,
+            int rawRewardArg,
+            int persistenceArg)
         {
             levelObject = levelObjectArg;
             price = priceArg;
             isBought = isBoughtArg;
             returnValue = returnValueArg;
             completionThreshold = completionThresholdArg;
+            rawReward = rawRewardArg;
+            persistence = persistenceArg;
         }
     }
 
@@ -93,9 +103,17 @@ public class LevelManagerScript : MonoBehaviour
         {
             if (!levels[i].isBought)
             {
-                levelsUIScript.DeleteButtonForLevel(levels[i].levelObject);
-                Destroy(levels[i].levelObject);
-                levels.RemoveAt(i);
+                levels[i].persistence--;
+                if(levels[i].persistence == 0)
+                {
+                    levelsUIScript.DeleteButtonForLevel(levels[i].levelObject);
+                    Destroy(levels[i].levelObject);
+                    levels.RemoveAt(i);
+                }
+                else
+                {
+                    levelsUIScript.UpdatePersistence(levels[i].levelObject,  levels[i].persistence);
+                }
             }
         }
 
@@ -110,9 +128,11 @@ public class LevelManagerScript : MonoBehaviour
 
             int newLevelCost = Mathf.RoundToInt(nextLevelParams.GetCost() * GetProgressionCostMultiplier()/10)*10;
             float newReturnValue = nextLevelParams.GetReturnValue();
+            int rawReward = nextLevelParams.rewardValue;
+            int persistence = nextLevelParams.persistenceInterval;
             float newLevelCompletionThresholdFraction = nextLevelParams.GetCompletionThresholdFraction();
-            levels.Add(new LevelData(newLevel, newLevelCost, newReturnValue, false, newLevelCompletionThresholdFraction));
-            GameObject newLevelButton = levelsUIScript.SpawnShopLevelButton(newLevel, newLevelCost, newReturnValue, newLevelCompletionThresholdFraction);
+            levels.Add(new LevelData(newLevel, newLevelCost, newReturnValue, false, newLevelCompletionThresholdFraction, rawReward, persistence));
+            GameObject newLevelButton = levelsUIScript.SpawnShopLevelButton(newLevel, newLevelCost, newReturnValue, newLevelCompletionThresholdFraction, rawReward, persistence);
             LevelButtonScript newLevelButtonScript = newLevelButton.GetComponent<LevelButtonScript>();
             snapshotCreatorScript.finishedGeneratingSnapshotEvent += newLevelButtonScript.SetSprite;
             proceduralMap.Initialize(nextLevelParams);
@@ -148,6 +168,32 @@ public class LevelManagerScript : MonoBehaviour
             if (levelDataObjeect.levelObject == level)
             {
                 result = levelDataObjeect.returnValue;
+            }
+        }
+        return result;
+    }
+
+    public int GetPersistence(GameObject level)
+    {
+        int result = 0;
+        foreach (LevelData levelDataObjeect in levels)
+        {
+            if (levelDataObjeect.levelObject == level)
+            {
+                result = levelDataObjeect.persistence;
+            }
+        }
+        return result;
+    }
+
+    public int GetRawReward(GameObject level)
+    {
+        int result = 0;
+        foreach (LevelData levelDataObjeect in levels)
+        {
+            if (levelDataObjeect.levelObject == level)
+            {
+                result = levelDataObjeect.rawReward;
             }
         }
         return result;

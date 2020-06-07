@@ -10,20 +10,28 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a2e1f3fd2c010144fb6bfd97b09d57e1, type: 3}
-  m_Name: LevelTypeTest2
+  m_Name: MediumCaves
   m_EditorClassIdentifier: 
   levelName: LevelName
-  width: 10
-  height: 10
-  steps: 1
-  deathLimit: 2
+  width: 15
+  height: 15
+  steps: 3
+  deathLimit: 4
   lifeLimit: 3
-  initialDensity: 0.1
+  initialDensity: 0.54
   probabilityWeight: 1
   firstAppearanceLevel: 1
-  priceMean: 349
-  priceStandardDeviation: 43
-  returnValueMean: 1.699
-  returnValueDeviation: 0.124
-  completionsFractionMean: 0.335
-  completionFractionDispersion: 0.094
+  weightVsLevelCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  priceMean: 0
+  priceStandardDeviation: 0
+  returnValueMean: 0
+  returnValueDeviation: 0
+  rewardValue: 0
+  completionsFractionMean: 0
+  completionFractionDispersion: 0
+  persistenceInterval: 0

@@ -63,6 +63,7 @@ public class GlobalManagerScript : MonoBehaviour
         buttonSortScript.Sort();
     }
 
+       
     private void OnLevelRun(GameObject level)
     {
         summaryUIScript.LevelCompletedEvent += ()=>levelManagerScript.DestroyLevel(level);
@@ -73,7 +74,9 @@ public class GlobalManagerScript : MonoBehaviour
         LevelScript levelScritp = level.GetComponent<LevelScript>();
         levelScritp.SetDisplayed(true);
         ProceduralMap levelMap = level.GetComponent<ProceduralMap>();
-        levelMoneyManagerScript.Initialize(levelMap.GetFreeArea(), levelManagerScript.GetCompletionThreshold(level));
+        levelMoneyManagerScript.Initialize(levelMap.GetFreeArea(),
+            levelManagerScript.GetCompletionThreshold(level),
+            levelManagerScript.GetRawReward(level));
         levelMoneyManagerScript.SetReturnValue(levelManagerScript.GetReturnValue(level));
         levelsUIScript.DeleteButtonForLevel(level);
         dragScript.SetProceduralMap(level);

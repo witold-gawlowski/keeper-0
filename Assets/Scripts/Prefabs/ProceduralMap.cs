@@ -103,10 +103,10 @@ public class ProceduralMap : MonoBehaviour
                     {
                         for (int q = -1; q <= 1; q++)
                         {
-                            if (q == 0 && k == 0)
-                            {
-                                break;
-                            }
+                            //if (q == 0 && k == 0)
+                            //{
+                            //    break;
+                            //}
                             if (map[i + k, j + q] == 0)
                             {
                                 if (boundaryMap == null || boundaryMap.map[i + k, j + q] == 0)

@@ -16,6 +16,8 @@ public class LevelButtonScript : MonoBehaviour
     public GameObject completionThresholdText;
     public GameObject returnValueText;
     public Image levelImage;
+    public GameObject rawRewardText;
+    public GameObject persistence;
 
     public void OnTap()
     {
@@ -32,22 +34,35 @@ public class LevelButtonScript : MonoBehaviour
         levelImage.sprite = spriteArg;
     }
 
+    public void UpdatePersistence(int valueArg)
+    {
+        persistence.GetComponent<Text>().text = "T" + valueArg.ToString(); 
+    }
+
     public void OnBuy()
     {
         onTapHandler = runTapHandler;
         priceText.SetActive(false);
     }
 
-    public void Initialize(int cost, float returnValueArg, float completionThresholdArg, GameObject level, System.Action<GameObject> buyTapHandlerArg,
-        System.Action<GameObject> runTapHandlerArg)
+    public void Initialize(int cost,
+        float returnValueArg,
+        float completionThresholdArg,
+        GameObject level,
+        System.Action<GameObject> buyTapHandlerArg,
+        System.Action<GameObject> runTapHandlerArg, 
+        int rawRewardArg,
+        int persistenceArg)
     {
         priceText.SetActive(true);
         returnValueText.GetComponent<Text>().text = "x" + returnValueArg.ToString();
-        completionThresholdText.GetComponent<Text>().text = completionThresholdArg.ToString();
+        completionThresholdText.GetComponent<Text>().text = completionThresholdArg.ToString("0.00");
         associatedLevel = level;
         priceText.GetComponent<Text>().text = "$"+cost.ToString();
         onTapHandler = buyTapHandlerArg;
         runTapHandler = runTapHandlerArg;
+        rawRewardText.GetComponent<Text>().text = "$" + rawRewardArg.ToString();
+        persistence.GetComponent<Text>().text = "T" + persistenceArg.ToString();
     }
     
    

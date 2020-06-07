@@ -17,10 +17,12 @@ public class LevelSchedulerScript : MonoBehaviour
         List<LevelTypeScriptableObjectScript> roster = new List<LevelTypeScriptableObjectScript>();
         for(int i=0; i<types.Length; i++)
         {
-            if (types[i].firstAppearanceLevel <= currentLevel)
+            LevelTypeScriptableObjectScript levelType = types[i];
+            float weightAtCurrentLevel = levelType.weightVsLevelCurve.Evaluate(currentLevel);
+            if (true)
             {
-                roster.Add(types[i]);
-                probabilityWeightTotal += types[i].probabilityWeight;
+                roster.Add(levelType);
+                probabilityWeightTotal += weightAtCurrentLevel;
             }
         }
 
