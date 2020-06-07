@@ -11,6 +11,8 @@ public class ProceduralMap : MonoBehaviour
     public ProceduralMap boundaryMap;
     public ProceduralMap contentsMap;
     int[,] tempMap;
+    int[,] components;
+    Dictionary<int, int> componentSizes;
 
     int width;
     int height;
@@ -18,6 +20,8 @@ public class ProceduralMap : MonoBehaviour
     float initialDensity;
     int dieLimit;
     int spawnLimit;
+
+    int currentDFSComponent;
 
     public void Initialize(LevelTypeScriptableObjectScript levelParamsArg)
     {
@@ -27,15 +31,22 @@ public class ProceduralMap : MonoBehaviour
         steps = levelParamsArg.steps;
         width = levelParamsArg.width;
         height = levelParamsArg.height;
-        Generate();
         levelSpriteObject.transform.localPosition = GetLevelCenterPosition();
+
+        int maxCompNum = -1;
+        do {
+            Generate();
+            GetComponents();
+            GetComponentSizes();
+            if (levelParamsArg.removeSecondaryCaves)
+            {
+                RemoveSecondaryComponents();
+            }
+            print(".");
+            maxCompNum = GetMaxComponentNumber();
+        } while (levelParamsArg.minimalMaxCaveSize > componentSizes[maxCompNum]);
+
         finishedGeneratingMapEvent();
-        if (contentsMap != null)
-        {
-            levelParamsArg.steps = 1;
-            levelParamsArg.initialDensity = 0.1f;
-            contentsMap.Initialize(levelParamsArg);
-        }
     }
 
     public Vector3 GetLevelCenterPosition()
@@ -68,6 +79,112 @@ public class ProceduralMap : MonoBehaviour
         }
         return result;
     }
+
+    public void GetComponents()
+    {
+        components = new int[width, height];
+        for(int i=0; i< width; i++)
+        {
+            for(int j=0; j<height; j++)
+            {
+                components[i, j] = -1;
+            }
+        }
+        for (int i = 0; i < width; i++)
+        {
+            for (int j = 0; j < height; j++)
+            {
+                if (components[i, j] == -1)
+                {
+                    dfs(i, j);
+                    currentDFSComponent++;
+                }
+            }
+        }
+
+    }
+
+    void GetComponentSizes()
+    {
+        componentSizes = new Dictionary<int, int>();
+        componentSizes.Add(-1, 0);
+        for (int i = 0; i < width; i++)
+        {
+            for (int j = 0; j < height; j++)
+            {
+                int component = components[i, j];
+                if(component != -1)
+                {
+                    if(componentSizes.ContainsKey(component))
+                    {
+                        componentSizes[component]++;
+                    }
+                    else
+                    {
+                        componentSizes.Add(component, 1);
+                    }
+                }
+            }
+        }
+    }
+
+    int GetMaxComponentNumber()
+    {
+        
+        int maxComponentNumber = -1;
+        foreach(KeyValuePair<int, int>  pair in componentSizes)
+        {
+            if(pair.Value > componentSizes[maxComponentNumber])
+            {
+                maxComponentNumber = pair.Key;
+            }
+        }
+        return maxComponentNumber;
+    }
+
+    void RemoveSecondaryComponents()
+    {
+        int maxComponentNumber = GetMaxComponentNumber();
+        for (int i = 0; i < width; i++)
+        {
+            for (int j = 0; j < height; j++)
+            {
+                if(map[i, j] == 0)
+                {
+                    if(components[i, j] != maxComponentNumber)
+                    {
+                        map[i, j] = 1;
+                    }
+                }
+            }
+        }
+    }
+
+    void dfs(int i, int j)
+    {
+        if(map[i, j] == 1)
+        {
+            return;
+        }
+        components[i, j] = currentDFSComponent;
+        int[] dx = { -1, 1, 0, 0 };
+        int[] dy = { 0, 0, 1, -1 };
+        for(int l = 0; l<4; l++)
+        {
+            int newi = i + dx[l];
+            int newj = j + dy[l];
+            if(newi<0 || newj<0  || newi == width || newj == height)
+            {
+                continue;
+            }
+
+            if (components[newi, newj]  == -1)
+            {
+                dfs(newi, newj);
+            }
+        }
+    }
+
 
     public void Generate()
     {
