@@ -23,7 +23,52 @@ MonoBehaviour:
   firstAppearanceLevel: 1
   weightVsLevelCurve:
     serializedVersion: 2
-    m_Curve: []
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 2.5876436
+      value: 0.025094956
+      inSlope: 0.0009559111
+      outSlope: 0.0009559111
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.7266083
+    - serializedVersion: 3
+      time: 6.022939
+      value: 4.148548
+      inSlope: 0.011644561
+      outSlope: 0.011644561
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.299369
+    - serializedVersion: 3
+      time: 9.587844
+      value: 0.011572599
+      inSlope: 0.0028120754
+      outSlope: 0.0028120754
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.2399045
+    - serializedVersion: 3
+      time: 39.909424
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
@@ -35,3 +80,5 @@ MonoBehaviour:
   completionsFractionMean: 0
   completionFractionDispersion: 0
   persistenceInterval: 0
+  minimalMaxCaveSize: 0
+  removeSecondaryCaves: 0

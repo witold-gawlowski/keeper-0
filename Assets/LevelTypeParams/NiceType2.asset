@@ -15,9 +15,9 @@ MonoBehaviour:
   levelName: LevelName
   width: 12
   height: 12
-  steps: 2
-  deathLimit: 3
-  lifeLimit: 3
+  steps: 3
+  deathLimit: 5
+  lifeLimit: 4
   initialDensity: 0.4
   probabilityWeight: 1
   firstAppearanceLevel: 1
@@ -34,8 +34,8 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 3.798447
-      value: 4.1369753
+      time: 3.5648654
+      value: 0.9934397
       inSlope: 0.011644561
       outSlope: 0.011644561
       tangentMode: 0
@@ -43,14 +43,14 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.299369
     - serializedVersion: 3
-      time: 7.3633513
-      value: 0
-      inSlope: 0.0028120754
-      outSlope: 0.0028120754
+      time: 7.697029
+      value: 0.028384056
+      inSlope: -0.003254724
+      outSlope: -0.003254724
       tangentMode: 0
       weightedMode: 0
       inWeight: 0.33333334
-      outWeight: 0.2399045
+      outWeight: 0.06768263
     - serializedVersion: 3
       time: 39.909424
       value: 0
@@ -71,3 +71,5 @@ MonoBehaviour:
   completionsFractionMean: 0.335
   completionFractionDispersion: 0.094
   persistenceInterval: 3
+  minimalMaxCaveSize: 40
+  removeSecondaryCaves: 1

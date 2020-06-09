@@ -21,7 +21,7 @@ public class DragScript : MonoBehaviour
     bool snapped;
     private ProceduralMap map;
     private ProceduralMap gemMap;
-    bool firstBlockPlaced;
+    public bool firstBlockPlaced;
 
     public void SetProceduralMap(GameObject levelInstanceObject)
     {
@@ -81,14 +81,13 @@ public class DragScript : MonoBehaviour
                     Mathf.RoundToInt(draggedBlockScript.transform.position.x),
                     Mathf.RoundToInt(draggedBlockScript.transform.position.y));
                 map.Block(draggedBlockScript.relativeTilePositions, snappedBlockPosition);
-                print("gems" + gemMap.OverlapCount(draggedBlockScript.relativeTilePositions, snappedBlockPosition));
                 if (!firstBlockPlaced)
                 {
                     firstBlockPlaced = true;
                 }
+                blockFeederScript.Pop();
                 blockPlacedEvent(draggedBlockScript.value, draggedBlockScript.GetArea());
                 draggedBlockScript = null;
-                blockFeederScript.Pop();
             }
             else
             {

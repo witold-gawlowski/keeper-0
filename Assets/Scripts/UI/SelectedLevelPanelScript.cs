@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class SelectedLevelPanelScript : MonoBehaviour
 {
     public System.Action<GameObject> LevelBoughtEvent;
+    public System.Action<GameObject> LevelRemoveEvent;
     public System.Action<GameObject> RunLevelEvent;
     public System.Action BackButtonTapEvent;
     private GameObject selectedLevel;
@@ -36,6 +37,11 @@ public class SelectedLevelPanelScript : MonoBehaviour
     public void OnBuildButtonTap()
     {
         RunLevelEvent(selectedLevel);
+    }
+
+    public void OnRemoveButtonTap()
+    {
+        LevelRemoveEvent(selectedLevel);
     }
         
     public void OnBackButtonTap()

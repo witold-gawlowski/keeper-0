@@ -35,3 +35,5 @@ MonoBehaviour:
   completionsFractionMean: 0
   completionFractionDispersion: 0
   persistenceInterval: 0
+  minimalMaxCaveSize: 40
+  removeSecondaryCaves: 1

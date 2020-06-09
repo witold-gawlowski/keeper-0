@@ -7,9 +7,11 @@ public class BlockShuffleContainer : MonoBehaviour
     private List<GameObject> blocks;
     public BlockManagerScript blockManagerScript;
     public BlockUIQueue blockUIQueue;
-    
+    private List<GameObject> pendingRemoval;
+
     public void Initialize()
     {
+        pendingRemoval = new List<GameObject>();
         blocks = blockManagerScript.GetIndividualBlockList();
         Shuffle();
     }
@@ -27,10 +29,18 @@ public class BlockShuffleContainer : MonoBehaviour
     }
     public void Pop()
     {
-        blockManagerScript.RemoveBlock(Top());
+        pendingRemoval.Add(Top());
         blocks.RemoveAt(0);
         blockUIQueue.Next();
         return;
+    }
+
+    public void OnLevelCompleted()
+    {
+        foreach(GameObject blockObject in pendingRemoval)
+        {
+            blockManagerScript.RemoveBlock(blockObject);
+        }
     }
 
     public List<GameObject> GetBlocks()

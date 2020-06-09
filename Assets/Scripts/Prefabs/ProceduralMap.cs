@@ -42,7 +42,6 @@ public class ProceduralMap : MonoBehaviour
             {
                 RemoveSecondaryComponents();
             }
-            print(".");
             maxCompNum = GetMaxComponentNumber();
         } while (levelParamsArg.minimalMaxCaveSize > componentSizes[maxCompNum]);
 
@@ -263,7 +262,20 @@ public class ProceduralMap : MonoBehaviour
   
     }
 
-    
+    public void ClearBlocks()
+    {
+        print("cleaerblocks!");
+        for (int i = 0; i < width; i++)
+        {
+            for (int j = 0; j < height; j++)
+            {
+                if(map[i, j] == 3)
+                {
+                    map[i, j] = 0;
+                }
+            }
+        }
+    }
 
     public void Block(List<Vector2Int> blockGeometry, Vector2Int blockPosition)
     {
@@ -274,7 +286,7 @@ public class ProceduralMap : MonoBehaviour
             Vector2Int tilePosition = blockGeometry[i] + blockPosition;
             int tx = tilePosition.x;
             int ty = tilePosition.y;
-            map[tx, ty] = 1;
+            map[tx, ty] = 3;
             for(int j=0; j<4; j++)
             {
                 if(map[tx+dx[j], ty + dy[j]] == 0)
@@ -285,6 +297,7 @@ public class ProceduralMap : MonoBehaviour
         }
     }
 
+    //make sure it  works before using
     public int OverlapCount(List<Vector2Int> blockGeometry, Vector2Int blockPosition)
     {
         int result = 0;
@@ -310,7 +323,7 @@ public class ProceduralMap : MonoBehaviour
             {
                 return false;
             }
-            else if (map[tilePosition.x, tilePosition.y] == 1)
+            else if (map[tilePosition.x, tilePosition.y] == 1 || map[tilePosition.x, tilePosition.y] == 3)
             {
                 return false;
             }

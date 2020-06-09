@@ -41,17 +41,25 @@ public class LevelManagerScript : MonoBehaviour
     LevelSchedulerScript levelScheduler;
     public GlobalManagerScript globalManager;
     public AnimationCurve levelDifficultyMultiplierCurve;
+    public float rewardReductionFraction = 0.9f;
+    public int rewardReductionConstant = 200;
 
     private void Awake()
     {
         levelScheduler = GetComponentInChildren<LevelSchedulerScript>();
         levelsUIScript.SetLevelBoughtEventHandler(BuyLevel);
+        levelsUIScript.SetLevelRemovedEventHandler(RemoveLevel);
         levels = new List<LevelData>();
     }
 
     public void OnStartNewRound()
     {
         RerollRoster();
+    }
+
+    public void OnFinishBuilding()
+    {
+        DecayLevelRewards();
     }
 
     public int GetMinRosterPrice()
@@ -97,27 +105,31 @@ public class LevelManagerScript : MonoBehaviour
         return levels;
     }
 
-    public void RerollRoster()
+    public void RemoveLevel(GameObject levelObjectArg)
     {
-        for(int i=levels.Count-1; i>=0; i--)
+        levelsUIScript.DeleteButtonForLevel(levelObjectArg);
+        DestroyLevel(levelObjectArg);
+    }
+
+    public void DecayLevelRewards()
+    {
+        for (int i = levels.Count - 1; i >= 0; i--)
         {
-            if (!levels[i].isBought)
+            print("updating reward");
+            levels[i].rawReward = Mathf.RoundToInt(levels[i].rawReward * rewardReductionFraction - rewardReductionConstant);
+            if (levels[i].rawReward <= 0)
             {
-                levels[i].persistence--;
-                if(levels[i].persistence == 0)
-                {
-                    levelsUIScript.DeleteButtonForLevel(levels[i].levelObject);
-                    Destroy(levels[i].levelObject);
-                    levels.RemoveAt(i);
-                }
-                else
-                {
-                    levelsUIScript.UpdatePersistence(levels[i].levelObject,  levels[i].persistence);
-                }
+                RemoveLevel(levels[i].levelObject);
+            }
+            else
+            {
+                levelsUIScript.UpdateRawReward(levels[i].levelObject, levels[i].rawReward);
             }
         }
+    }
 
-        //TODO: split to separate functions
+    public void RerollRoster()
+    { 
         for (int i = 0; i < numbersOfLevelsInRoster; i++)
         {
             GameObject newLevel = Instantiate(levelPrefab, Vector3.zero, Quaternion.identity);

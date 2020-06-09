@@ -36,9 +36,10 @@ public class GlobalUIScript : MonoBehaviour
         briefing.SetActive(false);
     }
 
-    public void OnStartOfNewRound()
+    public void OnRoundFinish()
     {
         buildingUI.SetActive(false);
         briefing.SetActive(true);
     }
+
 }

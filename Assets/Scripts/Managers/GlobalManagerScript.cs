@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class GlobalManagerScript : MonoBehaviour
 {
+    public System.Action OnLevelCompletedActions;
+    public System.Action OnLevelFinishedActions;
     public System.Action StartNewRoundEvent;
     public BuildingUIScript buildingUIScript;
     public LevelManagerScript levelManagerScript;
@@ -20,6 +22,8 @@ public class GlobalManagerScript : MonoBehaviour
     public ButtonSortScript buttonSortScript;
     public SummaryUIScript summaryUIScript;
     public BlockUIQueue blockUIQueue;
+    public BlockShuffleContainer blockShuffleContainer;
+    
 
     int roundCount;
 
@@ -33,6 +37,7 @@ public class GlobalManagerScript : MonoBehaviour
         buildingUIScript.RotateButtonTapEvent += blockUIQueue.RotateTop;
         dragScript.blockPlacedEvent += blockSpawnerScript.ResetRotation;
         levelMoneyManagerScript.progressUpdatedEvent += buildingUIScript.OnProgressUpdate;
+        levelMoneyManagerScript.levelCompletedEvent += blockShuffleContainer.OnLevelCompleted;
     }
 
     private void Start()
@@ -59,15 +64,15 @@ public class GlobalManagerScript : MonoBehaviour
         blockShopScript.OnNewRoundStart();
         blockManagerScript.UpdateInventoryUI();
         levelManagerScript.OnStartNewRound();
-        globalUIScript.OnStartOfNewRound();
         buttonSortScript.Sort();
     }
 
        
     private void OnLevelRun(GameObject level)
     {
-        summaryUIScript.LevelCompletedEvent += ()=>levelManagerScript.DestroyLevel(level);
-        buildingUIScript.BuildingCanceledEvent += () => levelManagerScript.DestroyLevel(level);
+        OnLevelCompletedActions += () => levelManagerScript.DestroyLevel(level);
+        OnLevelCompletedActions += () => levelsUIScript.DeleteButtonForLevel(level);
+        OnLevelFinishedActions += () => level.GetComponent<ProceduralMap>().ClearBlocks();
         blockManagerScript.OnStartBuilding(level);
         dragScript.gameObject.SetActive(true);
         dragScript.OnStartBuilding();
@@ -78,7 +83,6 @@ public class GlobalManagerScript : MonoBehaviour
             levelManagerScript.GetCompletionThreshold(level),
             levelManagerScript.GetRawReward(level));
         levelMoneyManagerScript.SetReturnValue(levelManagerScript.GetReturnValue(level));
-        levelsUIScript.DeleteButtonForLevel(level);
         dragScript.SetProceduralMap(level);
         Camera.main.transform.position = levelMap.GetLevelCenterPosition() - new Vector3(0, 3, 10);
         buildingUIScript.OnStartBuilding();
@@ -86,19 +90,24 @@ public class GlobalManagerScript : MonoBehaviour
 
     private void OnLevelCompleted()
     {
+        OnLevelCompletedActions();
         OnLevelFinish();
+        StartNewRoundEvent();
         accountManager.AddFunds(levelMoneyManagerScript.GetTotalReward());
+        roundCount++;
+        levelsUIScript.UpdateCompletedLevels(roundCount);
     }
 
     private void OnLevelFinish()
-    { 
+    {
+        OnLevelFinishedActions();
+        OnLevelFinishedActions = null;
+        OnLevelCompletedActions = null;
+        globalUIScript.OnRoundFinish(); 
         blockSpawnerScript.ClearAllBlocks();
         dragScript.gameObject.SetActive(false);
         levelManagerScript.HideNotOwnedLevels();
-        StartNewRoundEvent();
-        blockManagerScript.UpdateInventoryUI();
-        roundCount++;
-        levelsUIScript.UpdateCompletedLevels(roundCount);
+        levelManagerScript.DecayLevelRewards();
     }
 
     private bool CanPlayerContinue()

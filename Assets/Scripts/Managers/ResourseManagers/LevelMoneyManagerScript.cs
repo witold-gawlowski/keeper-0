@@ -51,7 +51,6 @@ public class LevelMoneyManagerScript : MonoBehaviour
 
     private void CheckCompleteness()
     {
-        print("comp. thres:  " + completionThreshold);
         if(GetCompletedFraction() >= completionThreshold)
         {
             levelCompletedEvent();

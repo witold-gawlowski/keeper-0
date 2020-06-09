@@ -16,8 +16,8 @@ MonoBehaviour:
   width: 15
   height: 20
   steps: 3
-  deathLimit: 2
-  lifeLimit: 4
+  deathLimit: 1
+  lifeLimit: 6
   initialDensity: 0.5
   probabilityWeight: 1
   firstAppearanceLevel: 1
@@ -35,3 +35,5 @@ MonoBehaviour:
   completionsFractionMean: 0
   completionFractionDispersion: 0
   persistenceInterval: 0
+  minimalMaxCaveSize: 0
+  removeSecondaryCaves: 1

@@ -39,6 +39,11 @@ public class LevelButtonScript : MonoBehaviour
         persistence.GetComponent<Text>().text = "T" + valueArg.ToString(); 
     }
 
+    public void UpdateRawReward(int valueArg)
+    {
+        rawRewardText.GetComponent<Text>().text = "$" + valueArg.ToString();
+    }
+
     public void OnBuy()
     {
         onTapHandler = runTapHandler;

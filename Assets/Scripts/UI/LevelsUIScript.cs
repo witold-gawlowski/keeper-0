@@ -22,6 +22,12 @@ public class LevelsUIScript : MonoBehaviour
         selectedLevelPanelScript.BackButtonTapEvent += OnBackButtonTap;
         selectedLevelPanelScript.LevelBoughtEvent += SelectedLevelBuyButtonTapHandler;
         selectedLevelPanelScript.RunLevelEvent += SelectedLevelBuildButtonTapHandler;
+        selectedLevelPanelScript.LevelRemoveEvent += SelectedLevelRemoveButtonTapHandler;
+    }
+
+    public void SelectedLevelRemoveButtonTapHandler(GameObject level)
+    {
+        selectedLevelPanelScript.gameObject.SetActive(false);
     }
 
     public void SelectedLevelBuyButtonTapHandler(GameObject level)
@@ -32,6 +38,11 @@ public class LevelsUIScript : MonoBehaviour
     public void SelectedLevelBuildButtonTapHandler(GameObject level)
     {
         selectedLevelPanelScript.gameObject.SetActive(false); 
+    }
+
+    public void SetLevelRemovedEventHandler(System.Action<GameObject> levelRemovedEventHandlerArg)
+    {
+        selectedLevelPanelScript.LevelRemoveEvent += levelRemovedEventHandlerArg;
     }
 
     public void SetLevelBoughtEventHandler(System.Action<GameObject> levelBoughtEventHandlerArg)
@@ -83,6 +94,18 @@ public class LevelsUIScript : MonoBehaviour
     {
         DeleteButtonForLevelFromParent(level, shopItemsParent.transform);
         DeleteButtonForLevelFromParent(level, inventoryItemsParent.transform);
+    }
+
+    public void UpdateRawReward(GameObject level, int valueArg)
+    {
+        foreach (Transform t in shopItemsParent.transform)
+        {
+            LevelButtonScript levelButtonScriptTemp = t.GetComponent<LevelButtonScript>();
+            if (levelButtonScriptTemp != null && levelButtonScriptTemp.GetAssociatedLevel().Equals(level))
+            {
+                levelButtonScriptTemp.UpdateRawReward(valueArg);
+            }
+        }
     }
 
     public void UpdatePersistence(GameObject level, int valueArg)
