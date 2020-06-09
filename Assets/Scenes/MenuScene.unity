@@ -2824,6 +2824,7 @@ MonoBehaviour:
   levelMoneyManagerScript: {fileID: 1799857387}
   buildingUI: {fileID: 1965867163}
   blockUIQueue: {fileID: 1992855447}
+  firstBlockPlaced: 0
 --- !u!4 &878351333
 Transform:
   m_ObjectHideFlags: 0
