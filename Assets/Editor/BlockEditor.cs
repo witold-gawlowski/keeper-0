@@ -5,8 +5,11 @@ using System.IO;
 [CustomEditor(typeof(BlockScript))]
 public class BlockScriptEditor : Editor
 {
-
+    int tileSize = 9;
+    int imageSize = 100;
+    Vector2Int pixelShift = -Vector2Int.one * 4;
     public List<Vector2Int> relativeTilePositions;
+    Vector2Int middleTilePosition;
 
     private void OnEnable()
     {
@@ -58,22 +61,23 @@ public class BlockScriptEditor : Editor
         return result;
     }
 
+    Vector2Int GetTilePositionInPixels(Vector2Int tileRelativePosition)
+    {
+        return (tileRelativePosition - middleTilePosition) * tileSize + pixelShift + Vector2Int.one * imageSize/2;
+    }
+   
+
     void DrawTiles(ref Texture2D textureArg)
     {
-        int middleTileIndex = GetMiddleTileIndex();
-        Vector2Int middleTilePosition = relativeTilePositions[middleTileIndex];
-        int tileSize = 9;
-        Vector2Int pixelShift = -Vector2Int.one * 4;
         foreach (Vector2Int v2 in relativeTilePositions)
         {
-            Vector2Int tilePosition = (v2 - middleTilePosition) * tileSize + pixelShift + Vector2Int.one*50;
+            Vector2Int tilePosition = GetTilePositionInPixels(v2);
             DrawTile(ref textureArg, tilePosition);
         }
     }
 
     void DrawTile(ref Texture2D textureArg, Vector2Int positionArg)
     {
-        int tileSize = 9;
         for(int i=0; i<tileSize; i++)
         {
             for (int j = 0; j<tileSize; j++)
@@ -85,12 +89,46 @@ public class BlockScriptEditor : Editor
 
     void DrawSeparators(ref Texture2D textureArg)
     {
-        
+        int n = relativeTilePositions.Count;
+        for(int i=0; i<n-1; i++)
+        {
+            for (int j = i+1; j < n; j++)
+            {
+                Vector2Int relPosI = relativeTilePositions[i];
+                Vector2Int relPosJ = relativeTilePositions[j];
+
+                if(Mathf.Abs(relPosI.x-relPosJ.x)+Mathf.Abs(relPosI.y - relPosJ.y)==1)
+                {
+                    DrawSingleSeparator(ref textureArg, relPosJ, relPosI);
+                }
+            }
+        }
+    }
+
+    void Swap(Vector2Int a, Vector2Int b)
+    {
+        Vector2Int c = a;
+        a = b;
+        b = c;
     }
 
     void DrawSingleSeparator(ref Texture2D textureArg, Vector2Int middlePositionA, Vector2Int middlePositionB)
     {
-        int tileSize = 9;
+        Vector2Int middlePositionAPixelCoords = GetTilePositionInPixels(middlePositionA);
+        Vector2Int middlePositionBPixelCoords = GetTilePositionInPixels(middlePositionB);
+
+        Vector2Int AtoBUnitVector = (middlePositionBPixelCoords - middlePositionAPixelCoords)/tileSize;
+        Vector2Int AtoBMirroredUnitVector = new Vector2Int(AtoBUnitVector.y, AtoBUnitVector.x);
+
+        for (int i = 0; i < 2; i++)
+        {
+            for(int j=0;  j<tileSize; j++)
+            {
+                Vector2Int temp = AtoBMirroredUnitVector * j + AtoBUnitVector * i;
+
+                textureArg.SetPixel(temp.x - middlePositionAPixelCoords.x, temp.y - middlePositionAPixelCoords.y, Color.gray); 
+            }
+        }
     }
 
     public override void OnInspectorGUI()
@@ -102,7 +140,11 @@ public class BlockScriptEditor : Editor
             int height =100;
             Texture2D tex = new Texture2D(width, height, TextureFormat.RGB24, false);
 
+            int middleTileIndex = GetMiddleTileIndex();
+            middleTilePosition = relativeTilePositions[middleTileIndex];
             DrawTiles(ref  tex);
+            DrawSeparators(ref tex);
+
             tex.Apply();
 
             byte[] bytes = tex.EncodeToPNG();
