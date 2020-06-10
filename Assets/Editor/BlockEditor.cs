@@ -105,28 +105,22 @@ public class BlockScriptEditor : Editor
         }
     }
 
-    void Swap(Vector2Int a, Vector2Int b)
-    {
-        Vector2Int c = a;
-        a = b;
-        b = c;
-    }
 
-    void DrawSingleSeparator(ref Texture2D textureArg, Vector2Int middlePositionA, Vector2Int middlePositionB)
+    void DrawSingleSeparator(ref Texture2D textureArg, Vector2Int tilePositionA, Vector2Int tilePositionB)
     {
-        Vector2Int middlePositionAPixelCoords = GetTilePositionInPixels(middlePositionA);
-        Vector2Int middlePositionBPixelCoords = GetTilePositionInPixels(middlePositionB);
+        Vector2Int leftBottomCornerPositionAPixelCoords = GetTilePositionInPixels(tilePositionA);
+        Vector2Int leftBottomCornerPositionBPixelCoords = GetTilePositionInPixels(tilePositionB);
 
-        Vector2Int AtoBUnitVector = (middlePositionBPixelCoords - middlePositionAPixelCoords)/tileSize;
+        Vector2Int AtoBUnitVector = (leftBottomCornerPositionBPixelCoords - leftBottomCornerPositionAPixelCoords) / tileSize;
         Vector2Int AtoBMirroredUnitVector = new Vector2Int(AtoBUnitVector.y, AtoBUnitVector.x);
 
         for (int i = 0; i < 2; i++)
         {
             for(int j=0;  j<tileSize; j++)
             {
-                Vector2Int temp = AtoBMirroredUnitVector * j + AtoBUnitVector * i;
+                Vector2Int temp = AtoBMirroredUnitVector * j - AtoBUnitVector * i;
 
-                textureArg.SetPixel(temp.x - middlePositionAPixelCoords.x, temp.y - middlePositionAPixelCoords.y, Color.gray); 
+                textureArg.SetPixel(-temp.x + leftBottomCornerPositionAPixelCoords.x, -temp.y + leftBottomCornerPositionAPixelCoords.y, Color.grey); 
             }
         }
     }
