@@ -39,6 +39,10 @@ public class BlocksUIScript : MonoBehaviour
     public void Awake()
     {
         selectedBlockPanelScript.SetBuyEventHandler(blockShopScript.Buy);
+    }
+
+    public void Start()
+    {
         CreateInventoryButtons();
     }
 
@@ -105,7 +109,8 @@ public class BlocksUIScript : MonoBehaviour
         inventoryButtons = new Dictionary<GameObject, BlockButtonScript>();
         foreach(BlockManagerScript.InitialBlockConfigData blockData in blockManagerScript.blockConfig)
         {
-            GameObject newBlockButton = CreateButton(blockData.blockSprite, 0);
+            Sprite blockSprite = blockManagerScript.GetSpriteForPrefab(blockData.blockObject);
+            GameObject newBlockButton = CreateButton(blockSprite, 0);
             BlockButtonScript newBlockButtonScript = newBlockButton.GetComponent<BlockButtonScript>();
             inventoryButtons.Add(blockData.blockObject, newBlockButtonScript);
         }

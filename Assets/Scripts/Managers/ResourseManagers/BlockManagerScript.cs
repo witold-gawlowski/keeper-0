@@ -9,7 +9,6 @@ public class BlockManagerScript : MonoBehaviour
     public class InitialBlockConfigData
     {
         public GameObject blockObject;
-        public Sprite blockSprite;
         public int startCount;
         public InitialBlockConfigData(
             GameObject blockObjectArg,
@@ -17,11 +16,11 @@ public class BlockManagerScript : MonoBehaviour
             int startCountArg = 0)
         {
             blockObject = blockObjectArg;
-            blockSprite = blockImageArg;
             startCount = startCountArg;
         }
     }
 
+    Dictionary<GameObject, Sprite> blockImages;
     public List<InitialBlockConfigData> blockConfig;
     public BlockShopScript blockShopScript;
     public BlocksUIScript blocksUIScript;
@@ -29,12 +28,26 @@ public class BlockManagerScript : MonoBehaviour
     Dictionary<GameObject, int> blockInventory;
     public BlockUIQueue blockUIQueue;
     public LevelManagerScript levelManagerScript;
-
+    public List<Sprite> deleteMeTest;
     public int offersPerRound;
 
     public void Awake()
     {
         InitializeInventory();
+        InitializeSprites();
+    }
+
+    void InitializeSprites()
+    {
+        blockImages = new Dictionary<GameObject, Sprite>();
+        foreach(InitialBlockConfigData configData in blockConfig)
+        {
+            string blockPrefabName = configData.blockObject.name;
+            print(blockPrefabName + "block prefab name");
+            Sprite blockSprite = Resources.Load<Sprite>("Blocks/" + blockPrefabName);
+            blockImages.Add(configData.blockObject, blockSprite);
+            deleteMeTest.Add(blockSprite);
+        }
     }
 
     public void OnStartBuilding(GameObject level)
@@ -66,14 +79,7 @@ public class BlockManagerScript : MonoBehaviour
 
     public Sprite GetSpriteForPrefab(GameObject blockPrefab)
     {
-        foreach(InitialBlockConfigData blockConfigData in blockConfig)
-        {
-            if(blockConfigData.blockObject == blockPrefab)
-            {
-                return blockConfigData.blockSprite;
-            }
-        }
-        return null;
+        return blockImages[blockPrefab];
     }
 
     public void UpdateInventoryUI()

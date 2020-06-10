@@ -4988,37 +4988,31 @@ MonoBehaviour:
   blockConfig:
   - blockObject: {fileID: 582720744970519140, guid: 87e7ca4ce4737c247b7251c11696c561,
       type: 3}
-    blockSprite: {fileID: 21300000, guid: 818522e722d997c4bb3eed2863970239, type: 3}
     startCount: 1
   - blockObject: {fileID: 2808700170928207112, guid: ef7a79d11bdc3534d869910839e31c3f,
       type: 3}
-    blockSprite: {fileID: 21300000, guid: 2ba696e87d370d64ba3f7c6b14974721, type: 3}
     startCount: 1
   - blockObject: {fileID: 8395051332880769578, guid: 9e52c9f54aec83041bea0a1ae748e258,
       type: 3}
-    blockSprite: {fileID: 21300000, guid: 0a53a465a7df4104baf6b18941d054c6, type: 3}
     startCount: 1
   - blockObject: {fileID: 7965991292074517445, guid: d53acd84b7f54a04b89f4d25f3a5c66c,
       type: 3}
-    blockSprite: {fileID: 21300000, guid: cda48a8ead0e16045924d3d3669685c2, type: 3}
     startCount: 1
   - blockObject: {fileID: 8788037283467384516, guid: 2ab79e1c5512c41449a014a19e44b1e6,
       type: 3}
-    blockSprite: {fileID: 21300000, guid: 357a296436981cb428dca46574a3b056, type: 3}
     startCount: 1
   - blockObject: {fileID: 1859091123109131759, guid: 266eaed590d5f5b46a1550960f6f7415,
       type: 3}
-    blockSprite: {fileID: 21300000, guid: 474afdee8e29d2f498449d2d899103c7, type: 3}
     startCount: 1
   - blockObject: {fileID: 767611008255919206, guid: 68aff6343029e804ebb47a5466e9eb78,
       type: 3}
-    blockSprite: {fileID: 21300000, guid: 4088bbedac0bdd84fb9e3f7d19e4c445, type: 3}
     startCount: 1
   blockShopScript: {fileID: 682157686}
   blocksUIScript: {fileID: 1054924737}
   blockShuffleContainer: {fileID: 2024050008}
   blockUIQueue: {fileID: 1992855447}
   levelManagerScript: {fileID: 2041774212}
+  deleteMeTest: []
   offersPerRound: 0
 --- !u!1 &1394793825
 GameObject:

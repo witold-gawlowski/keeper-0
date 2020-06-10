@@ -7,6 +7,7 @@ public class BlockScriptEditor : Editor
 {
     int tileSize = 9;
     int imageSize = 100;
+    Color separatorColor = new Color(0.9f, 0.9f, 0.9f, 1);
     Vector2Int pixelShift = -Vector2Int.one * 4;
     public List<Vector2Int> relativeTilePositions;
     Vector2Int middleTilePosition;
@@ -120,7 +121,18 @@ public class BlockScriptEditor : Editor
             {
                 Vector2Int temp = AtoBMirroredUnitVector * j - AtoBUnitVector * i;
 
-                textureArg.SetPixel(-temp.x + leftBottomCornerPositionAPixelCoords.x, -temp.y + leftBottomCornerPositionAPixelCoords.y, Color.grey); 
+                textureArg.SetPixel(-temp.x + leftBottomCornerPositionAPixelCoords.x, -temp.y + leftBottomCornerPositionAPixelCoords.y, separatorColor); 
+            }
+        }
+    }
+
+    void ClearTexture(ref Texture2D texArg)
+    {
+        for (int i = 0; i < imageSize; i++)
+        {
+            for(int j=0; j<imageSize; j++)
+            {
+                texArg.SetPixel(i, j, Color.clear);
             }
         }
     }
@@ -130,10 +142,8 @@ public class BlockScriptEditor : Editor
         DrawDefaultInspector();
         if (GUILayout.Button("Draw block icon"))
         {
-            int width = 100;
-            int height =100;
-            Texture2D tex = new Texture2D(width, height, TextureFormat.RGB24, false);
-
+            Texture2D tex = new Texture2D(imageSize, imageSize, TextureFormat.ARGB32, false);
+            ClearTexture(ref tex);
             int middleTileIndex = GetMiddleTileIndex();
             middleTilePosition = relativeTilePositions[middleTileIndex];
             DrawTiles(ref  tex);
@@ -144,7 +154,10 @@ public class BlockScriptEditor : Editor
             byte[] bytes = tex.EncodeToPNG();
             Object.DestroyImmediate(tex);
 
-            File.WriteAllBytes(Application.dataPath + "/Sprites/SavedScreen.png", bytes);
+            string blockName = (target as BlockScript).name;
+            File.WriteAllBytes(Application.dataPath + "/Sprites/Blocks/"+ blockName+".png", bytes);
+
+
         }
     }
 }
