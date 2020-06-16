@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class BlockScript : MonoBehaviour
 {
+    public int blockCathegory = 0;
     public List<Vector2Int> relativeTilePositions;
     public GameObject tile;
     public int value;

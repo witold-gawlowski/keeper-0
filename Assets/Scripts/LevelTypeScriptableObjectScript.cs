@@ -52,24 +52,12 @@ public class LevelTypeScriptableObjectScript: ScriptableObject
     public int minimalMaxCaveSize;
     public bool removeSecondaryCaves;
 
-    public static float NextGaussian()
-    {
-        float v1, v2, s;
-        do
-        {
-            v1 = 2.0f * Random.Range(0f, 1f) - 1.0f;
-            v2 = 2.0f * Random.Range(0f, 1f) - 1.0f;
-            s = v1 * v1 + v2 * v2;
-        } while (s >= 1.0f || s == 0f);
 
-        s = Mathf.Sqrt((-2.0f * Mathf.Log(s)) / s);
-
-        return v1 * s;
-    }
+   
 
     public float GetReturnValue()
     {
-        float result = NextGaussian() * returnValueDeviation + returnValueMean;
+        float result = Tools.RandomGaussian01() * returnValueDeviation + returnValueMean;
         if(result < 1.05f)
         {
             result = 1.05f;
@@ -79,7 +67,7 @@ public class LevelTypeScriptableObjectScript: ScriptableObject
 
     public int GetCost()
     {
-        float unrefinedPrice = NextGaussian() * priceStandardDeviation + priceMean;
+        float unrefinedPrice = Tools.RandomGaussian01() * priceStandardDeviation + priceMean;
         if(unrefinedPrice < 0)
         {
             unrefinedPrice = 0;
@@ -89,7 +77,7 @@ public class LevelTypeScriptableObjectScript: ScriptableObject
 
     public float GetCompletionThresholdFraction()
     {
-        float unrefinedFraction = NextGaussian() * completionFractionDispersion + completionsFractionMean;
+        float unrefinedFraction = Tools.RandomGaussian01() * completionFractionDispersion + completionsFractionMean;
         return Mathf.Clamp01(unrefinedFraction);
     }
 
