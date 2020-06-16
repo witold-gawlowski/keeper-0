@@ -109,6 +109,7 @@ public class BlockScriptEditor : Editor
 
     void DrawSingleSeparator(ref Texture2D textureArg, Vector2Int tilePositionA, Vector2Int tilePositionB)
     {
+        Debug.Log("A: " + tilePositionA + "B:" + tilePositionB);
         Vector2Int leftBottomCornerPositionAPixelCoords = GetTilePositionInPixels(tilePositionA);
         Vector2Int leftBottomCornerPositionBPixelCoords = GetTilePositionInPixels(tilePositionB);
 
@@ -155,7 +156,7 @@ public class BlockScriptEditor : Editor
             Object.DestroyImmediate(tex);
 
             string blockName = (target as BlockScript).name;
-            File.WriteAllBytes(Application.dataPath + "/Sprites/Blocks/"+ blockName+".png", bytes);
+            File.WriteAllBytes("D:/Documents/Keeper-0/Assets/Resources/Blocks/"+ blockName+".png", bytes);
 
 
         }

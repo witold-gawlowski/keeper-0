@@ -172,5 +172,10 @@ PrefabInstance:
       propertyPath: relativeTilePositions.Array.data[0].x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8206504338167825997, guid: 87e7ca4ce4737c247b7251c11696c561,
+        type: 3}
+      propertyPath: blockCathegory
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 87e7ca4ce4737c247b7251c11696c561, type: 3}

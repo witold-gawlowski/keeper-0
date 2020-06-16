@@ -119,6 +119,10 @@ PrefabInstance:
       propertyPath: value
       value: 400
       objectReference: {fileID: 0}
+    - target: {fileID: 50090733, guid: 2ab79e1c5512c41449a014a19e44b1e6, type: 3}
+      propertyPath: blockCathegory
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 8788037283467384516, guid: 2ab79e1c5512c41449a014a19e44b1e6,
         type: 3}
       propertyPath: m_Name

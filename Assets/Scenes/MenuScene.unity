@@ -2630,6 +2630,10 @@ MonoBehaviour:
   accountManager: {fileID: 2002959902}
   blockManagerScript: {fileID: 1377942661}
   blocksUIScript: {fileID: 1054924737}
+  NumberOfBlocksInBundleByCathegory: []
+  BundlePriceByCathegory: []
+  NumberOfBundlesByCathegory: []
+  NumberOfBlockTypesByCathegory: []
   offerCount: 4
   minBlocksInOffer: 1
   maxBlocksInOffer: 4
