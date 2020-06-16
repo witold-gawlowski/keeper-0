@@ -4075,10 +4075,35 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   types:
+  - {fileID: 11400000, guid: 12a9b483013dcce43bb41059db10ebf5, type: 2}
+  - {fileID: 11400000, guid: ed632918a3c1ba14f9fdc659258d8f1c, type: 2}
+  - {fileID: 11400000, guid: a64e7c629fd991c44a90bb07cda17104, type: 2}
+  - {fileID: 11400000, guid: 7e8b6f3630e218240af4941a705178da, type: 2}
+  - {fileID: 11400000, guid: 17fff8055daf8904f9b648c1f58ff870, type: 2}
+  - {fileID: 11400000, guid: 502dd546fec6eb24998e93b4e80a1edf, type: 2}
+  - {fileID: 11400000, guid: adaf2265f7df76d418f2ebba86e1d6dc, type: 2}
+  - {fileID: 11400000, guid: 08130b456a6949041ac3faedd28b92f9, type: 2}
+  - {fileID: 11400000, guid: 894a43baccf47aa478db8424dac34530, type: 2}
+  - {fileID: 11400000, guid: 341989714a77226418c88a82446460b7, type: 2}
+  - {fileID: 11400000, guid: d280da2ef2e73914c8ff979f1b7277ca, type: 2}
+  - {fileID: 11400000, guid: 1df59a361716ad441a5256a2e23f0679, type: 2}
   - {fileID: 11400000, guid: 615c655bc20dcc843aaa80d45304b1de, type: 2}
   - {fileID: 11400000, guid: 33c0ebd7990281a43ae8b7c3a58cfd2d, type: 2}
+  - {fileID: 11400000, guid: c4bfde910ca25b040b2d117352808422, type: 2}
+  - {fileID: 11400000, guid: f05d1e95aed2b6946bb6676e78c0582a, type: 2}
+  - {fileID: 11400000, guid: 7f7c8fb546a94184583bb3e9fbbf04ff, type: 2}
+  - {fileID: 11400000, guid: 8ac70af16e30bac47a1a58a525311f99, type: 2}
+  levelStructure: 
+  levelMapTypes: 
+  levelMapNumber: 
   levelManagerScript: {fileID: 2041774212}
   globalManager: {fileID: 2041666676}
+  minLevelGroups: 1
+  maxLevelGroups: 4
+  minLevelsPerGroup: 1
+  maxLevelsPerGroup: 5
+  minMapsPerLevel: 1
+  maxMapsPerLevel: 4
 --- !u!1 &1147324695
 GameObject:
   m_ObjectHideFlags: 0
@@ -7294,7 +7319,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a35ac3b5d7c9f8b4a93ebf905ef36b8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  numbersOfLevelsInRoster: 3
   levelPrefab: {fileID: 6374640658024995793, guid: c24ee2c5616378445bb2a3a800132cc8,
     type: 3}
   levelsUIScript: {fileID: 1054924736}

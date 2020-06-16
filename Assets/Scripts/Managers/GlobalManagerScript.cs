@@ -65,6 +65,7 @@ public class GlobalManagerScript : MonoBehaviour
         blockManagerScript.UpdateInventoryUI();
         levelManagerScript.OnStartNewRound();
         buttonSortScript.Sort();
+        levelsUIScript.UpdateCompletedLevels(roundCount, levelManagerScript.GetLevelTarget());
     }
 
        
@@ -92,10 +93,10 @@ public class GlobalManagerScript : MonoBehaviour
     {
         OnLevelCompletedActions();
         OnLevelFinish();
-        StartNewRoundEvent();
         accountManager.AddFunds(levelMoneyManagerScript.GetTotalReward());
         roundCount++;
-        levelsUIScript.UpdateCompletedLevels(roundCount);
+
+        StartNewRoundEvent();
     }
 
     private void OnLevelFinish()

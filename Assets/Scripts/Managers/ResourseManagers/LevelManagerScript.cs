@@ -33,7 +33,6 @@ public class LevelManagerScript : MonoBehaviour
         }
     }
 
-    public int numbersOfLevelsInRoster = 3;
     public GameObject levelPrefab;
     List<LevelData> levels;
     public LevelsUIScript levelsUIScript;
@@ -43,6 +42,7 @@ public class LevelManagerScript : MonoBehaviour
     public AnimationCurve levelDifficultyMultiplierCurve;
     public float rewardReductionFraction = 0.9f;
     public int rewardReductionConstant = 200;
+    int levelTarget;
 
     private void Awake()
     {
@@ -50,11 +50,18 @@ public class LevelManagerScript : MonoBehaviour
         levelsUIScript.SetLevelBoughtEventHandler(BuyLevel);
         levelsUIScript.SetLevelRemovedEventHandler(RemoveLevel);
         levels = new List<LevelData>();
+        levelScheduler.Create();
+    }
+
+
+    public int GetLevelTarget()
+    {
+        return levelScheduler.GetLevelCount();
     }
 
     public void OnStartNewRound()
     {
-        RerollRoster();
+        RosterUpdateRoutine();
     }
 
     public void OnFinishBuilding()
@@ -128,16 +135,17 @@ public class LevelManagerScript : MonoBehaviour
         }
     }
 
-    public void RerollRoster()
-    { 
-        for (int i = 0; i < numbersOfLevelsInRoster; i++)
+    public void RosterUpdateRoutine()
+    {
+        int currentLevel = globalManager.GetCurrentLevel();
+        int newLevelsInCurrentRound = levelScheduler.GetNumberOfNewMaps(currentLevel);
+        LevelTypeScriptableObjectScript nextLevelParams = levelScheduler.GetMapType(currentLevel);
+        for (int i = 0; i < newLevelsInCurrentRound; i++)
         {
             GameObject newLevel = Instantiate(levelPrefab, Vector3.zero, Quaternion.identity);
             SnapshotCreatorScript snapshotCreatorScript = newLevel.GetComponent<SnapshotCreatorScript>();
-            LevelScript levelScript = newLevel.GetComponent<LevelScript>();
             ProceduralMap proceduralMap = newLevel.GetComponent<ProceduralMap>();
-            LevelTypeScriptableObjectScript nextLevelParams = levelScheduler.GetNextLevelParams();
-
+            
             int newLevelCost = Mathf.RoundToInt(nextLevelParams.GetCost() * GetProgressionCostMultiplier()/10)*10;
             float newReturnValue = nextLevelParams.GetReturnValue();
             int rawReward = nextLevelParams.rewardValue;

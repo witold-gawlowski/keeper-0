@@ -67,9 +67,9 @@ public class LevelsUIScript : MonoBehaviour
         selectedLevelPanelScript.gameObject.SetActive(true);
     }
 
-    public void UpdateCompletedLevels(int value)
+    public void UpdateCompletedLevels(int value, int maxLevels)
     {
-        completedLevelsText.text = "Level " + value;
+        completedLevelsText.text = "Level " + value + "/" + maxLevels;
     }
 
     public void UpdateFunds(int value)
