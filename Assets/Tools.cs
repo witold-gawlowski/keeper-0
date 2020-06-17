@@ -4,13 +4,29 @@ using UnityEngine;
 
 public static class Tools
 {
-    public static float RandomGaussian01()
+    [System.Serializable]
+    public class Distribution
+    {
+        public List<Vector2Int> d;
+
+        public int GetTotalWeight()
+        {
+            int result = 0;
+            for (int i = 0; i < d.Count; i++)
+            {
+                result += d[i].y;
+            }
+            return result;
+        }
+    }
+
+    public static float RandomGaussian01(Randomizer randomizerArg)
     {
         float v1, v2, s;
         do
         {
-            v1 = 2.0f * Random.Range(0f, 1f) - 1.0f;
-            v2 = 2.0f * Random.Range(0f, 1f) - 1.0f;
+            v1 = 2.0f * randomizerArg.Range(0f, 1f) - 1.0f;
+            v2 = 2.0f * randomizerArg.Range(0f, 1f) - 1.0f;
             s = v1 * v1 + v2 * v2;
         } while (s >= 1.0f || s == 0f);
 
@@ -19,7 +35,25 @@ public static class Tools
         return v1 * s;
     }
 
-    public static int RefinedGauss(float mean, float stdDev, int rerandomThreshold = 0)
+    public static float SeededRandom(int seedArg)
+    {
+        Random.InitState(seedArg);
+        return Random.value;
+    }
+
+    public static int RandomFromDistribution(Distribution dTemp, Randomizer rArg)
+    {
+        int randomPointer = rArg.Range(0, dTemp.GetTotalWeight());
+        int index = -1;
+        int counter = 0;
+        do{
+            index++;
+            counter += dTemp.d[index].y;
+        } while (counter <= randomPointer);
+        return dTemp.d[index].x;
+    }
+
+    public static int RandomIntegerFromGaussianWithThreshold(Randomizer randomizerArg, float mean, float stdDev, int rerandomThreshold = 0)
     {
         int maxRerandomCount = 5;
         int result = 0;
@@ -27,7 +61,7 @@ public static class Tools
         do
         {
             c++;
-            float unrefinedGauss = RandomGaussian01() * stdDev + mean;
+            float unrefinedGauss = RandomGaussian01(randomizerArg) * stdDev + mean;
             result = Mathf.RoundToInt(unrefinedGauss);
         } while (result < rerandomThreshold && c < maxRerandomCount);
 

@@ -8,9 +8,14 @@ public class LevelDrawer : MonoBehaviour
     public LevelTypeScriptableObjectScript[] levelTypes;
     public int numberOfTypes;
     int displayedTypeCount;
-
+    Randomizer randomizer;
+    public int seed = 101;
     private void Update()
     {
+        if(randomizer == null)
+        {
+            randomizer = new Randomizer(seed);
+        }
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
             transform.GetChild(displayedTypeCount).gameObject.SetActive(false);
@@ -33,7 +38,7 @@ public class LevelDrawer : MonoBehaviour
                 {
                     sr.enabled = true;
                 }
-                proceduralMap.Initialize(type);
+                proceduralMap.Initialize(randomizer, type);
                 levelTypeGameObject.SetActive(false);
             }
             numberOfTypes = levelTypes.Length;

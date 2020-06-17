@@ -5,54 +5,37 @@ using UnityEngine.UI;
 
 public class BlockManagerScript : MonoBehaviour
 {
-    [System.Serializable]
-    public class InitialBlockConfigData
-    {
-        public GameObject blockObject;
-        public int startCount;
-        public InitialBlockConfigData(
-            GameObject blockObjectArg,
-            Sprite blockImageArg,
-            int startCountArg = 0)
-        {
-            blockObject = blockObjectArg;
-            startCount = startCountArg;
-        }
-    }
-
     Dictionary<GameObject, Sprite> blockImages;
-    public List<InitialBlockConfigData> blockConfig;
+    public List<GameObject> blockConfig;
     public BlockShopScript blockShopScript;
     public BlocksUIScript blocksUIScript;
     public BlockShuffleContainer blockShuffleContainer;
     Dictionary<GameObject, int> blockInventory;
     public BlockUIQueue blockUIQueue;
     public LevelManagerScript levelManagerScript;
-    public List<Sprite> deleteMeTest;
     public int offersPerRound;
+    public int seed = 101;
 
     public void Awake()
     {
-        InitializeInventory();
         InitializeSprites();
+        blockInventory = new Dictionary<GameObject, int>();
     }
 
     void InitializeSprites()
     {
         blockImages = new Dictionary<GameObject, Sprite>();
-        foreach(InitialBlockConfigData configData in blockConfig)
+        foreach(GameObject blockObjectTemp in blockConfig)
         {
-            string blockPrefabName = configData.blockObject.name;
-            print(blockPrefabName + "block prefab name");
+            string blockPrefabName = blockObjectTemp.name;
             Sprite blockSprite = Resources.Load<Sprite>("Blocks/" + blockPrefabName);
-            blockImages.Add(configData.blockObject, blockSprite);
-            deleteMeTest.Add(blockSprite);
+            blockImages.Add(blockObjectTemp, blockSprite);
         }
     }
 
     public void OnStartBuilding(GameObject level)
     {
-        blockShuffleContainer.Initialize();
+        blockShuffleContainer.Initialize(seed);
         List<GameObject> blocksQueue = blockShuffleContainer.GetBlocks();
         List<BlockUIQueue.BlockUIData> blockUIData = new List<BlockUIQueue.BlockUIData>();
         foreach(GameObject blockQueueObject in blocksQueue)
@@ -68,34 +51,18 @@ public class BlockManagerScript : MonoBehaviour
     }
 
 
-    public void InitializeInventory()
-    {
-        blockInventory = new Dictionary<GameObject, int>();
-        foreach(InitialBlockConfigData blockInitData in blockConfig)
-        {
-            blockInventory.Add(blockInitData.blockObject, blockInitData.startCount);
-        }
-    }
-
     public Sprite GetSpriteForPrefab(GameObject blockPrefab)
     {
         return blockImages[blockPrefab];
     }
 
-    public void UpdateInventoryUI()
-    {
-        foreach(KeyValuePair<GameObject, int> inventoryElement in blockInventory)
-        {
-            blocksUIScript.UpdateInventoryBlockCount(inventoryElement.Key, inventoryElement.Value);
-        }
-    }
 
     public List<GameObject> GetBlockTypes()
     {
         var result = new List<GameObject>();
-        foreach(InitialBlockConfigData blockData in blockConfig)
+        foreach(GameObject blockObjectTemp in blockConfig)
         {
-            result.Add(blockData.blockObject);
+            result.Add(blockObjectTemp);
         }
         return result;
     }

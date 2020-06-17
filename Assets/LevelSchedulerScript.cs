@@ -16,6 +16,12 @@ public class LevelSchedulerScript : MonoBehaviour
     public int maxLevelsPerGroup = 5;
     public int minMapsPerLevel = 0;
     public int maxMapsPerLevel = 3;
+    Randomizer randomizer;
+
+    public void Init(Randomizer rArg)
+    {
+        randomizer = rArg;
+    }
 
     public int GetNumberOfNewMaps(int roundArg)
     {
@@ -35,10 +41,10 @@ public class LevelSchedulerScript : MonoBehaviour
     void CreateLevelStructure()
     {
         levelStructure = new List<int>();
-        int numberOfLevelGroups = Random.Range(minLevelGroups, maxLevelGroups+1);
+        int numberOfLevelGroups = randomizer.Range(minLevelGroups, maxLevelGroups+1);
         for (int i = 0; i < numberOfLevelGroups; i++)
         {
-            int groupLevelCount = Random.Range(minLevelsPerGroup, maxLevelsPerGroup+1);
+            int groupLevelCount = randomizer.Range(minLevelsPerGroup, maxLevelsPerGroup+1);
             levelStructure.Add(groupLevelCount);
         }
     }
@@ -49,12 +55,12 @@ public class LevelSchedulerScript : MonoBehaviour
         levelMapTypes = new List<int>();
         for(int i=0; i<levelStructure.Count; i++)
         {
-            int levelTypeIndex = Random.Range(0, types.Length);
+            int levelTypeIndex = randomizer.Range(0, types.Length);
             int groupLevelCount = levelStructure[i];
             for (int j = 0; j < groupLevelCount; j++)
             {
                 levelMapTypes.Add(levelTypeIndex);
-                int mapsCount = Random.Range(minMapsPerLevel, maxMapsPerLevel+1);
+                int mapsCount = randomizer.Range(minMapsPerLevel, maxMapsPerLevel+1);
                 levelMapNumber.Add(mapsCount);
             }
         }

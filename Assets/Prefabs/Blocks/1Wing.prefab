@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6258990628878285927}
   - component: {fileID: 3398255681332312143}
   m_Layer: 0
-  m_Name: Block_Wing
+  m_Name: 1Wing
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -43,7 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44c247030dc311443be1ba4299a834de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  blockCathegory: 0
+  blockCathegory: 1
   relativeTilePositions:
   - {x: 0, y: 0}
   - {x: 1, y: 0}

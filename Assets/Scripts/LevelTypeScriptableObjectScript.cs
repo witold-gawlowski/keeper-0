@@ -55,9 +55,9 @@ public class LevelTypeScriptableObjectScript: ScriptableObject
 
    
 
-    public float GetReturnValue()
+    public float GetReturnValue(Randomizer rArg)
     {
-        float result = Tools.RandomGaussian01() * returnValueDeviation + returnValueMean;
+        float result = Tools.RandomGaussian01(rArg) * returnValueDeviation + returnValueMean;
         if(result < 1.05f)
         {
             result = 1.05f;
@@ -65,9 +65,9 @@ public class LevelTypeScriptableObjectScript: ScriptableObject
         return Mathf.RoundToInt(result/0.05f)*0.05f;
     }
 
-    public int GetCost()
+    public int GetCost(Randomizer rArg)
     {
-        float unrefinedPrice = Tools.RandomGaussian01() * priceStandardDeviation + priceMean;
+        float unrefinedPrice = Tools.RandomGaussian01(rArg) * priceStandardDeviation + priceMean;
         if(unrefinedPrice < 0)
         {
             unrefinedPrice = 0;
@@ -75,9 +75,9 @@ public class LevelTypeScriptableObjectScript: ScriptableObject
         return Mathf.RoundToInt(unrefinedPrice/10)*10;
     }
 
-    public float GetCompletionThresholdFraction()
+    public float GetCompletionThresholdFraction(Randomizer rArg)
     {
-        float unrefinedFraction = Tools.RandomGaussian01() * completionFractionDispersion + completionsFractionMean;
+        float unrefinedFraction = Tools.RandomGaussian01(rArg) * completionFractionDispersion + completionsFractionMean;
         return Mathf.Clamp01(unrefinedFraction);
     }
 

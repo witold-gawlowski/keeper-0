@@ -62,7 +62,6 @@ public class GlobalManagerScript : MonoBehaviour
     private void OnStartNewRound()
     {
         blockShopScript.OnNewRoundStart();
-        blockManagerScript.UpdateInventoryUI();
         levelManagerScript.OnStartNewRound();
         buttonSortScript.Sort();
         levelsUIScript.UpdateCompletedLevels(roundCount, levelManagerScript.GetLevelTarget());

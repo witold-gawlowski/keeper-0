@@ -43,10 +43,14 @@ public class LevelManagerScript : MonoBehaviour
     public float rewardReductionFraction = 0.9f;
     public int rewardReductionConstant = 200;
     int levelTarget;
+    public int seed = 101;
+    Randomizer randomizer;
 
     private void Awake()
     {
+        randomizer = new Randomizer(seed);
         levelScheduler = GetComponentInChildren<LevelSchedulerScript>();
+        levelScheduler.Init(randomizer);
         levelsUIScript.SetLevelBoughtEventHandler(BuyLevel);
         levelsUIScript.SetLevelRemovedEventHandler(RemoveLevel);
         levels = new List<LevelData>();
@@ -146,16 +150,16 @@ public class LevelManagerScript : MonoBehaviour
             SnapshotCreatorScript snapshotCreatorScript = newLevel.GetComponent<SnapshotCreatorScript>();
             ProceduralMap proceduralMap = newLevel.GetComponent<ProceduralMap>();
             
-            int newLevelCost = Mathf.RoundToInt(nextLevelParams.GetCost() * GetProgressionCostMultiplier()/10)*10;
-            float newReturnValue = nextLevelParams.GetReturnValue();
+            int newLevelCost = Mathf.RoundToInt(nextLevelParams.GetCost(randomizer) * GetProgressionCostMultiplier()/10)*10;
+            float newReturnValue = nextLevelParams.GetReturnValue(randomizer);
             int rawReward = nextLevelParams.rewardValue;
             int persistence = nextLevelParams.persistenceInterval;
-            float newLevelCompletionThresholdFraction = nextLevelParams.GetCompletionThresholdFraction();
+            float newLevelCompletionThresholdFraction = nextLevelParams.GetCompletionThresholdFraction(randomizer);
             levels.Add(new LevelData(newLevel, newLevelCost, newReturnValue, false, newLevelCompletionThresholdFraction, rawReward, persistence));
             GameObject newLevelButton = levelsUIScript.SpawnShopLevelButton(newLevel, newLevelCost, newReturnValue, newLevelCompletionThresholdFraction, rawReward, persistence);
             LevelButtonScript newLevelButtonScript = newLevelButton.GetComponent<LevelButtonScript>();
             snapshotCreatorScript.finishedGeneratingSnapshotEvent += newLevelButtonScript.SetSprite;
-            proceduralMap.Initialize(nextLevelParams);
+            proceduralMap.Initialize(randomizer, nextLevelParams);
         }
     }
 

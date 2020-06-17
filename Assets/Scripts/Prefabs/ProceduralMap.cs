@@ -23,7 +23,7 @@ public class ProceduralMap : MonoBehaviour
 
     int currentDFSComponent;
 
-    public void Initialize(LevelTypeScriptableObjectScript levelParamsArg)
+    public void Initialize(Randomizer rArg, LevelTypeScriptableObjectScript levelParamsArg)
     {
         dieLimit = levelParamsArg.deathLimit;
         spawnLimit = levelParamsArg.lifeLimit;
@@ -35,7 +35,7 @@ public class ProceduralMap : MonoBehaviour
 
         int maxCompNum = -1;
         do {
-            Generate();
+            Generate(rArg);
             GetComponents();
             GetComponentSizes();
             if (levelParamsArg.removeSecondaryCaves)
@@ -185,7 +185,7 @@ public class ProceduralMap : MonoBehaviour
     }
 
 
-    public void Generate()
+    public void Generate(Randomizer rArg)
     {
         map = new int[width, height];
         tempMap = new int[width, height];
@@ -194,7 +194,7 @@ public class ProceduralMap : MonoBehaviour
             for (int j = 0; j < height; j++)
             {
                 tempMap[i, j] = 0;
-                map[i, j] = Random.value > initialDensity ? 0 : 1;
+                map[i, j] = rArg.Range(0.0f, 1.0f) > initialDensity ? 0 : 1;
             }
         }
         for (int i = 0; i < width; i++)

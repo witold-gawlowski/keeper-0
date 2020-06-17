@@ -105,14 +105,13 @@ public class BlocksUIScript : MonoBehaviour
 
     public void CreateInventoryButtons()
     {
-        print("create inventory buttons");
         inventoryButtons = new Dictionary<GameObject, BlockButtonScript>();
-        foreach(BlockManagerScript.InitialBlockConfigData blockData in blockManagerScript.blockConfig)
+        foreach(GameObject blockObjectTemp in blockManagerScript.blockConfig)
         {
-            Sprite blockSprite = blockManagerScript.GetSpriteForPrefab(blockData.blockObject);
+            Sprite blockSprite = blockManagerScript.GetSpriteForPrefab(blockObjectTemp);
             GameObject newBlockButton = CreateButton(blockSprite, 0);
             BlockButtonScript newBlockButtonScript = newBlockButton.GetComponent<BlockButtonScript>();
-            inventoryButtons.Add(blockData.blockObject, newBlockButtonScript);
+            inventoryButtons.Add(blockObjectTemp, newBlockButtonScript);
         }
     }
 
