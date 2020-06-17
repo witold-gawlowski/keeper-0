@@ -83,6 +83,7 @@ public class BlockShuffleContainer : MonoBehaviour
             RegisterBlock(currentBlockTemp);
         }
         blocks.Sort(new Comp());
+
     }
 
     public void Pop()
