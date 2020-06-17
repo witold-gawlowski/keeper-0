@@ -98,7 +98,7 @@ public class BlockScriptEditor : Editor
                 Vector2Int relPosI = relativeTilePositions[i];
                 Vector2Int relPosJ = relativeTilePositions[j];
 
-                if(Mathf.Abs(relPosI.x-relPosJ.x)+Mathf.Abs(relPosI.y - relPosJ.y)==1)
+                if(Mathf.Abs(relPosI.x -  relPosJ.x)+Mathf.Abs(relPosI.y - relPosJ.y)==1)
                 {
                     DrawSingleSeparator(ref textureArg, relPosJ, relPosI);
                 }
@@ -109,10 +109,20 @@ public class BlockScriptEditor : Editor
 
     void DrawSingleSeparator(ref Texture2D textureArg, Vector2Int tilePositionA, Vector2Int tilePositionB)
     {
-        Debug.Log("A: " + tilePositionA + "B:" + tilePositionB);
+      
         Vector2Int leftBottomCornerPositionAPixelCoords = GetTilePositionInPixels(tilePositionA);
         Vector2Int leftBottomCornerPositionBPixelCoords = GetTilePositionInPixels(tilePositionB);
 
+        //swap A and B so that A  has always greater coords than B
+        if (leftBottomCornerPositionAPixelCoords.x < leftBottomCornerPositionBPixelCoords.x ||
+            leftBottomCornerPositionAPixelCoords.y < leftBottomCornerPositionBPixelCoords.y)
+        {
+            Vector2Int temp = leftBottomCornerPositionBPixelCoords;
+            leftBottomCornerPositionBPixelCoords = leftBottomCornerPositionAPixelCoords;
+            leftBottomCornerPositionAPixelCoords = temp;
+        }
+
+        Debug.Log(leftBottomCornerPositionAPixelCoords);
         Vector2Int AtoBUnitVector = (leftBottomCornerPositionBPixelCoords - leftBottomCornerPositionAPixelCoords) / tileSize;
         Vector2Int AtoBMirroredUnitVector = new Vector2Int(AtoBUnitVector.y, AtoBUnitVector.x);
 
