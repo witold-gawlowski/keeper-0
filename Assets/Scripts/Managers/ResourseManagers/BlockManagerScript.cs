@@ -53,6 +53,10 @@ public class BlockManagerScript : MonoBehaviour
 
     public Sprite GetSpriteForPrefab(GameObject blockPrefab)
     {
+        if (!blockImages.ContainsKey(blockPrefab))
+        {
+            print("missing  image!");
+        }
         return blockImages[blockPrefab];
     }
 
