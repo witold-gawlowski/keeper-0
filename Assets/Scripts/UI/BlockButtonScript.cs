@@ -32,6 +32,10 @@ public class BlockButtonScript : MonoBehaviour
             costText.text = "$" + costArg.ToString();
             costText.enabled = true;
         }
+        if (countArg == 0)
+        {
+            gameObject.SetActive(false);
+        }
     }
 
     public void UpdateCount(int newCount)

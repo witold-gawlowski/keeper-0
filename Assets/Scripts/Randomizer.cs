@@ -5,7 +5,6 @@ using UnityEngine;
 public class Randomizer
 {
     Random.State stateSave;
-    static int count = 0;
 
     public Randomizer(int seed)
     {

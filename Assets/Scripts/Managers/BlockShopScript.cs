@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class BlockShopScript : MonoBehaviour
 {
+    [System.Serializable]
     public class Item
     {
         public GameObject blockPrefab{ get; set; }
@@ -34,9 +35,7 @@ public class BlockShopScript : MonoBehaviour
         blockTypes = blockManagerScript.GetBlockTypes();
         InitCathegoryTypes();
     }
-
-
-
+       
     List<GameObject> GetRandomSubset(List<GameObject> set, int subsetSize)
     {
         List<GameObject> result = new List<GameObject>();
@@ -87,7 +86,7 @@ public class BlockShopScript : MonoBehaviour
                 int numberOfTypesForCathegory = cathegoryTypes[cathegory].Count;
                 int typeIndex = randomizer.Range(0, numberOfTypesForCathegory);
                 GameObject bundlePrefabTemp = cathegoryTypes[cathegory][typeIndex];
-                int bundlePriceTemp = Tools.RandomIntegerFromGaussianWithThreshold(BundlePriceByCathegory[cathegory].x, BundlePriceByCathegory[cathegory].y);
+                int bundlePriceTemp = Tools.RandomIntegerFromGaussianWithThreshold(randomizer, BundlePriceByCathegory[cathegory].x, BundlePriceByCathegory[cathegory].y);
                 int numberOfBlocksInBundleTemp = Tools.RandomFromDistribution(NumberOfBlocksInBundleByCathegory[cathegory], randomizer); 
                 offer.Add(new Item()
                 {

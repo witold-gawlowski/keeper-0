@@ -23,7 +23,9 @@ public class BlockShuffleContainer : MonoBehaviour
     public void Initialize(int seedArg)
     {
         seed = seedArg;
+        blockTypeCounter = new Dictionary<GameObject, int>();
         pendingRemoval = new List<GameObject>();
+        blocks = new List<BlockSortingElement>();
         List<GameObject> blockGameObjects = blockManagerScript.GetIndividualBlockList();
         foreach(GameObject blockGameObject in blockGameObjects)
         {
@@ -104,7 +106,11 @@ public class BlockShuffleContainer : MonoBehaviour
 
     public List<GameObject> GetBlocks()
     {
-        return blocks;
+        List<GameObject> result = new List<GameObject>();
+        for(int i=0; i<blocks.Count; i++){
+            result.Add(blocks[i].block);
+        }
+        return result;
     } 
 
     public GameObject Top()
@@ -113,7 +119,7 @@ public class BlockShuffleContainer : MonoBehaviour
         {
             return null;
         }
-        return blocks[0];
+        return blocks[0].block;
     }
 
 }

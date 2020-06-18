@@ -4334,10 +4334,10 @@ RectTransform:
   m_Father: {fileID: 1680443916}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 491.8, y: 0}
+  m_SizeDelta: {x: 983.6, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1182219254
 MonoBehaviour:
@@ -5092,8 +5092,8 @@ MonoBehaviour:
   blockShuffleContainer: {fileID: 2024050008}
   blockUIQueue: {fileID: 1992855447}
   levelManagerScript: {fileID: 2041774212}
-  deleteMeTest: []
   offersPerRound: 0
+  seed: 101
 --- !u!1 &1394793825
 GameObject:
   m_ObjectHideFlags: 0
@@ -5386,6 +5386,7 @@ MonoBehaviour:
   levelTypes:
   - {fileID: 11400000, guid: d280da2ef2e73914c8ff979f1b7277ca, type: 2}
   numberOfTypes: 0
+  seed: 101
 --- !u!4 &1482237734
 Transform:
   m_ObjectHideFlags: 0
@@ -7271,6 +7272,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   blockManagerScript: {fileID: 1377942661}
+  globalManager: {fileID: 2041666676}
   blockUIQueue: {fileID: 1992855447}
 --- !u!1 &2041666675
 GameObject:
@@ -7405,6 +7407,7 @@ MonoBehaviour:
     m_RotationOrder: 4
   rewardReductionFraction: 0.9
   rewardReductionConstant: 200
+  seed: 101
 --- !u!1 &2066324349
 GameObject:
   m_ObjectHideFlags: 0
