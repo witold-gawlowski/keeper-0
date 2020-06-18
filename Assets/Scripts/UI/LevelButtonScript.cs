@@ -18,6 +18,8 @@ public class LevelButtonScript : MonoBehaviour
     public Image levelImage;
     public GameObject rawRewardText;
     public GameObject persistence;
+    public RectTransform parentMask;
+    public RectTransform levelImageRectTransform;
 
     public void OnTap()
     {
@@ -29,8 +31,32 @@ public class LevelButtonScript : MonoBehaviour
         return associatedLevel;
     }
 
+    private void Start()
+    {
+        StartCoroutine(SetMapImageSize());
+    }
+
+    public IEnumerator SetMapImageSize()
+    {
+        yield return new WaitForEndOfFrame();
+        int width = levelImage.sprite.texture.width;
+        int height = levelImage.sprite.texture.height;
+        float parentWidth = parentMask.rect.width;
+        float parentHeight = parentMask.rect.height;
+        if (width < height)
+        {
+            print(" w < h ");
+            levelImageRectTransform.sizeDelta = new Vector2(parentWidth, height * parentWidth / width);
+        }
+        else
+        {
+            levelImageRectTransform.sizeDelta = new Vector2(parentHeight / height * width, parentHeight);
+        }
+    }
+
     public void SetSprite(Sprite spriteArg)
     {
+
         levelImage.sprite = spriteArg;
     }
 

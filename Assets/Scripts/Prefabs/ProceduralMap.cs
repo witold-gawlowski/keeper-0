@@ -264,7 +264,6 @@ public class ProceduralMap : MonoBehaviour
 
     public void ClearBlocks()
     {
-        print("cleaerblocks!");
         for (int i = 0; i < width; i++)
         {
             for (int j = 0; j < height; j++)

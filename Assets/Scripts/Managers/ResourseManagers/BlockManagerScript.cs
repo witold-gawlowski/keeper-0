@@ -50,6 +50,14 @@ public class BlockManagerScript : MonoBehaviour
 
     }
 
+    public int GetInventoryBlockCount(GameObject blockObject)
+    {
+        if (blockInventory.ContainsKey(blockObject))
+        {
+            return blockInventory[blockObject];
+        }
+        return 0;
+    }
 
     public Sprite GetSpriteForPrefab(GameObject blockPrefab)
     {

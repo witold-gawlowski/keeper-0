@@ -89,6 +89,14 @@ public class BlocksUIScript : MonoBehaviour
         }
     }
 
+    public void RemoveUsedBlocks()
+    {
+        foreach(KeyValuePair<GameObject, BlockButtonScript> keyValuePair in inventoryButtons)
+        {
+            UpdateInventoryBlockCount(keyValuePair.Key, blockManagerScript.GetInventoryBlockCount(keyValuePair.Key));
+        }
+    }
+
     public void UpdateInventoryBlockCount(GameObject blockTypeArg, int newCountArg)
     {
         BlockButtonScript correspondingButtonScript = inventoryButtons[blockTypeArg];

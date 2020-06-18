@@ -72,6 +72,6 @@ public class BlockUIQueue : MonoBehaviour
     {
         int lastChildIndex = transform.childCount - 1;
         Destroy(transform.GetChild(lastChildIndex).gameObject);
-        transform.GetChild(Mathf.Max(0, lastChildIndex-numberOfDisplayedBlocks)).gameObject.SetActive(true);
+        transform.GetChild(Mathf.Max(0, lastChildIndex - numberOfDisplayedBlocks)).gameObject.SetActive(true);
     }
 }

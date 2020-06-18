@@ -30,7 +30,7 @@ public class GlobalManagerScript : MonoBehaviour
     private void Awake()
     {
         summaryUIScript.LevelCompletedEvent += OnLevelCompleted;
-        buildingUIScript.BuildingCanceledEvent += OnLevelFinish;
+        buildingUIScript.BuildingCanceledEvent += OnLevelFinished;
         levelsUIScript.AddRunLevelEventHandler(OnLevelRun);
         StartNewRoundEvent += OnStartNewRound;
         buildingUIScript.RotateButtonTapEvent += blockSpawnerScript.HandleRotEvent;
@@ -91,14 +91,14 @@ public class GlobalManagerScript : MonoBehaviour
     private void OnLevelCompleted()
     {
         OnLevelCompletedActions();
-        OnLevelFinish();
+        OnLevelFinished();
         accountManager.AddFunds(levelMoneyManagerScript.GetTotalReward());
         roundCount++;
 
         StartNewRoundEvent();
     }
 
-    private void OnLevelFinish()
+    private void OnLevelFinished()
     {
         OnLevelFinishedActions();
         OnLevelFinishedActions = null;
@@ -108,6 +108,7 @@ public class GlobalManagerScript : MonoBehaviour
         dragScript.gameObject.SetActive(false);
         levelManagerScript.HideNotOwnedLevels();
         levelManagerScript.DecayLevelRewards();
+        blockUIScript.RemoveUsedBlocks();
     }
 
     private bool CanPlayerContinue()

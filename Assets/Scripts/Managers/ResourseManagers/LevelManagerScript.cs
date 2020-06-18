@@ -126,7 +126,6 @@ public class LevelManagerScript : MonoBehaviour
     {
         for (int i = levels.Count - 1; i >= 0; i--)
         {
-            print("updating reward");
             levels[i].rawReward = Mathf.RoundToInt(levels[i].rawReward * rewardReductionFraction - rewardReductionConstant);
             if (levels[i].rawReward <= 0)
             {

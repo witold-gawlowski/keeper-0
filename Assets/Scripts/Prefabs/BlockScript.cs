@@ -8,12 +8,11 @@ public class BlockScript : MonoBehaviour
     public List<Vector2Int> relativeTilePositions;
     public GameObject tile;
     public int value;
-    // Start is called before the first frame update
     void Start()
     {
         if (relativeTilePositions[0] != Vector2.zero)
         {
-            throw new System.Exception();
+            //throw new System.Exception();
         }
         foreach(Vector2 v2 in relativeTilePositions)
         {
