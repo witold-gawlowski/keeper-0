@@ -20,6 +20,7 @@ public class LevelButtonScript : MonoBehaviour
     public GameObject persistence;
     public RectTransform parentMask;
     public RectTransform levelImageRectTransform;
+    bool hasSpriteSet;
 
     public void OnTap()
     {
@@ -31,11 +32,6 @@ public class LevelButtonScript : MonoBehaviour
         return associatedLevel;
     }
 
-    private void Start()
-    {
-        StartCoroutine(SetMapImageSize());
-    }
-
     public IEnumerator SetMapImageSize()
     {
         yield return new WaitForEndOfFrame();
@@ -45,7 +41,6 @@ public class LevelButtonScript : MonoBehaviour
         float parentHeight = parentMask.rect.height;
         if (width < height)
         {
-            print(" w < h ");
             levelImageRectTransform.sizeDelta = new Vector2(parentWidth, height * parentWidth / width);
         }
         else
@@ -54,10 +49,22 @@ public class LevelButtonScript : MonoBehaviour
         }
     }
 
+    public void OnEnable()
+    {
+        if (hasSpriteSet)
+        {
+            StartCoroutine(SetMapImageSize());
+        }
+    }
+
     public void SetSprite(Sprite spriteArg)
     {
-
         levelImage.sprite = spriteArg;
+        hasSpriteSet = true;
+        if(gameObject.activeInHierarchy == true)
+        {
+            StartCoroutine(SetMapImageSize());
+        }
     }
 
     public void UpdatePersistence(int valueArg)

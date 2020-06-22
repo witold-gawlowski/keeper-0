@@ -20,6 +20,7 @@ public class BlockManagerScript : MonoBehaviour
     {
         InitializeSprites();
         blockInventory = new Dictionary<GameObject, int>();
+        EventManager.OnDeleteBlockButtonTap += RemoveBlock;
     }
 
     void InitializeSprites()
@@ -82,6 +83,16 @@ public class BlockManagerScript : MonoBehaviour
     public void RemoveBlock(GameObject blockType)
     {
         blockInventory[blockType] = blockInventory[blockType] - 1;
+        int blockCountTemp = GetInventoryBlockCount(blockType);
+        EventManager.RaiseOnBlockDeleted(blockType, blockCountTemp);
+    }
+
+    public void RemoveBlocks(List<GameObject> blocksArg)
+    {
+        foreach (GameObject blockObject in blocksArg)
+        {
+            RemoveBlock(blockObject);
+        }
     }
 
     public void IncreaseInventoryBlockCount(GameObject blockType, int blockCount)

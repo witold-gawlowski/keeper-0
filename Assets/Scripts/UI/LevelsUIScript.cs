@@ -90,6 +90,7 @@ public class LevelsUIScript : MonoBehaviour
         }
     }
 
+
     public void DeleteButtonForLevel(GameObject level)
     {
         DeleteButtonForLevelFromParent(level, shopItemsParent.transform);

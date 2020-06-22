@@ -94,7 +94,6 @@ public class GlobalManagerScript : MonoBehaviour
         OnLevelFinished();
         accountManager.AddFunds(levelMoneyManagerScript.GetTotalReward());
         roundCount++;
-
         StartNewRoundEvent();
     }
 
@@ -108,7 +107,6 @@ public class GlobalManagerScript : MonoBehaviour
         dragScript.gameObject.SetActive(false);
         levelManagerScript.HideNotOwnedLevels();
         levelManagerScript.DecayLevelRewards();
-        blockUIScript.RemoveUsedBlocks();
     }
 
     private bool CanPlayerContinue()

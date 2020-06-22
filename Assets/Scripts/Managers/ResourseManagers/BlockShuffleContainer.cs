@@ -98,10 +98,7 @@ public class BlockShuffleContainer : MonoBehaviour
 
     public void OnLevelCompleted()
     {
-        foreach(GameObject blockObject in pendingRemoval)
-        {
-            blockManagerScript.RemoveBlock(blockObject);
-        }
+        blockManagerScript.RemoveBlocks(pendingRemoval);
     }
 
     public List<GameObject> GetBlocks()
