@@ -3913,6 +3913,9 @@ MonoBehaviour:
   blockImage: {fileID: 502253824}
   costText: {fileID: 343925109}
   countText: {fileID: 194353085}
+  associatedPrefab: {fileID: 0}
+  deleteButton: {fileID: 1827820896}
+  buyButton: {fileID: 222433948}
 --- !u!114 &1058748426
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4454,10 +4457,10 @@ RectTransform:
   m_Father: {fileID: 1680443916}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 491.8, y: 0}
+  m_SizeDelta: {x: 983.6, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1182219254
 MonoBehaviour:

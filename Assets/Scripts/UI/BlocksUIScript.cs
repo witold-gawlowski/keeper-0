@@ -76,7 +76,7 @@ public class BlocksUIScript : MonoBehaviour
     {
         selectedBlockPanelScript.gameObject.SetActive(true);
         Sprite correspondingBlockSprite = blockManagerScript.GetSpriteForPrefab(itemArg.blockPrefab);
-        selectedBlockPanelScript.Initialize(itemArg, correspondingBlockSprite);
+        selectedBlockPanelScript.InitializeShopPanel(itemArg, correspondingBlockSprite);
     }
 
 
@@ -85,7 +85,7 @@ public class BlocksUIScript : MonoBehaviour
         selectedBlockPanelScript.gameObject.SetActive(true);
         Sprite correspondingBlockSprite = blockManagerScript.GetSpriteForPrefab(blockPrefabArg);
         int count = blockManagerScript.GetInventoryBlockCount(blockPrefabArg);
-        selectedBlockPanelScript.Initialize(correspondingBlockSprite, blockPrefabArg, count);
+        selectedBlockPanelScript.InitializeInventoryPanel(correspondingBlockSprite, blockPrefabArg, count);
     }
 
 
