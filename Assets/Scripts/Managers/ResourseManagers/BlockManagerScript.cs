@@ -38,7 +38,8 @@ public class BlockManagerScript : MonoBehaviour
 
     public void DeleteEventHandler(IEvent e)
     {
-        print("deletee event handler");
+        var  a = e as SelectedBlockPanelScript.DeleteButtonEvent;
+        RemoveBlock(a.blockPrefab);
     }
 
     public void OnStartBuilding(GameObject level)

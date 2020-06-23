@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class SelectedBlockPanelScript : MonoBehaviour
 {
    public class DeleteButtonEvent : IEvent {
-        GameObject blockPrefab;
+        public GameObject blockPrefab;
         public DeleteButtonEvent(GameObject blockPrefabArg)
         {
             blockPrefab = blockPrefabArg;
@@ -24,7 +24,7 @@ public class SelectedBlockPanelScript : MonoBehaviour
 
     private void Awake()
     {
-
+        EventManager.onBlockDeleted += UpdateCount; 
     }
 
     public void InitializeShopPanel(BlockShopScript.Item itemArg, Sprite spriteArg)
@@ -39,12 +39,17 @@ public class SelectedBlockPanelScript : MonoBehaviour
 
     public void InitializeInventoryPanel(Sprite spriteArg, GameObject prefabObjectArg, int countArg)
     {
-        countText.text = "Count: " + countArg;
+        UpdateCount(null,countArg);
         associatedPrefab = prefabObjectArg; ;
         blockImage.sprite = spriteArg;
         costText.enabled = false;
         buyButton.SetActive(false);
         deleteButton.SetActive(true);
+    }
+
+    public void UpdateCount(GameObject dummy, int countArg)
+    {
+        countText.text = "Count: " + countArg;
     }
 
     public void SetBuyEventHandler(System.Action<BlockShopScript.Item> handlerArg)

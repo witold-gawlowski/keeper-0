@@ -40,6 +40,7 @@ public class BlocksUIScript : MonoBehaviour
     {
         selectedBlockPanelScript.SetBuyEventHandler(blockShopScript.Buy);
         EventManager.onInventoryBlockTap += HandleInventoryBlockButtonTap;
+        EventManager.onBlockDeleted += UpdateInventoryBlockCount;
     }
 
     public void Start()
