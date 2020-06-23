@@ -48,7 +48,6 @@ public class BlockManagerScript : MonoBehaviour
             blockUIData.Add(tempBlockUIData);
         }
         blockUIQueue.Init(blockUIData);
-
     }
 
     public int GetInventoryBlockCount(GameObject blockObject)

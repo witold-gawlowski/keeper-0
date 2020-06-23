@@ -7,6 +7,7 @@ public class BlockButtonScript : MonoBehaviour
 {
     public System.Action<BlockShopScript.Item> buttonTapEvent;
     public BlockShopScript.Item associatedItem;
+    public GameObject associatedBlockPrefab;
     public Text costText;
     public Text countText;
     public GameObject blockImagePrefab;
@@ -14,28 +15,29 @@ public class BlockButtonScript : MonoBehaviour
 
     Sprite blockSprite;
 
-    public void Initialize(
+    public void InitializeInventoryButton(
         Sprite spriteArg,
-        int countArg,
-        BlockShopScript.Item itemArg = null,
-        int costArg = 0)
+        GameObject gameObjectArg)
     {
         blockSprite = spriteArg;
-        UpdateCount(countArg);
-        if (itemArg == null)
-        {
-            costText.enabled = false;
-        }
-        else
-        {
-            associatedItem = itemArg;
-            costText.text = "$" + costArg.ToString();
-            costText.enabled = true;
-        }
-        if (countArg == 0)
-        {
-            gameObject.SetActive(false);
-        }
+        costText.enabled = false;
+        gameObject.SetActive(false);
+        associatedBlockPrefab = gameObjectArg;
+        associatedItem = null;
+    }
+
+    public void InitializeShopButton(
+        Sprite spriteArg,
+        BlockShopScript.Item itemArg,
+        System.Action<BlockShopScript.Item> tapHandler)
+    {
+        blockSprite = spriteArg;
+        UpdateCount(itemArg.count);
+        associatedItem = itemArg;
+        associatedBlockPrefab = null;
+        costText.text = "$" + itemArg.price;
+        costText.enabled = true;
+        buttonTapEvent += tapHandler;
     }
 
     public void UpdateCount(int newCount)
@@ -60,16 +62,17 @@ public class BlockButtonScript : MonoBehaviour
         }
     }
 
-    public void SetTapHandler(System.Action<BlockShopScript.Item> tapHandler)
-    {
-        buttonTapEvent += tapHandler;
-    }
 
     public void OnTap()
     {
         if (associatedItem != null)
         {
             buttonTapEvent(associatedItem);
+        }
+
+        if(associatedBlockPrefab != null)
+        {
+            EventManager.RaiseOnInventoryBlockTap(associatedBlockPrefab);
         }
     }
 }

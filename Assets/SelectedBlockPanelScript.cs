@@ -11,6 +11,7 @@ public class SelectedBlockPanelScript : MonoBehaviour
     public Text costText;
     public Text countText;
     public BlockShopScript.Item associatedShopItem;
+    public GameObject associatedPrefab;
 
     
     public void Initialize(BlockShopScript.Item itemArg, Sprite spriteArg)
@@ -20,6 +21,15 @@ public class SelectedBlockPanelScript : MonoBehaviour
         countText.text = "Count: "+itemArg.count.ToString();
         associatedShopItem = itemArg;
     }
+
+    public void Initialize(Sprite spriteArg, GameObject prefabObjectArg, int countArg)
+    {
+        countText.text = "Count: " + countArg;
+        associatedPrefab = prefabObjectArg; ;
+        blockImage.sprite = spriteArg;
+        costText.enabled = false;
+    }
+
 
     public void SetBuyEventHandler(System.Action<BlockShopScript.Item> handlerArg)
     {
@@ -37,4 +47,5 @@ public class SelectedBlockPanelScript : MonoBehaviour
         gameObject.SetActive(false);
         BuyButtonEvent(associatedShopItem);
     }
+
 }

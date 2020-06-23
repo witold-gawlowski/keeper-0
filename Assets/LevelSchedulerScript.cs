@@ -66,10 +66,6 @@ public class LevelSchedulerScript : MonoBehaviour
         }
     }
 
-   
-
-
-
 
     //public int GetGroupIndex(int roundArg)
     //{

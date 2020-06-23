@@ -39,6 +39,7 @@ public class BlocksUIScript : MonoBehaviour
     public void Awake()
     {
         selectedBlockPanelScript.SetBuyEventHandler(blockShopScript.Buy);
+        EventManager.onInventoryBlockTap += HandleInventoryBlockButtonTap;
     }
 
     public void Start()
@@ -71,12 +72,22 @@ public class BlocksUIScript : MonoBehaviour
         }
     }
 
-    public void HandleBlockButtonTap(BlockShopScript.Item itemArg)
+    public void HandleShopBlockButtonTap(BlockShopScript.Item itemArg)
     {
         selectedBlockPanelScript.gameObject.SetActive(true);
         Sprite correspondingBlockSprite = blockManagerScript.GetSpriteForPrefab(itemArg.blockPrefab);
         selectedBlockPanelScript.Initialize(itemArg, correspondingBlockSprite);
     }
+
+
+    public void HandleInventoryBlockButtonTap(GameObject blockPrefabArg)
+    {
+        selectedBlockPanelScript.gameObject.SetActive(true);
+        Sprite correspondingBlockSprite = blockManagerScript.GetSpriteForPrefab(blockPrefabArg);
+        int count = blockManagerScript.GetInventoryBlockCount(blockPrefabArg);
+        selectedBlockPanelScript.Initialize(correspondingBlockSprite, blockPrefabArg, count);
+    }
+
 
     public void CreateAllShopButtons(List<BlockShopScript.Item> listOfItems)
     {
@@ -84,7 +95,7 @@ public class BlocksUIScript : MonoBehaviour
         foreach(BlockShopScript.Item itemTemp in listOfItems)
         {
             Sprite itemSprite = blockManagerScript.GetSpriteForPrefab(itemTemp.blockPrefab);
-            GameObject newShopButton = CreateButton(itemSprite, itemTemp.count, itemTemp, itemTemp.price);
+            GameObject newShopButton = CreateShopButton(itemSprite,itemTemp);
             currentShopOfferButtons.Add(newShopButton);
         }
     }
@@ -117,31 +128,25 @@ public class BlocksUIScript : MonoBehaviour
         foreach(GameObject blockObjectTemp in blockManagerScript.blockConfig)
         {
             Sprite blockSprite = blockManagerScript.GetSpriteForPrefab(blockObjectTemp);
-            GameObject newBlockButton = CreateButton(blockSprite, 0);
+            GameObject newBlockButton = CreateInventoryButton(blockSprite, blockObjectTemp);
             BlockButtonScript newBlockButtonScript = newBlockButton.GetComponent<BlockButtonScript>();
             inventoryButtons.Add(blockObjectTemp, newBlockButtonScript);
         }
     }
 
-    GameObject CreateButton(
-        Sprite spriteArg,
-        int blockCountArg,
-        BlockShopScript.Item shopItem = null,
-        int priceArg = 0)
+    GameObject CreateInventoryButton(Sprite spriteArg, GameObject gameObjectArg)
     {
-        GameObject newBlockButton = Instantiate(
-            blockButtonPrefab,
-            shopItem != null ? shopItemsParent.transform : inventoryItemsParent.transform);
+        GameObject newBlockButton = Instantiate(blockButtonPrefab,  inventoryItemsParent.transform);
         BlockButtonScript newBlockButtonScript = newBlockButton.GetComponent<BlockButtonScript>();
-        newBlockButtonScript.Initialize(
-              spriteArg,
-              blockCountArg,
-              shopItem,
-              priceArg);
-        if(shopItem != null)
-        {
-            newBlockButtonScript.SetTapHandler(HandleBlockButtonTap);
-        }
+        newBlockButtonScript.InitializeInventoryButton(spriteArg, gameObjectArg);
+        return newBlockButton;
+    }
+
+    GameObject CreateShopButton(Sprite spriteArg, BlockShopScript.Item shopItem)
+    {
+        GameObject newBlockButton = Instantiate(blockButtonPrefab, shopItemsParent.transform);
+        BlockButtonScript newBlockButtonScript = newBlockButton.GetComponent<BlockButtonScript>();
+        newBlockButtonScript.InitializeShopButton(spriteArg, shopItem, HandleShopBlockButtonTap);
         return newBlockButton;
     }
 

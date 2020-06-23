@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class EventManager : MonoBehaviour
 {
-    public delegate void OnInventoryBlockTap(BlockShopScript.Item itemArg);
+    public delegate void OnInventoryBlockTap(GameObject blockObjectArg);
     public static event OnInventoryBlockTap onInventoryBlockTap;
-    public static void RaiseOnInventoryBlockTap(BlockShopScript.Item itemArg)
+    public static void RaiseOnInventoryBlockTap(GameObject blockObjectArg)
     {
         if (onInventoryBlockTap != null)
         {
-            onInventoryBlockTap(itemArg);
+            onInventoryBlockTap(blockObjectArg);
         }
     }
 
