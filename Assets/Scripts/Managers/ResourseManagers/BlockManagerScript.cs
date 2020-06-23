@@ -16,11 +16,13 @@ public class BlockManagerScript : MonoBehaviour
     public int offersPerRound;
     public int seed = 101;
 
+    EventManager.EventDelegate deleteEventDelegate;
+
     public void Awake()
     {
         InitializeSprites();
         blockInventory = new Dictionary<GameObject, int>();
-        EventManager.OnDeleteBlockButtonTap += RemoveBlock;
+        EventManager.AddListener<SelectedBlockPanelScript.DeleteButtonEvent>(DeleteEventHandler);
     }
 
     void InitializeSprites()
@@ -32,6 +34,11 @@ public class BlockManagerScript : MonoBehaviour
             Sprite blockSprite = Resources.Load<Sprite>("Blocks/" + blockPrefabName);
             blockImages.Add(blockObjectTemp, blockSprite);
         }
+    }
+
+    public void DeleteEventHandler(IEvent e)
+    {
+        print("deletee event handler");
     }
 
     public void OnStartBuilding(GameObject level)

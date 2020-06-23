@@ -5,6 +5,13 @@ using UnityEngine.UI;
 
 public class SelectedBlockPanelScript : MonoBehaviour
 {
+   public class DeleteButtonEvent : IEvent {
+        GameObject blockPrefab;
+        public DeleteButtonEvent(GameObject blockPrefabArg)
+        {
+            blockPrefab = blockPrefabArg;
+        }
+    }
 
     public System.Action<BlockShopScript.Item> BuyButtonEvent;
     public Image blockImage;
@@ -15,7 +22,11 @@ public class SelectedBlockPanelScript : MonoBehaviour
     public GameObject deleteButton;
     public GameObject buyButton;
 
-    
+    private void Awake()
+    {
+
+    }
+
     public void InitializeShopPanel(BlockShopScript.Item itemArg, Sprite spriteArg)
     {
         blockImage.sprite = spriteArg;
@@ -36,7 +47,6 @@ public class SelectedBlockPanelScript : MonoBehaviour
         deleteButton.SetActive(true);
     }
 
-
     public void SetBuyEventHandler(System.Action<BlockShopScript.Item> handlerArg)
     {
         BuyButtonEvent = null;
@@ -48,12 +58,14 @@ public class SelectedBlockPanelScript : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    
-
     public void OnBuyButtonTap()
     {
         gameObject.SetActive(false);
         BuyButtonEvent(associatedShopItem);
     }
 
+    public void OnDeleteButtonTap()
+    {
+        EventManager.SendEvent(new DeleteButtonEvent(associatedPrefab));
+    }
 }

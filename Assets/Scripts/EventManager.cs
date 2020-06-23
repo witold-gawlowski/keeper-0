@@ -2,28 +2,35 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public class IEvent { }
+
 public class EventManager : MonoBehaviour
 {
+    //private void Awake()
+    //{
+    //    genericEvents = new Dictionary<System.Type, EventDelegate>();
+    //    listeners = new Dictionary<EventDelegate, EventDelegate>();
+    //}
 
-    private void Awake()
-    {
-        genericEvents = new Dictionary<System.Type, EventDelegate>();
-        listeners = new Dictionary<EventDelegate, EventDelegate>();
-    }
-
-    public class IEvent { }
     public delegate void EventDelegate(IEvent e);
 
-    Dictionary<System.Type, EventDelegate> genericEvents;
-    Dictionary<EventDelegate, EventDelegate> listeners;
+    static Dictionary<System.Type, EventDelegate> genericEvents = new Dictionary<System.Type, EventDelegate>();
+    static Dictionary<EventDelegate, EventDelegate> listeners = new Dictionary<EventDelegate, EventDelegate>();
 
-    public void AddListener<T>(EventDelegate listener) where T : IEvent{
+    public static void AddListener<T>(EventDelegate listener) where T : IEvent{
         EventDelegate del = (e) => listener((T) e);
-        genericEvents[typeof(T)]  += del;
+        if (!genericEvents.ContainsKey(typeof(T)))
+        {
+            genericEvents.Add(typeof(T), del);
+        }
+        else
+        {
+            genericEvents[typeof(T)] += del;
+        }
         listeners[listener] = del;
     }
 
-    public void SendEvent(IEvent e)
+    public static void SendEvent(IEvent e)
     {
         EventDelegate a = genericEvents[e.GetType()];
         foreach (EventDelegate k in a.GetInvocationList())
