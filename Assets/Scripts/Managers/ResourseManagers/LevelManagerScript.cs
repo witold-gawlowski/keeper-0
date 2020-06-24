@@ -15,13 +15,15 @@ public class LevelManagerScript : MonoBehaviour
         public float completionThreshold;
         public int rawReward;
         public int persistence;
+        public int age;
         public LevelData(GameObject levelObjectArg,
             int priceArg,
             float returnValueArg,
             bool isBoughtArg,
             float completionThresholdArg,
             int rawRewardArg,
-            int persistenceArg)
+            int persistenceArg,
+            int age)
         {
             levelObject = levelObjectArg;
             price = priceArg;
@@ -68,10 +70,6 @@ public class LevelManagerScript : MonoBehaviour
         RosterUpdateRoutine();
     }
 
-    public void OnFinishBuilding()
-    {
-        DecayLevelRewards();
-    }
 
     public int GetMinRosterPrice()
     {
@@ -122,7 +120,8 @@ public class LevelManagerScript : MonoBehaviour
         DestroyLevel(levelObjectArg);
     }
 
-    public void DecayLevelRewards()
+
+    public void DecayLevelRewardsAndHideNewIcons()
     {
         for (int i = levels.Count - 1; i >= 0; i--)
         {
@@ -135,6 +134,7 @@ public class LevelManagerScript : MonoBehaviour
             {
                 levelsUIScript.UpdateRawReward(levels[i].levelObject, levels[i].rawReward);
             }
+            levelsUIScript.HideNewIconForLevel(levels[i].levelObject);
         }
     }
 
@@ -154,7 +154,8 @@ public class LevelManagerScript : MonoBehaviour
             int rawReward = nextLevelParams.rewardValue;
             int persistence = nextLevelParams.persistenceInterval;
             float newLevelCompletionThresholdFraction = nextLevelParams.GetCompletionThresholdFraction(randomizer);
-            levels.Add(new LevelData(newLevel, newLevelCost, newReturnValue, false, newLevelCompletionThresholdFraction, rawReward, persistence));
+            int age = 0; 
+            levels.Add(new LevelData(newLevel, newLevelCost, newReturnValue, false, newLevelCompletionThresholdFraction, rawReward, persistence, age));
             GameObject newLevelButton = levelsUIScript.SpawnShopLevelButton(newLevel, newLevelCost, newReturnValue, newLevelCompletionThresholdFraction, rawReward, persistence);
             LevelButtonScript newLevelButtonScript = newLevelButton.GetComponent<LevelButtonScript>();
             snapshotCreatorScript.finishedGeneratingSnapshotEvent += newLevelButtonScript.SetSprite;

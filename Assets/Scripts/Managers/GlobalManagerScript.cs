@@ -106,7 +106,7 @@ public class GlobalManagerScript : MonoBehaviour
         blockSpawnerScript.ClearAllBlocks();
         dragScript.gameObject.SetActive(false);
         levelManagerScript.HideNotOwnedLevels();
-        levelManagerScript.DecayLevelRewards();
+        levelManagerScript.DecayLevelRewardsAndHideNewIcons();
     }
 
     private bool CanPlayerContinue()

@@ -21,6 +21,12 @@ public class LevelButtonScript : MonoBehaviour
     public RectTransform parentMask;
     public RectTransform levelImageRectTransform;
     bool hasSpriteSet;
+    public GameObject newIconObject;
+
+    public void HideNewIcon()
+    {
+        newIconObject.SetActive(false);
+    }
 
     public void OnTap()
     {

@@ -21,6 +21,6 @@ public class SummaryUIScript : MonoBehaviour
         baseValueText.text = "BaseValue: $" + baseValueArg.ToString();
         completedPercentText.text = "Completed " + completedFractionArg.ToString() + "%";
         rewardMultiplierText.text = "Reward multiplier: x" + rewardMultiplierArg.ToString("0.00");
-        totalRewardText.text = "Total Reward: $" + totalRewardArg.ToString();
+        totalRewardText.text = "Reward: \n$" + totalRewardArg.ToString();
     }
 }

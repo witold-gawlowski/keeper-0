@@ -90,6 +90,17 @@ public class LevelsUIScript : MonoBehaviour
         }
     }
 
+    public void HideNewIconForLevel(GameObject level)
+    {
+        foreach (Transform t in shopItemsParent.transform)
+        {
+            LevelButtonScript levelButtonScriptTemp = t.GetComponent<LevelButtonScript>();
+            if (levelButtonScriptTemp != null && levelButtonScriptTemp.GetAssociatedLevel().Equals(level))
+            {
+                levelButtonScriptTemp.HideNewIcon();
+            }
+        }
+    }
 
     public void DeleteButtonForLevel(GameObject level)
     {
