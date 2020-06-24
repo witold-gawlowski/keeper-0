@@ -8,6 +8,9 @@ public class BlockScript : MonoBehaviour
     public List<Vector2Int> relativeTilePositions;
     public GameObject tile;
     public int value;
+    public Color placedColor = new Color(0.7f, 0.2f, 0.2f, 1.0f);
+    public Color hangingColor = new Color(0.8f, 0.2f, 0.2f, 1.0f);
+
     void Start()
     {
         if (relativeTilePositions[0] != Vector2.zero)
@@ -17,6 +20,14 @@ public class BlockScript : MonoBehaviour
         foreach(Vector2 v2 in relativeTilePositions)
         {
             Instantiate(tile, new Vector3(v2.x, v2.y, 0) + transform.position, Quaternion.identity, transform);
+        }
+    }
+
+    public void SetColorPlaced()
+    {
+        foreach(SpriteRenderer sr  in GetComponentsInChildren<SpriteRenderer>())
+        {
+            sr.color = placedColor;
         }
     }
 

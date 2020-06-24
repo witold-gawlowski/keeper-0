@@ -87,6 +87,7 @@ public class DragScript : MonoBehaviour
                 }
                 blockFeederScript.Pop();
                 blockPlacedEvent(draggedBlockScript.value, draggedBlockScript.GetArea());
+                draggedBlockScript.SetColorPlaced();
                 draggedBlockScript = null;
             }
             else
