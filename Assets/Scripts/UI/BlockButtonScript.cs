@@ -39,7 +39,7 @@ public class BlockButtonScript : MonoBehaviour
         System.Action<BlockShopScript.Item> tapHandler)
     {
         blockSprite = spriteArg;
-        StartCoroutine(UpdateCount(itemArg.count));
+        UpdateCount(itemArg.count);
         associatedItem = itemArg;
         associatedBlockPrefab = null;
         costText.text = "$" + itemArg.price;
@@ -47,9 +47,8 @@ public class BlockButtonScript : MonoBehaviour
         buttonTapEvent += tapHandler;
     }
 
-    public IEnumerator UpdateCount(int newCount)
+    public void UpdateCount(int newCount)
     {
-        yield return new WaitForEndOfFrame();
         foreach(Transform childTransform in imagesParent.transform)
         {
             Destroy(childTransform.gameObject);
