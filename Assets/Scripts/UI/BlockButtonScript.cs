@@ -61,7 +61,7 @@ public class BlockButtonScript : MonoBehaviour
             Image blockImage = newImageObject.GetComponent<Image>();
             RectTransform rectTransformTemp = newImageObject.GetComponent<RectTransform>();
             float buttonDiameter = GlobalUIScript.instance.GetButtonDiameter();
-            rectTransformTemp.sizeDelta = new Vector2(buttonDiameter, buttonDiameter);
+            //rectTransformTemp.sizeDelta = new Vector2(buttonDiameter, buttonDiameter);
             blockImage.sprite = blockSprite;
             RectTransform newImagerectTransform = newImageObject.GetComponent<RectTransform>();
             newImagerectTransform.pivot = Vector2.one * (0.5f + 0.1f * (i-newCount/2));

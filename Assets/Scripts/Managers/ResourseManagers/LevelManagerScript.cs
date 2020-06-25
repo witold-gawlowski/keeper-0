@@ -125,6 +125,7 @@ public class LevelManagerScript : MonoBehaviour
     {
         for (int i = levels.Count - 1; i >= 0; i--)
         {
+            levelsUIScript.MoveToOldSection(levels[i].levelObject);
             levels[i].rawReward = Mathf.RoundToInt(levels[i].rawReward * rewardReductionFraction - rewardReductionConstant);
             if (levels[i].rawReward <= 0)
             {
@@ -135,7 +136,6 @@ public class LevelManagerScript : MonoBehaviour
                 levelsUIScript.UpdateRawReward(levels[i].levelObject, levels[i].rawReward);
             }
             //levelsUIScript.HideNewIconForLevel(levels[i].levelObject);
-            levelsUIScript.MoveToOldSection(levels[i].levelObject);
         }
     }
 

@@ -15,6 +15,8 @@ public class BlockScriptEditor : Editor
     private void OnEnable()
     {
         relativeTilePositions = (target as BlockScript).relativeTilePositions;
+        Vector2Int boxDiam = (target as BlockScript).GetBoxDiameters();
+        imageSize = Mathf.Max(boxDiam.x, boxDiam.y) * 9 + 30;
     }
 
     public Vector2 GetBlockMiddlePosition()
@@ -154,6 +156,7 @@ public class BlockScriptEditor : Editor
         if (GUILayout.Button("Draw block icon"))
         {
             Texture2D tex = new Texture2D(imageSize, imageSize, TextureFormat.ARGB32, false);
+            tex.filterMode = FilterMode.Point;
             ClearTexture(ref tex);
             int middleTileIndex = GetMiddleTileIndex();
             middleTilePosition = relativeTilePositions[middleTileIndex];

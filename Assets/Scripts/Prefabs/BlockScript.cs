@@ -25,6 +25,35 @@ public class BlockScript : MonoBehaviour
         geometricMiddlePosition = GetGeometricMiddle();
     }
 
+    public Vector2Int GetBoxDiameters()
+    {
+        int maxX=-100, maxY=-100, minX=100, minY=100;
+        int tx, ty;
+        for (int i = 0; i < relativeTilePositions.Count; i++)
+        {
+            tx = relativeTilePositions[i].x;
+            ty = relativeTilePositions[i].y;
+
+            if (maxX < tx)
+            {
+                maxX = tx;
+            }
+            if (maxY < ty)
+            {
+                maxY = ty;
+            }
+            if(minX > tx)
+            {
+                minX = tx;
+            }
+            if(minY > ty)
+            {
+                minY = ty;
+            }
+        }
+        return new Vector2Int(maxX-minX, maxY-minY);
+    }
+
     public void SetColorPlaced()
     {
         foreach(SpriteRenderer sr  in GetComponentsInChildren<SpriteRenderer>())

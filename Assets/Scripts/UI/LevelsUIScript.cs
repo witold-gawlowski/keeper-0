@@ -120,6 +120,7 @@ public class LevelsUIScript : MonoBehaviour
     {
         DeleteButtonForLevelFromParent(level, shopItemsParent.transform);
         DeleteButtonForLevelFromParent(level, inventoryItemsParent.transform);
+        DeleteButtonForLevelFromParent(level, inventoryItemsParent.transform);
     }
 
     public void UpdateRawReward(GameObject level, int valueArg)
