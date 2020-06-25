@@ -10,6 +10,7 @@ public class BlockScript : MonoBehaviour
     public int value;
     public Color placedColor = new Color(0.7f, 0.2f, 0.2f, 1.0f);
     public Color hangingColor = new Color(0.8f, 0.2f, 0.2f, 1.0f);
+    public Vector3 geometricMiddlePosition;
 
     void Start()
     {
@@ -21,6 +22,7 @@ public class BlockScript : MonoBehaviour
         {
             Instantiate(tile, new Vector3(v2.x, v2.y, 0) + transform.position, Quaternion.identity, transform);
         }
+        geometricMiddlePosition = GetGeometricMiddle();
     }
 
     public void SetColorPlaced()
@@ -29,6 +31,16 @@ public class BlockScript : MonoBehaviour
         {
             sr.color = placedColor;
         }
+    }
+
+    Vector2 GetGeometricMiddle()
+    {
+        Vector2 result = Vector2.zero;
+        for (int i = 0; i < relativeTilePositions.Count; i++)
+        {
+            result += relativeTilePositions[i];
+        }
+        return result/relativeTilePositions.Count;
     }
 
     public void Rotate()
@@ -40,6 +52,7 @@ public class BlockScript : MonoBehaviour
             newPos.y = relativeTilePositions[i].x;
             relativeTilePositions[i] = newPos;
         }
+        geometricMiddlePosition = GetGeometricMiddle();
     }
 
     public int GetArea()

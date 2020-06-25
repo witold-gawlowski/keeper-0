@@ -23,6 +23,7 @@ public class DragScript : MonoBehaviour
     private ProceduralMap gemMap;
     public bool firstBlockPlaced;
 
+
     public void SetProceduralMap(GameObject levelInstanceObject)
     {
         map = levelInstanceObject.GetComponent<ProceduralMap>();
@@ -63,7 +64,7 @@ public class DragScript : MonoBehaviour
             snapped = false;
             if (draggedBlockScript != null)
             {
-                Vector3 fingerShiftedNewPosition = newPosition + new Vector3(-3, 3);
+                Vector3 fingerShiftedNewPosition = newPosition + new Vector3(-3, 3) - draggedBlockScript.geometricMiddlePosition;
                 draggedBlockScript.transform.position = fingerShiftedNewPosition;
                 Vector2Int snappedPointerPosition = new Vector2Int(Mathf.RoundToInt(fingerShiftedNewPosition.x), Mathf.RoundToInt(fingerShiftedNewPosition.y));
                 if (map.AreFree(draggedBlockScript.relativeTilePositions, snappedPointerPosition, firstBlockPlaced))

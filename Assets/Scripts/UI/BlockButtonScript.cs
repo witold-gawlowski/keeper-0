@@ -12,6 +12,7 @@ public class BlockButtonScript : MonoBehaviour
     public Text countText;
     public GameObject blockImagePrefab;
     public GameObject imagesParent;
+    RectTransform rectTransform;
 
     Sprite blockSprite;
 
@@ -26,13 +27,19 @@ public class BlockButtonScript : MonoBehaviour
         associatedItem = null;
     }
 
+
+    public void Awake()
+    {
+        rectTransform = GetComponent<RectTransform>();
+    }
+
     public void InitializeShopButton(
         Sprite spriteArg,
         BlockShopScript.Item itemArg,
         System.Action<BlockShopScript.Item> tapHandler)
     {
         blockSprite = spriteArg;
-        UpdateCount(itemArg.count);
+        StartCoroutine(UpdateCount(itemArg.count));
         associatedItem = itemArg;
         associatedBlockPrefab = null;
         costText.text = "$" + itemArg.price;
@@ -40,8 +47,9 @@ public class BlockButtonScript : MonoBehaviour
         buttonTapEvent += tapHandler;
     }
 
-    public void UpdateCount(int newCount)
+    public IEnumerator UpdateCount(int newCount)
     {
+        yield return new WaitForEndOfFrame();
         foreach(Transform childTransform in imagesParent.transform)
         {
             Destroy(childTransform.gameObject);
@@ -52,6 +60,9 @@ public class BlockButtonScript : MonoBehaviour
             GameObject newImageObject = Instantiate(blockImagePrefab, imagesParent.transform);
             newImageObject.transform.SetAsFirstSibling();
             Image blockImage = newImageObject.GetComponent<Image>();
+            RectTransform rectTransformTemp = newImageObject.GetComponent<RectTransform>();
+            float buttonDiameter = GlobalUIScript.instance.GetButtonDiameter();
+            rectTransformTemp.sizeDelta = new Vector2(buttonDiameter, buttonDiameter);
             blockImage.sprite = blockSprite;
             RectTransform newImagerectTransform = newImageObject.GetComponent<RectTransform>();
             newImagerectTransform.pivot = Vector2.one * (0.5f + 0.1f * (i-newCount/2));
