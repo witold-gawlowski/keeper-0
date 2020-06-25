@@ -10,6 +10,7 @@ public class LevelsUIScript : MonoBehaviour
     public GameObject levelButtonPrefab;
     public GameObject shopItemsParent;
     public GameObject inventoryItemsParent;
+    public GameObject oldItemsParent;
     public GameObject buyButton;
     public GameObject buildButton;
     public SelectedLevelPanelScript selectedLevelPanelScript;
@@ -87,6 +88,19 @@ public class LevelsUIScript : MonoBehaviour
                 Destroy(t.gameObject);
                 return;
             }
+        }
+    }
+    public void MoveToOldSection(GameObject level)
+    {
+        foreach (Transform t in shopItemsParent.transform)
+        {
+            LevelButtonScript levelButtonScriptTemp = t.GetComponent<LevelButtonScript>();
+            if (levelButtonScriptTemp != null && levelButtonScriptTemp.GetAssociatedLevel().Equals(level))
+            {
+                t.SetParent(oldItemsParent.transform);
+                t.SetAsFirstSibling();
+            }
+
         }
     }
 

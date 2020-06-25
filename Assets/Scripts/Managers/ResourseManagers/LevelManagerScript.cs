@@ -134,7 +134,8 @@ public class LevelManagerScript : MonoBehaviour
             {
                 levelsUIScript.UpdateRawReward(levels[i].levelObject, levels[i].rawReward);
             }
-            levelsUIScript.HideNewIconForLevel(levels[i].levelObject);
+            //levelsUIScript.HideNewIconForLevel(levels[i].levelObject);
+            levelsUIScript.MoveToOldSection(levels[i].levelObject);
         }
     }
 
