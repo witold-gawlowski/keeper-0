@@ -59,11 +59,11 @@ public class BlocksUIScript : MonoBehaviour
         }
     }
 
-    public void DeleteOfferItemButton(BlockShopScript.Item item)
+    public void DeleteOfferItemButton(Card item)
     {
         foreach(GameObject offerButton in currentShopOfferButtons)
         {
-            BlockShopScript.Item itemTemp = offerButton.GetComponent<BlockButtonScript>().associatedItem;
+            Card itemTemp = offerButton.GetComponent<BlockButtonScript>().associatedItem;
             if (itemTemp == item)
             {
                 currentShopOfferButtons.Remove(offerButton);
@@ -73,10 +73,10 @@ public class BlocksUIScript : MonoBehaviour
         }
     }
 
-    public void HandleShopBlockButtonTap(BlockShopScript.Item itemArg)
+    public void HandleShopBlockButtonTap(Card itemArg)
     {
         selectedBlockPanelScript.gameObject.SetActive(true);
-        Sprite correspondingBlockSprite = blockManagerScript.GetSpriteForPrefab(itemArg.blockPrefab);
+        Sprite correspondingBlockSprite = blockManagerScript.GetSpriteForPrefab(itemArg.block);
         selectedBlockPanelScript.InitializeShopPanel(itemArg, correspondingBlockSprite);
     }
 
@@ -90,13 +90,13 @@ public class BlocksUIScript : MonoBehaviour
     }
 
 
-    public void CreateAllShopButtons(List<BlockShopScript.Item> listOfItems)
+    public void CreateAllShopButtons(List<Card> listOfItems)
     {
         currentShopOfferButtons = new List<GameObject>();
-        foreach(BlockShopScript.Item itemTemp in listOfItems)
+        foreach(Card itemTemp in listOfItems)
         {
-            Sprite itemSprite = blockManagerScript.GetSpriteForPrefab(itemTemp.blockPrefab);
-            GameObject newShopButton = CreateShopButton(itemSprite,itemTemp);
+            Sprite itemSprite = blockManagerScript.GetSpriteForPrefab(itemTemp.block);
+            GameObject newShopButton = CreateShopButton(itemSprite, itemTemp);
             currentShopOfferButtons.Add(newShopButton);
         }
     }
@@ -143,7 +143,7 @@ public class BlocksUIScript : MonoBehaviour
         return newBlockButton;
     }
 
-    GameObject CreateShopButton(Sprite spriteArg, BlockShopScript.Item shopItem)
+    GameObject CreateShopButton(Sprite spriteArg, Card shopItem)
     {
         GameObject newBlockButton = Instantiate(blockButtonPrefab, shopItemsParent.transform);
         BlockButtonScript newBlockButtonScript = newBlockButton.GetComponent<BlockButtonScript>();

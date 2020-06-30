@@ -13,11 +13,11 @@ public class SelectedBlockPanelScript : MonoBehaviour
         }
     }
 
-    public System.Action<BlockShopScript.Item> BuyButtonEvent;
+    public System.Action<Card> BuyButtonEvent;
     public Image blockImage;
     public Text costText;
     public Text countText;
-    public BlockShopScript.Item associatedShopItem;
+    public Card associatedShopItem;
     public GameObject associatedPrefab;
     public GameObject deleteButton;
     public GameObject buyButton;
@@ -27,11 +27,11 @@ public class SelectedBlockPanelScript : MonoBehaviour
         EventManager.onBlockDeleted += UpdateCount; 
     }
 
-    public void InitializeShopPanel(BlockShopScript.Item itemArg, Sprite spriteArg)
+    public void InitializeShopPanel(Card itemArg, Sprite spriteArg)
     {
         blockImage.sprite = spriteArg;
-        costText.text = "Price: $"+itemArg.price.ToString();
-        countText.text = "Count: "+itemArg.count.ToString();
+        costText.text = "Price: $"+itemArg.cashCost.ToString();
+        countText.text = "Count: "+itemArg.quantity.ToString();
         associatedShopItem = itemArg;
         buyButton.SetActive(true);
         deleteButton.SetActive(false);
@@ -52,7 +52,7 @@ public class SelectedBlockPanelScript : MonoBehaviour
         countText.text = "Count: " + countArg;
     }
 
-    public void SetBuyEventHandler(System.Action<BlockShopScript.Item> handlerArg)
+    public void SetBuyEventHandler(System.Action<Card> handlerArg)
     {
         BuyButtonEvent = null;
         BuyButtonEvent += handlerArg;

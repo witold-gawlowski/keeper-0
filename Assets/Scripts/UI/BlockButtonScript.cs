@@ -5,8 +5,8 @@ using UnityEngine.UI;
 
 public class BlockButtonScript : MonoBehaviour
 {
-    public System.Action<BlockShopScript.Item> buttonTapEvent;
-    public BlockShopScript.Item associatedItem;
+    public System.Action<Card> buttonTapEvent;
+    public Card associatedItem;
     public GameObject associatedBlockPrefab;
     public Text costText;
     public Text countText;
@@ -35,14 +35,14 @@ public class BlockButtonScript : MonoBehaviour
 
     public void InitializeShopButton(
         Sprite spriteArg,
-        BlockShopScript.Item itemArg,
-        System.Action<BlockShopScript.Item> tapHandler)
+        Card itemArg,
+        System.Action<Card> tapHandler)
     {
         blockSprite = spriteArg;
-        UpdateCount(itemArg.count);
+        UpdateCount(itemArg.quantity);
         associatedItem = itemArg;
         associatedBlockPrefab = null;
-        costText.text = "$" + itemArg.price;
+        costText.text = "$" + itemArg.cashCost;
         costText.enabled = true;
         buttonTapEvent += tapHandler;
     }

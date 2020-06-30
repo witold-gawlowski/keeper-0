@@ -4,15 +4,9 @@ using UnityEngine;
 
 public class BlockShopScript : MonoBehaviour
 {
-    [System.Serializable]
-    public class Item
-    {
-        public GameObject blockPrefab{ get; set; }
-        public int count { get; set; }
-        public int price { get; set; }
-    }
 
-    List<Item> offer;
+
+    List<Card> offer;
     public accountManager accountManager;
     public BlockManagerScript blockManagerScript;
     public BlocksUIScript blocksUIScript;
@@ -28,14 +22,16 @@ public class BlockShopScript : MonoBehaviour
     int maxCathegory = 3;
     public List<List<GameObject>> cathegoryTypes;
     Randomizer randomizer;
+    Deck deck;
 
-    private void Awake()
+    void Awake()
     {
+        deck = FindObjectOfType<Deck>();
         randomizer = new Randomizer(blockManagerScript.seed);
         blockTypes = blockManagerScript.GetBlockTypes();
         InitCathegoryTypes();
     }
-       
+
     List<GameObject> GetRandomSubset(List<GameObject> set, int subsetSize)
     {
         List<GameObject> result = new List<GameObject>();
@@ -75,9 +71,9 @@ public class BlockShopScript : MonoBehaviour
         }
     }
 
-    public void RerollOffer()
+    void RerollOffer()
     {
-        offer = new List<Item>();
+        offer = new List<Card>();
         for (int cathegory = 0; cathegory < maxCathegory; cathegory++)
         {
             int numberOfBundles = Tools.RandomFromDistribution(NumberOfBundlesByCathegory[cathegory], randomizer);
@@ -88,11 +84,11 @@ public class BlockShopScript : MonoBehaviour
                 GameObject bundlePrefabTemp = cathegoryTypes[cathegory][typeIndex];
                 int bundlePriceTemp = Tools.RandomIntegerFromGaussianWithThreshold(randomizer, BundlePriceByCathegory[cathegory].x, BundlePriceByCathegory[cathegory].y);
                 int numberOfBlocksInBundleTemp = Tools.RandomFromDistribution(NumberOfBlocksInBundleByCathegory[cathegory], randomizer); 
-                offer.Add(new Item()
+                offer.Add(new Card()
                 {
-                    blockPrefab = bundlePrefabTemp,
-                    count = numberOfBlocksInBundleTemp,
-                    price = bundlePriceTemp
+                    block = bundlePrefabTemp,
+                    quantity = numberOfBlocksInBundleTemp,
+                    cashCost = bundlePriceTemp
                 });
             }
         }
@@ -121,12 +117,12 @@ public class BlockShopScript : MonoBehaviour
         blocksUIScript.CreateAllShopButtons(offer);
     }
    
-    public void Buy(Item item)
+    public void Buy(Card item)
     {
-        if (accountManager.TryPay(item.price))
+        if (accountManager.TryPay(item.cashCost))
         {
             offer.Remove(item);
-            blockManagerScript.IncreaseInventoryBlockCount(item.blockPrefab, item.count);
+            blockManagerScript.IncreaseInventoryBlockCount(item.block, item.quantity);
             blocksUIScript.DeleteOfferItemButton(item);
         }
     }

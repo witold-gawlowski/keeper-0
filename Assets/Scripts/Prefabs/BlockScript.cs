@@ -8,7 +8,7 @@ public class BlockScript : MonoBehaviour
     public List<Vector2Int> relativeTilePositions;
     public GameObject tile;
     public int value;
-    public Color placedColor = new Color(0.7f, 0.2f, 0.2f, 1.0f);
+    public Color placedColor2 = new Color(0.6f, 0.2f, 0.2f, 1.0f);
     public Color hangingColor = new Color(0.8f, 0.2f, 0.2f, 1.0f);
     public Vector3 geometricMiddlePosition;
 
@@ -58,7 +58,7 @@ public class BlockScript : MonoBehaviour
     {
         foreach(SpriteRenderer sr  in GetComponentsInChildren<SpriteRenderer>())
         {
-            sr.color = placedColor;
+            sr.color = placedColor2;
         }
     }
 

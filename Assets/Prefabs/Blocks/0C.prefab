@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8853295386183986002}
   - component: {fileID: 227528976595414906}
   m_Layer: 0
-  m_Name: Block_C
+  m_Name: 0C
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -52,3 +52,6 @@ MonoBehaviour:
   - {x: 2, y: 0}
   tile: {fileID: 8562417976350379660, guid: a33eca05f65bcb54cb9097a587b37edf, type: 3}
   value: 130
+  placedColor2: {r: 0.7764706, g: 0.33333334, b: 0.34117648, a: 1}
+  hangingColor: {r: 0.8, g: 0.2, b: 0.2, a: 1}
+  geometricMiddlePosition: {x: 0, y: 0, z: 0}
