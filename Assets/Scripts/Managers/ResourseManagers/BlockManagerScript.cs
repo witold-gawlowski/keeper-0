@@ -5,8 +5,6 @@ using UnityEngine.UI;
 
 public class BlockManagerScript : MonoBehaviour
 {
-    Dictionary<GameObject, Sprite> blockImages;
-    public List<GameObject> blockConfig;
     public BlockShopScript blockShopScript;
     public BlocksUIScript blocksUIScript;
     public BlockShuffleContainer blockShuffleContainer;
@@ -20,20 +18,8 @@ public class BlockManagerScript : MonoBehaviour
 
     public void Awake()
     {
-        InitializeSprites();
         blockInventory = new Dictionary<GameObject, int>();
         EventManager.AddListener<SelectedBlockPanelScript.DeleteButtonEvent>(DeleteEventHandler);
-    }
-
-    void InitializeSprites()
-    {
-        blockImages = new Dictionary<GameObject, Sprite>();
-        foreach(GameObject blockObjectTemp in blockConfig)
-        {
-            string blockPrefabName = blockObjectTemp.name;
-            Sprite blockSprite = Resources.Load<Sprite>("Blocks/" + blockPrefabName);
-            blockImages.Add(blockObjectTemp, blockSprite);
-        }
     }
 
     public void DeleteEventHandler(IEvent e)
@@ -49,7 +35,7 @@ public class BlockManagerScript : MonoBehaviour
         List<BlockUIQueue.BlockUIData> blockUIData = new List<BlockUIQueue.BlockUIData>();
         foreach(GameObject blockQueueObject in blocksQueue)
         {
-            Sprite tempSprite = GetSpriteForPrefab(blockQueueObject);
+            Sprite tempSprite = BlockCodexScript.instance.GetSpriteForPrefab(blockQueueObject);
             BlockScript blockQueueObjectScript = blockQueueObject.GetComponent<BlockScript>();
             int blockRewardValue = Mathf.RoundToInt(levelManagerScript.GetReturnValue(level) * blockQueueObjectScript.value);
             BlockUIQueue.BlockUIData tempBlockUIData = new BlockUIQueue.BlockUIData(tempSprite, blockRewardValue);
@@ -65,26 +51,6 @@ public class BlockManagerScript : MonoBehaviour
             return blockInventory[blockObject];
         }
         return 0;
-    }
-
-    public Sprite GetSpriteForPrefab(GameObject blockPrefab)
-    {
-        if (!blockImages.ContainsKey(blockPrefab))
-        {
-            print("missing  image!");
-        }
-        return blockImages[blockPrefab];
-    }
-
-
-    public List<GameObject> GetBlockTypes()
-    {
-        var result = new List<GameObject>();
-        foreach(GameObject blockObjectTemp in blockConfig)
-        {
-            result.Add(blockObjectTemp);
-        }
-        return result;
     }
 
     public void RemoveBlock(GameObject blockType)

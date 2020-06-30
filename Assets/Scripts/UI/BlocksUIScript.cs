@@ -76,7 +76,7 @@ public class BlocksUIScript : MonoBehaviour
     public void HandleShopBlockButtonTap(Card itemArg)
     {
         selectedBlockPanelScript.gameObject.SetActive(true);
-        Sprite correspondingBlockSprite = blockManagerScript.GetSpriteForPrefab(itemArg.block);
+        Sprite correspondingBlockSprite = BlockCodexScript.instance.GetSpriteForPrefab(itemArg.block);
         selectedBlockPanelScript.InitializeShopPanel(itemArg, correspondingBlockSprite);
     }
 
@@ -84,7 +84,7 @@ public class BlocksUIScript : MonoBehaviour
     public void HandleInventoryBlockButtonTap(GameObject blockPrefabArg)
     {
         selectedBlockPanelScript.gameObject.SetActive(true);
-        Sprite correspondingBlockSprite = blockManagerScript.GetSpriteForPrefab(blockPrefabArg);
+        Sprite correspondingBlockSprite = BlockCodexScript.instance.GetSpriteForPrefab(blockPrefabArg);
         int count = blockManagerScript.GetInventoryBlockCount(blockPrefabArg);
         selectedBlockPanelScript.InitializeInventoryPanel(correspondingBlockSprite, blockPrefabArg, count);
     }
@@ -95,7 +95,7 @@ public class BlocksUIScript : MonoBehaviour
         currentShopOfferButtons = new List<GameObject>();
         foreach(Card itemTemp in listOfItems)
         {
-            Sprite itemSprite = blockManagerScript.GetSpriteForPrefab(itemTemp.block);
+            Sprite itemSprite = BlockCodexScript.instance.GetSpriteForPrefab(itemTemp.block);
             GameObject newShopButton = CreateShopButton(itemSprite, itemTemp);
             currentShopOfferButtons.Add(newShopButton);
         }
@@ -126,9 +126,9 @@ public class BlocksUIScript : MonoBehaviour
     public void CreateInventoryButtons()
     {
         inventoryButtons = new Dictionary<GameObject, BlockButtonScript>();
-        foreach(GameObject blockObjectTemp in blockManagerScript.blockConfig)
+        foreach(GameObject blockObjectTemp in BlockCodexScript.instance.blockConfig)
         {
-            Sprite blockSprite = blockManagerScript.GetSpriteForPrefab(blockObjectTemp);
+            Sprite blockSprite = BlockCodexScript.instance.GetSpriteForPrefab(blockObjectTemp);
             GameObject newBlockButton = CreateInventoryButton(blockSprite, blockObjectTemp);
             BlockButtonScript newBlockButtonScript = newBlockButton.GetComponent<BlockButtonScript>();
             inventoryButtons.Add(blockObjectTemp, newBlockButtonScript);

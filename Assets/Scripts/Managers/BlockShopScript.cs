@@ -28,7 +28,7 @@ public class BlockShopScript : MonoBehaviour
     {
         deck = FindObjectOfType<Deck>();
         randomizer = new Randomizer(blockManagerScript.seed);
-        blockTypes = blockManagerScript.GetBlockTypes();
+        blockTypes = BlockCodexScript.instance.GetBlockTypes();
         InitCathegoryTypes();
     }
 

@@ -27,6 +27,10 @@ public class BlockButtonScript : MonoBehaviour
         associatedItem = null;
     }
 
+    public void InitializeGemShopButton(Sprite spriteArg, Card cardArg)
+    {
+
+    }
 
     public void Awake()
     {
