@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class BlockButtonScript : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class BlockButtonScript : MonoBehaviour
     public Text countText;
     public GameObject blockImagePrefab;
     public GameObject imagesParent;
+    public TextMeshProUGUI gemCost;
     RectTransform rectTransform;
 
     Sprite blockSprite;
@@ -31,6 +33,8 @@ public class BlockButtonScript : MonoBehaviour
     {
         blockSprite = spriteArg;
         UpdateCount(cardArg.quantity);
+        gemCost.text = "<sprite=\"Gem2\" index=0>" + cardArg.gemCost.ToString();
+        gemCost.gameObject.SetActive(true);
     }
 
     public void Awake()
