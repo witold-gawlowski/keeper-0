@@ -5227,37 +5227,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cb7d5e6616e95e4cb1b48096d841e4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  blockConfig:
-  - {fileID: 8853295386183986003, guid: e312e93c2c4a271449e37abd9ef89a49, type: 3}
-  - {fileID: 7082414660671302751, guid: b5512cacd39f8a0448883f5c29409f7b, type: 3}
-  - {fileID: 4601588319983396990, guid: d21504f11ed1ea547be052dc924d57c3, type: 3}
-  - {fileID: 582720744970519140, guid: 87e7ca4ce4737c247b7251c11696c561, type: 3}
-  - {fileID: 2808700170928207112, guid: ef7a79d11bdc3534d869910839e31c3f, type: 3}
-  - {fileID: 3540483686817923776, guid: af989a7c57676ab499f3d41f9dd5c82a, type: 3}
-  - {fileID: 8564226537785472386, guid: 00418ab66be0fc7449ddaf4501de2029, type: 3}
-  - {fileID: 6903483841013818259, guid: 548916a79548ee1488ac319024c9844e, type: 3}
-  - {fileID: 8395051332880769578, guid: 9e52c9f54aec83041bea0a1ae748e258, type: 3}
-  - {fileID: 7965991292074517445, guid: d53acd84b7f54a04b89f4d25f3a5c66c, type: 3}
-  - {fileID: 8788037283467384516, guid: 2ab79e1c5512c41449a014a19e44b1e6, type: 3}
-  - {fileID: 2834512948287249855, guid: da94d38f66e444a4a81e1de3b78cf04a, type: 3}
-  - {fileID: 8293728172768902337, guid: c44b8e04c0562a9449f6bf7f077593ea, type: 3}
-  - {fileID: 198660504889261365, guid: 54a2af52d4be44c42973c4db8693dc5d, type: 3}
-  - {fileID: 4074382735239057372, guid: ba7b45b4c88da1141ad915b60414349d, type: 3}
-  - {fileID: 9097300725421513630, guid: addd886238d650c4e8c27f3b84599f10, type: 3}
-  - {fileID: 4855616208828419583, guid: bb4a283f739e5db4496305bc16a12713, type: 3}
-  - {fileID: 191999418212849691, guid: 12d139c177439804dbfa5c79617b8e5a, type: 3}
-  - {fileID: 8171609556995210452, guid: 3c0fea097e31e2f4ab2a0973a0249f07, type: 3}
-  - {fileID: 6258990628878285926, guid: daa44578ff8af9d44af2b6efec982263, type: 3}
-  - {fileID: 4530749508480165881, guid: 8d8b92a709c593d40aa290cd7873d36c, type: 3}
-  - {fileID: 2026156432267589773, guid: c8fae511679326143ab50ac4297f38ec, type: 3}
-  - {fileID: 995501854794064727, guid: 96f4c8e181f4bd1489803ee3045b503f, type: 3}
-  - {fileID: 1705934352055881839, guid: 949cf732e7a95ae4aa191bc0a7779189, type: 3}
-  - {fileID: 767611008255919206, guid: 68aff6343029e804ebb47a5466e9eb78, type: 3}
-  - {fileID: 8904314332742828450, guid: 56f8800bcc982664d866b2a709662869, type: 3}
-  - {fileID: 4404595047080327999, guid: 2fa64cda209825440af52cde5b08a6f5, type: 3}
-  - {fileID: 1859091123109131759, guid: 266eaed590d5f5b46a1550960f6f7415, type: 3}
-  - {fileID: 1928663312304692606, guid: d30b1724fc41bc840a93cac59ded73f8, type: 3}
-  - {fileID: 4513108905263052965, guid: 125217fbb2602a349857d63eddd54014, type: 3}
   blockShopScript: {fileID: 682157686}
   blocksUIScript: {fileID: 1054924737}
   blockShuffleContainer: {fileID: 2024050008}
@@ -7562,7 +7531,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelsUIScript: {fileID: 1054924736}
-  startingMoney: 1000
+  startingMoney: 10000
 --- !u!1 &2024050006
 GameObject:
   m_ObjectHideFlags: 0

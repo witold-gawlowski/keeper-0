@@ -38,14 +38,22 @@ public class BlocksUIScript : MonoBehaviour
 
     public void Awake()
     {
-        selectedBlockPanelScript.SetBuyEventHandler(blockShopScript.Buy);
+        selectedBlockPanelScript.SetBuyEventHandler(blockShopScript.Sell);
         EventManager.onInventoryBlockTap += HandleInventoryBlockButtonTap;
         EventManager.onBlockDeleted += UpdateInventoryBlockCount;
+        EventManager.AddListener<UpdateOfferUIEvent>(HandleUpdateOfferEvent);
     }
-
+       
     public void Start()
     {
         CreateInventoryButtons();
+    }
+
+    public void HandleUpdateOfferEvent(IEvent evArg)
+    {
+        UpdateOfferUIEvent evData = evArg as UpdateOfferUIEvent;
+        ClearOfferButtons();
+        CreateAllShopButtons(evData.cards);
     }
 
     public void ClearOfferButtons()

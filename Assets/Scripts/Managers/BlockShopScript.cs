@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public class UpdateOfferUIEvent : IEvent { public List<Card> cards; public UpdateOfferUIEvent(List<Card> cardsArg) { cards = cardsArg;}}
 public class BlockShopScript : MonoBehaviour
 {
-
-
     List<Card> offer;
     public accountManager accountManager;
     public BlockManagerScript blockManagerScript;
@@ -71,30 +70,68 @@ public class BlockShopScript : MonoBehaviour
         }
     }
 
-    void RerollOffer()
+    void OnCardSold()
     {
-        offer = new List<Card>();
-        for (int cathegory = 0; cathegory < maxCathegory; cathegory++)
+        if (!deck.IsDeckEmpty())
         {
-            int numberOfBundles = Tools.RandomFromDistribution(NumberOfBundlesByCathegory[cathegory], randomizer);
-            for(int j = 0; j<numberOfBundles; j++)
-            {
-                int numberOfTypesForCathegory = cathegoryTypes[cathegory].Count;
-                int typeIndex = randomizer.Range(0, numberOfTypesForCathegory);
-                GameObject bundlePrefabTemp = cathegoryTypes[cathegory][typeIndex];
-                int bundlePriceTemp = Tools.RandomIntegerFromGaussianWithThreshold(randomizer, BundlePriceByCathegory[cathegory].x, BundlePriceByCathegory[cathegory].y);
-                int numberOfBlocksInBundleTemp = Tools.RandomFromDistribution(NumberOfBlocksInBundleByCathegory[cathegory], randomizer); 
-                offer.Add(new Card()
-                {
-                    block = bundlePrefabTemp,
-                    quantity = numberOfBlocksInBundleTemp,
-                    cashCost = bundlePriceTemp
-                });
-            }
+            Card nextCCard = deck.Draw();
+            offer.Add(nextCCard);
+            EventManager.SendEvent(new UpdateOfferUIEvent(offer));
+        }
+        else if (offer.Count == 0)
+        {
+            deck.Shuffle();
+            RerollOffer();
         }
     }
 
-    //public void RerollOffer()
+    void RerollOffer()
+    {
+        offer = new List<Card>();
+        if (deck.IsDeckEmpty())
+        {
+            deck.Shuffle();
+        }
+        for (int i=0; i<5; i++)
+        {
+            if (!deck.IsDeckEmpty())
+            {
+                Card nextCard = deck.Draw();
+                offer.Add(nextCard);
+            }
+            else
+            {
+                break;
+            }
+        }
+        EventManager.SendEvent(new UpdateOfferUIEvent(offer));
+    }
+    
+
+    //void RerollOffer_Old()
+    //{
+    //    offer = new List<Card>();
+    //    for (int cathegory = 0; cathegory < maxCathegory; cathegory++)
+    //    {
+    //        int numberOfBundles = Tools.RandomFromDistribution(NumberOfBundlesByCathegory[cathegory], randomizer);
+    //        for(int j = 0; j<numberOfBundles; j++)
+    //        {
+    //            int numberOfTypesForCathegory = cathegoryTypes[cathegory].Count;
+    //            int typeIndex = randomizer.Range(0, numberOfTypesForCathegory);
+    //            GameObject bundlePrefabTemp = cathegoryTypes[cathegory][typeIndex];
+    //            int bundlePriceTemp = Tools.RandomIntegerFromGaussianWithThreshold(randomizer, BundlePriceByCathegory[cathegory].x, BundlePriceByCathegory[cathegory].y);
+    //            int numberOfBlocksInBundleTemp = Tools.RandomFromDistribution(NumberOfBlocksInBundleByCathegory[cathegory], randomizer); 
+    //            offer.Add(new Card()
+    //            {
+    //                block = bundlePrefabTemp,
+    //                quantity = numberOfBlocksInBundleTemp,
+    //                cashCost = bundlePriceTemp
+    //            });
+    //        }
+    //    }
+    //}
+
+    //public void RerollOffer_Old2()
     //{
     //    offer = new List<Item>();
     //    for(int i=0; i<offerCount; i++)
@@ -113,17 +150,16 @@ public class BlockShopScript : MonoBehaviour
     public void OnNewRoundStart()
     {
         RerollOffer();
-        blocksUIScript.ClearOfferButtons();
-        blocksUIScript.CreateAllShopButtons(offer);
     }
    
-    public void Buy(Card item)
+    public void Sell(Card item)
     {
         if (accountManager.TryPay(item.cashCost))
         {
             offer.Remove(item);
             blockManagerScript.IncreaseInventoryBlockCount(item.block, item.quantity);
             blocksUIScript.DeleteOfferItemButton(item);
+            OnCardSold();
         }
     }
 }
