@@ -1,24 +1,32 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-public class CardSoldEvent : IEvent { Card c; public CardSoldEvent(Card cArg) { c = cArg; } }
-public class GemShopAwakeEvent : IEvent { public List<Card> cards; public GemShopAwakeEvent(List<Card> cArg) { cards = cArg; } }
+public class CardSoldEvent : IEvent { public Card card; public CardSoldEvent(Card cArg) { card = cArg; } }
+public class UpdateGemShopUIEvent : IEvent { public List<Card> cards; public UpdateGemShopUIEvent(List<Card> cArg) { cards = cArg; } }
 public class GemShop : MonoBehaviour
 {
-
     public List<Card> cards;
 
-
-
-    private void Start()
+    void Awake()
     {
-        GemShopAwakeEvent awakeEvent = new GemShopAwakeEvent(cards);
+        EventManager.AddListener<CardSoldEvent>(CardSoldeventHandler);
+    }
+    
+    void CardSoldeventHandler(IEvent evArg)
+    {
+        CardSoldEvent ev = evArg as CardSoldEvent;
+        Sell(ev.card);
+    }
+
+    void Start()
+    {
+        UpdateGemShopUIEvent awakeEvent = new UpdateGemShopUIEvent(cards);
         EventManager.SendEvent(awakeEvent);
     }
 
-    public void Sell(Card cardArg)
+    private void Sell(Card cardArg)
     {
         cards.Remove(cardArg);
-        EventManager.SendEvent(new CardSoldEvent(cardArg));
+        EventManager.SendEvent(new UpdateGemShopUIEvent(cards));
     }
 }

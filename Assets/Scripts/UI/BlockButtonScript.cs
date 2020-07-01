@@ -6,8 +6,10 @@ using TMPro;
 
 public class BlockButtonScript : MonoBehaviour
 {
+    enum ButtonType {Gemshop, InventoryI, InventoryII, Shop, Deck };
+    ButtonType type;
     public System.Action<Card> buttonTapEvent;
-    public Card associatedItem;
+    public Card associatedCard;
     public GameObject associatedBlockPrefab;
     public Text costText;
     public Text countText;
@@ -22,19 +24,22 @@ public class BlockButtonScript : MonoBehaviour
         Sprite spriteArg,
         GameObject gameObjectArg)
     {
+        type = ButtonType.InventoryII;
         blockSprite = spriteArg;
         costText.enabled = false;
         gameObject.SetActive(false);
         associatedBlockPrefab = gameObjectArg;
-        associatedItem = null;
+        associatedCard = null;
     }
 
     public void InitializeGemShopButton(Sprite spriteArg, Card cardArg)
     {
+        type = ButtonType.Gemshop;
         blockSprite = spriteArg;
         UpdateCount(cardArg.quantity);
         gemCost.text = "<sprite=\"Gem2\" index=0>" + cardArg.gemCost.ToString();
         gemCost.gameObject.SetActive(true);
+        associatedCard = cardArg;
     }
 
     public void Awake()
@@ -47,9 +52,10 @@ public class BlockButtonScript : MonoBehaviour
         Card itemArg,
         System.Action<Card> tapHandler)
     {
+        type = ButtonType.Shop;
         blockSprite = spriteArg;
         UpdateCount(itemArg.quantity);
-        associatedItem = itemArg;
+        associatedCard = itemArg;
         associatedBlockPrefab = null;
         costText.text = "$" + itemArg.cashCost;
         costText.enabled = true;
@@ -84,14 +90,19 @@ public class BlockButtonScript : MonoBehaviour
 
     public void OnTap()
     {
-        if (associatedItem != null)
+        if (type == ButtonType.Shop)
         {
-            buttonTapEvent(associatedItem);
+            buttonTapEvent(associatedCard);
         }
 
-        if(associatedBlockPrefab != null)
+        if(type == ButtonType.InventoryII)
         {
             EventManager.RaiseOnInventoryBlockTap(associatedBlockPrefab);
+        }
+
+        if(type == ButtonType.Gemshop)
+        {
+            EventManager.SendEvent(new CardSoldEvent(associatedCard));
         }
     }
 }

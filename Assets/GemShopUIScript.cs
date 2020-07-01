@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class GemShopUIScript : MonoBehaviour
 {
     public GameObject buttonPrefab;
@@ -10,16 +11,25 @@ public class GemShopUIScript : MonoBehaviour
 
     private void Awake()
     {
-        EventManager.AddListener<GemShopAwakeEvent>(HandleGemShopAwake);
+        EventManager.AddListener<UpdateGemShopUIEvent>(HandleGemShopUIUpdateEvent);
     }
 
-    public void HandleGemShopAwake(IEvent eventArg)
+    public void HandleGemShopUIUpdateEvent(IEvent eventArg)
     {
-        GemShopAwakeEvent gemShopAwakeEvent = eventArg as GemShopAwakeEvent;
+        UpdateGemShopUIEvent gemShopAwakeEvent = eventArg as UpdateGemShopUIEvent;
         List<Card> cardsTemp = gemShopAwakeEvent.cards;
+        ClearButtons();
         foreach(Card  cTemp in cardsTemp)
         {
             CreateButton(cTemp);
+        }
+    }
+
+    void ClearButtons()
+    {
+        foreach(Transform tLocal in buttonsParent.transform)
+        {
+            Destroy(tLocal.gameObject);
         }
     }
 

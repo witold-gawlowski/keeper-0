@@ -71,7 +71,7 @@ public class BlocksUIScript : MonoBehaviour
     {
         foreach(GameObject offerButton in currentShopOfferButtons)
         {
-            Card itemTemp = offerButton.GetComponent<BlockButtonScript>().associatedItem;
+            Card itemTemp = offerButton.GetComponent<BlockButtonScript>().associatedCard;
             if (itemTemp == item)
             {
                 currentShopOfferButtons.Remove(offerButton);

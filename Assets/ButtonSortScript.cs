@@ -12,7 +12,7 @@ public class ButtonSortScript : MonoBehaviour
             BlockButtonScript blockButtonScript = buttonTransform.GetComponent<BlockButtonScript>();
             if (blockButtonScript)
             {
-                if (blockButtonScript.associatedItem != null)
+                if (blockButtonScript.associatedCard != null)
                 {
                     buttonTransform.SetAsFirstSibling();
                 }
