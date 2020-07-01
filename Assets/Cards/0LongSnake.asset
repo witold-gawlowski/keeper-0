@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5c54605faf27b0d4584495df237485ea, type: 3}
-  m_Name: OC5
+  m_Name: 0LongSnake
   m_EditorClassIdentifier: 
-  gemCost: 3
-  block: {fileID: 8853295386183986003, guid: e312e93c2c4a271449e37abd9ef89a49, type: 3}
+  gemCost: 2
+  block: {fileID: 8564226537785472386, guid: 00418ab66be0fc7449ddaf4501de2029, type: 3}
   cashCost: 200
-  quantity: 5
+  quantity: 3

@@ -27,7 +27,7 @@ public class GemShopUIScript : MonoBehaviour
     {
         GameObject newBlockButton = Instantiate(buttonPrefab, buttonsParent.transform);
         BlockButtonScript newBlockButtonScript = newBlockButton.GetComponent<BlockButtonScript>();
-        Sprite spriteTemp = BlockCodexScript.instance.GetSpriteForPrefab(buttonPrefab); 
+        Sprite spriteTemp = BlockCodexScript.instance.GetSpriteForPrefab(cardArg.block); 
         newBlockButtonScript.InitializeGemShopButton(spriteTemp, cardArg);
     }
 

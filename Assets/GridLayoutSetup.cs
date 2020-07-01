@@ -9,7 +9,7 @@ public class GridLayoutSetup : MonoBehaviour
     IEnumerator Setup()
     {
         yield return new WaitForEndOfFrame();
-        float buttonDiameter = GlobalUIScript.instance.GetButtonDiameter();
+        float buttonDiameter = Tools.GetButtonDiameter();
         gridLayout.cellSize = new Vector2(buttonDiameter, buttonDiameter);
     }
 

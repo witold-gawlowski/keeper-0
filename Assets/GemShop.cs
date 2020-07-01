@@ -8,10 +8,6 @@ public class GemShop : MonoBehaviour
 
     public List<Card> cards;
 
-    private void Awake()
-    {
-        
-    }
 
 
     private void Start()

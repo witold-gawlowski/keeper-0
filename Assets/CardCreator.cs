@@ -17,7 +17,7 @@ public class CardCreator
         foreach (FileInfo f in info)
         {
             Debug.Log(f.Name);
-            string s = path + "/" + f.Name; //.Replace(".prefab","");
+            string s = "Assets/Prefabs/Blocks/"+ f.Name;
 
 
             GameObject pgo = AssetDatabase.LoadAssetAtPath(s, typeof(GameObject)) as GameObject;
@@ -28,7 +28,7 @@ public class CardCreator
             asset.cashCost = 200;
             asset.gemCost = 2;
             asset.quantity = 3;
-            AssetDatabase.CreateAsset(asset, "Assets/Cards/" + f.Name + ".asset");
+            AssetDatabase.CreateAsset(asset, "Assets/Cards/" + f.Name.Replace(".prefab", "") + ".asset");
             AssetDatabase.SaveAssets();
         }
    

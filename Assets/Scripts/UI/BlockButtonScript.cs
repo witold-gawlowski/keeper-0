@@ -29,7 +29,8 @@ public class BlockButtonScript : MonoBehaviour
 
     public void InitializeGemShopButton(Sprite spriteArg, Card cardArg)
     {
-
+        blockSprite = spriteArg;
+        UpdateCount(cardArg.quantity);
     }
 
     public void Awake()
@@ -64,7 +65,7 @@ public class BlockButtonScript : MonoBehaviour
             newImageObject.transform.SetAsFirstSibling();
             Image blockImage = newImageObject.GetComponent<Image>();
             RectTransform rectTransformTemp = newImageObject.GetComponent<RectTransform>();
-            float buttonDiameter = GlobalUIScript.instance.GetButtonDiameter();
+            float buttonDiameter = Tools.GetButtonDiameter();
             //rectTransformTemp.sizeDelta = new Vector2(buttonDiameter, buttonDiameter);
             blockImage.sprite = blockSprite;
             RectTransform newImagerectTransform = newImageObject.GetComponent<RectTransform>();
