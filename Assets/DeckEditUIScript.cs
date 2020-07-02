@@ -10,36 +10,54 @@ public class DeckEditUIScript : MonoBehaviour
 
     void Awake()
     {
-        EventManager.AddListener<InventoryAwakeEvent>(HandleInventoryAwake);
-        EventManager.AddListener<DeckAwakeEvent>(HandleDeckAwake);
+        EventManager.AddListener<UpdateInventoryUIEvent>(UpdateInventoryUIEventDispatcher);
+        EventManager.AddListener<UpdateDeckUIEvent>(UpdateDeckUIEventDispatcher);
     }
 
-    public void HandleDeckAwake(IEvent eventArg)
+
+    void ClearButtons(GameObject parentObject)
     {
-        DeckAwakeEvent deckAwakeEvent = eventArg as DeckAwakeEvent;
+        foreach (Transform tLocal in parentObject.transform)
+        {
+            Destroy(tLocal.gameObject);
+        }
+    }
+
+    public void UpdateDeckUIEventDispatcher(IEvent eventArg)
+    {
+        UpdateDeckUIEvent deckAwakeEvent = eventArg as UpdateDeckUIEvent;
         List<Card> cardsTemp = deckAwakeEvent.cards;
+        ClearButtons(deckButtonsParent);
         foreach (Card cTemp in cardsTemp)
         {
-            CreateButton(cTemp, deckButtonsParent);
+            CreateButton(cTemp, deckButtonsParent, true);
         }
     }
 
-    public void HandleInventoryAwake(IEvent eventArg)
+    public void UpdateInventoryUIEventDispatcher(IEvent eventArg)
     {
-        InventoryAwakeEvent inventoryAwakeEvent = eventArg as InventoryAwakeEvent;
+        UpdateInventoryUIEvent inventoryAwakeEvent = eventArg as UpdateInventoryUIEvent;
         List<Card> cardsTemp = inventoryAwakeEvent.cards;
+        ClearButtons(inventoryButtonsParent);
         foreach (Card cTemp in cardsTemp)
         {
-            CreateButton(cTemp, inventoryButtonsParent);
+            CreateButton(cTemp, inventoryButtonsParent, false);
         }
     }
 
-    void CreateButton(Card cardArg, GameObject parentArg)
+    void CreateButton(Card cardArg, GameObject parentArg, bool isDeck)
     {
         GameObject newBlockButton = Instantiate(buttonPrefab, parentArg.transform);
         BlockButtonScript newBlockButtonScript = newBlockButton.GetComponent<BlockButtonScript>();
         Sprite spriteTemp = BlockCodexScript.instance.GetSpriteForPrefab(cardArg.block);
-        newBlockButtonScript.InitializeGemShopButton(spriteTemp, cardArg);
+        if (isDeck)
+        {
+            newBlockButtonScript.InitializeDeckButton(spriteTemp, cardArg);
+        }
+        else
+        {
+            newBlockButtonScript.InitializeInventoryIButton(spriteTemp, cardArg);
+        }
     }
 
 

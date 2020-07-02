@@ -147,7 +147,7 @@ public class BlocksUIScript : MonoBehaviour
     {
         GameObject newBlockButton = Instantiate(blockButtonPrefab,  inventoryItemsParent.transform);
         BlockButtonScript newBlockButtonScript = newBlockButton.GetComponent<BlockButtonScript>();
-        newBlockButtonScript.InitializeInventoryButton(spriteArg, gameObjectArg);
+        newBlockButtonScript.InitializeInventoryIIButton(spriteArg, gameObjectArg);
         return newBlockButton;
     }
 

@@ -28,5 +28,6 @@ public class GemShop : MonoBehaviour
     {
         cards.Remove(cardArg);
         EventManager.SendEvent(new UpdateGemShopUIEvent(cards));
+
     }
 }

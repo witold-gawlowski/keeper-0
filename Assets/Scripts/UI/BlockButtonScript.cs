@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
+
+
 public class BlockButtonScript : MonoBehaviour
 {
     enum ButtonType {Gemshop, InventoryI, InventoryII, Shop, Deck };
@@ -20,7 +22,7 @@ public class BlockButtonScript : MonoBehaviour
 
     Sprite blockSprite;
 
-    public void InitializeInventoryButton(
+    public void InitializeInventoryIIButton(
         Sprite spriteArg,
         GameObject gameObjectArg)
     {
@@ -30,6 +32,24 @@ public class BlockButtonScript : MonoBehaviour
         gameObject.SetActive(false);
         associatedBlockPrefab = gameObjectArg;
         associatedCard = null;
+    }
+
+    public void InitializeInventoryIButton(Sprite spriteArg, Card cardArg)
+    {
+        type = ButtonType.InventoryI;
+        blockSprite = spriteArg;
+        UpdateCount(cardArg.quantity);
+        gemCost.gameObject.SetActive(false);
+        associatedCard = cardArg;
+    }
+
+    public void InitializeDeckButton(Sprite spriteArg, Card cardArg)
+    {
+        type = ButtonType.Deck;
+        blockSprite = spriteArg;
+        UpdateCount(cardArg.quantity);
+        gemCost.gameObject.SetActive(false);
+        associatedCard = cardArg;
     }
 
     public void InitializeGemShopButton(Sprite spriteArg, Card cardArg)
@@ -75,7 +95,7 @@ public class BlockButtonScript : MonoBehaviour
             newImageObject.transform.SetAsFirstSibling();
             Image blockImage = newImageObject.GetComponent<Image>();
             RectTransform rectTransformTemp = newImageObject.GetComponent<RectTransform>();
-            float buttonDiameter = Tools.GetButtonDiameter();
+            //float buttonDiameter = Tools.GetButtonDiameter();
             //rectTransformTemp.sizeDelta = new Vector2(buttonDiameter, buttonDiameter);
             blockImage.sprite = blockSprite;
             RectTransform newImagerectTransform = newImageObject.GetComponent<RectTransform>();
@@ -103,6 +123,16 @@ public class BlockButtonScript : MonoBehaviour
         if(type == ButtonType.Gemshop)
         {
             EventManager.SendEvent(new CardSoldEvent(associatedCard));
+        }
+        
+        if(type == ButtonType.Deck)
+        {
+            EventManager.SendEvent(new CardMovedToInventoryEvent(associatedCard));
+        }
+
+        if(type == ButtonType.InventoryI)
+        {
+            EventManager.SendEvent(new CardMovedToDeckEvent(associatedCard));
         }
     }
 }

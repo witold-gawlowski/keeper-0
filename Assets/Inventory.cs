@@ -1,20 +1,40 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-public class CardMovedToDeckEvent : IEvent { Card c; public CardMovedToDeckEvent(Card cArg) { c = cArg; } }
-public class InventoryAwakeEvent : IEvent { public List<Card> cards; public InventoryAwakeEvent(List<Card> cArg) { cards = cArg; } }
+public class CardMovedToDeckEvent : IEvent {public Card c; public CardMovedToDeckEvent(Card cArg) { c = cArg; } }
+public class UpdateInventoryUIEvent : IEvent { public List<Card> cards; public UpdateInventoryUIEvent(List<Card> cArg) { cards = cArg; } }
 public class Inventory : MonoBehaviour
 {
     public List<Card> cards;
 
     private void Awake()
     {
+        EventManager.AddListener<CardSoldEvent>(NewCardEventDispatcher);
+        EventManager.AddListener<CardMovedToDeckEvent>(CardMovedToDeckEventDispatcher);
+        EventManager.AddListener<CardMovedToInventoryEvent>(CardMovedToInventoryEventDispatcher);
+    }
 
+    public void CardMovedToDeckEventDispatcher(IEvent evArg)
+    {
+        CardMovedToDeckEvent evData = evArg as CardMovedToDeckEvent;
+        Remove(evData.c);
+    }
+
+    public void CardMovedToInventoryEventDispatcher(IEvent evArg)
+    {
+        CardMovedToInventoryEvent evData = evArg as CardMovedToInventoryEvent;
+        Add(evData.c);
+    }
+
+    void NewCardEventDispatcher(IEvent evArg)
+    {
+        CardSoldEvent ev = evArg as CardSoldEvent;
+        Add(ev.card);
     }
 
     private void Start()
     {
-        InventoryAwakeEvent awakeEvent = new InventoryAwakeEvent(cards);
+        UpdateInventoryUIEvent awakeEvent = new UpdateInventoryUIEvent(cards);
         EventManager.SendEvent(awakeEvent);
     }
 
@@ -22,9 +42,12 @@ public class Inventory : MonoBehaviour
     void Add(Card cardArg)
     {
         cards.Add(cardArg);
+        EventManager.SendEvent(new UpdateInventoryUIEvent(cards));
     }
+
     void Remove(Card cardArg)
     {
         cards.Remove(cardArg);
+        EventManager.SendEvent(new UpdateInventoryUIEvent(cards));
     }
 }
