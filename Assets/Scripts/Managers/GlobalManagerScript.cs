@@ -23,7 +23,7 @@ public class GlobalManagerScript : MonoBehaviour
     public SummaryUIScript summaryUIScript;
     public BlockUIQueue blockUIQueue;
     public BlockShuffleContainer blockShuffleContainer;
-    
+    public SceneFader fader;
 
     int roundCount;
 
@@ -49,7 +49,8 @@ public class GlobalManagerScript : MonoBehaviour
     public void HandleBackButtonTap()
     {
         EventManager.Clear();
-        SceneManager.LoadScene("MainMenuScene", LoadSceneMode.Single);
+        StartCoroutine(fader.FadeAndLoadScene(SceneFader.FadeDirection.In, "MainMenuScene"));
+        //SceneManager.LoadScene("MainMenuScene", LoadSceneMode.Single);
     }
 
     private void Update()

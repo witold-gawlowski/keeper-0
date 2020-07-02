@@ -11,7 +11,7 @@ public class MainMenuScript : MonoBehaviour
     public GameObject deckEditPanel;
     public GameObject hallOfFamePanel;
     public GameObject menuPanel;
-
+    public SceneFader sceneLoader;
     GameObject currentPanel;
 
     private void Awake()
@@ -50,7 +50,8 @@ public class MainMenuScript : MonoBehaviour
 
     public void OnStartButtonTap()
     {
-        SceneManager.LoadScene("MenuScene");
+        //SceneManager.LoadScene("MenuScene");
+        StartCoroutine(sceneLoader.FadeAndLoadScene(SceneFader.FadeDirection.In, "MenuScene"));
     }
 
     public void OnContinueButtonTap()

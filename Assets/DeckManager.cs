@@ -10,7 +10,7 @@ public class DeckManager : MonoBehaviour
 
     private void Awake()
     {
-        deck = FindObjectOfType<Deck>();
+        deck = FindObjectOfType<Deck>();    
         EventManager.AddListener<CardMovedToDeckEvent>(CardMovedToDeckEventDispatcher);
         EventManager.AddListener<CardMovedToInventoryEvent>(CardMovedToInventoryEventDispatcher);
     }
