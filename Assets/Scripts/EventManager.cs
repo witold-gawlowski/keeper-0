@@ -39,6 +39,14 @@ public class EventManager : MonoBehaviour
         }
     }
 
+    public static  void Clear()
+    {
+        genericEvents = new Dictionary<System.Type, EventDelegate>();
+        listeners = new Dictionary<EventDelegate, EventDelegate>();
+        onInventoryBlockTap = null;
+        onBlockDeleted = null;
+        OnDeleteBlockButtonTap = null;
+    }
 
     public delegate void OnInventoryBlockTap(GameObject blockObjectArg);
     public static event OnInventoryBlockTap onInventoryBlockTap;

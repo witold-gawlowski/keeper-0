@@ -48,7 +48,8 @@ public class GlobalManagerScript : MonoBehaviour
 
     public void HandleBackButtonTap()
     {
-        SceneManager.LoadScene("MainMenuScene", LoadSceneMode.Additive);
+        EventManager.Clear();
+        SceneManager.LoadScene("MainMenuScene", LoadSceneMode.Single);
     }
 
     private void Update()
