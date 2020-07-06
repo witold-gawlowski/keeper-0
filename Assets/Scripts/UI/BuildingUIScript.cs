@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class BuildingUIScript : MonoBehaviour
 {
@@ -14,6 +15,7 @@ public class BuildingUIScript : MonoBehaviour
     public SummaryUIScript summaryUIScript;
     public BlockUIQueue blockUIQueue;
     public Image progressBarImage;
+    
 
     public void TriggerRotateEvent()
     {

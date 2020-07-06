@@ -66,7 +66,13 @@ public class GlobalManagerScript : MonoBehaviour
         blockShopScript.OnNewRoundStart();
         levelManagerScript.OnStartNewRound();
         buttonSortScript.Sort();
-        levelsUIScript.UpdateCompletedLevels(roundCount, levelManagerScript.GetLevelTarget());
+       
+        EventManager.SendEvent(new TopBarUIUpdateEvent(null, roundCount, levelManagerScript.GetLevelTarget(),  null, null));
+        EventManager.SendEvent(new TopBarUIUpdateEvent(
+        levelManagerScript.seed,
+        GetCurrentLevel(),
+        levelManagerScript.GetLevelTarget(),
+        0, accountManager.startingMoney));
     }
 
        
@@ -88,6 +94,7 @@ public class GlobalManagerScript : MonoBehaviour
         dragScript.SetProceduralMap(level);
         Camera.main.transform.position = levelMap.GetLevelCenterPosition() - new Vector3(0, 3, 10);
         buildingUIScript.OnStartBuilding();
+
     }
 
     private void OnLevelCompleted()

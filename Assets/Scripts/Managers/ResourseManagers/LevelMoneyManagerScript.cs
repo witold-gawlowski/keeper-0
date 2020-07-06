@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+
 public class LevelMoneyManagerScript : MonoBehaviour
 {
     public System.Action<float> progressUpdatedEvent;
@@ -19,6 +21,7 @@ public class LevelMoneyManagerScript : MonoBehaviour
     public AnimationCurve completionPercentToRewardMultiplier;
     private float completionThreshold;
     int rawReward;
+    int gems;
     
     
     public void SetReturnValue(float returnValueArg)
@@ -55,6 +58,12 @@ public class LevelMoneyManagerScript : MonoBehaviour
         {
             levelCompletedEvent();
         }
+    }
+
+    public void GemsFoundHandler(IEvent evArg)
+    {
+        GemsFoundEvent evData = evArg as GemsFoundEvent;
+        gems += evData.count;
     }
 
     public float GetCompletedFraction()

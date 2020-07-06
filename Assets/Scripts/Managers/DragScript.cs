@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
+class GemsFoundEvent:IEvent{public int count;public GemsFoundEvent(int countArg){count = countArg;}}
 public class DragScript : MonoBehaviour
 {
 
@@ -88,6 +89,8 @@ public class DragScript : MonoBehaviour
                 }
                 blockFeederScript.Pop();
                 blockPlacedEvent(draggedBlockScript.value, draggedBlockScript.GetArea());
+                int gemsFound = gemMap.OverlapCount(draggedBlockScript.relativeTilePositions, snappedBlockPosition);
+                EventManager.SendEvent(new GemsFoundEvent(gemsFound));
                 draggedBlockScript.SetColorPlaced();
                 draggedBlockScript = null;
             }

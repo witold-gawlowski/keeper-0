@@ -38,7 +38,7 @@ SpriteRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 437681275140435696}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -71,7 +71,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: -2
   m_Sprite: {fileID: 0}
-  m_Color: {r: 0.15917587, g: 0.46226418, b: 0.22408713, a: 0}
+  m_Color: {r: 0.15917587, g: 0.46226418, b: 0.22408713, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -128,7 +128,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   square: {fileID: 8562417976350379660, guid: a33eca05f65bcb54cb9097a587b37edf, type: 3}
   levelSpriteObject: {fileID: 437681275140435696}
-  boundaryMap: {fileID: 0}
+  boundaryMap: {fileID: 6374640658024995794}
   contentsMap: {fileID: 0}
 --- !u!114 &1485638640156144673
 MonoBehaviour:
@@ -276,7 +276,7 @@ MonoBehaviour:
   square: {fileID: 8562417976350379660, guid: a33eca05f65bcb54cb9097a587b37edf, type: 3}
   levelSpriteObject: {fileID: 6374640656941069188}
   boundaryMap: {fileID: 0}
-  contentsMap: {fileID: 0}
+  contentsMap: {fileID: 8364492297492494609}
 --- !u!114 &6374640658024995756
 MonoBehaviour:
   m_ObjectHideFlags: 0

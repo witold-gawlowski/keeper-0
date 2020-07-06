@@ -10,14 +10,14 @@ public class accountManager : MonoBehaviour
     private void Start()
     {
         money = startingMoney;
-        levelsUIScript.UpdateFunds(money);
+        EventManager.SendEvent(new TopBarUIUpdateEvent(null, null, null, null, money));
     }
     public bool TryPay(int price)
     {
         if (money >= price)
         {
             money -= price;
-            levelsUIScript.UpdateFunds(money);
+            EventManager.SendEvent(new TopBarUIUpdateEvent(null, null, null, null, money));
             return true;
         }
         return false;
@@ -31,6 +31,6 @@ public class accountManager : MonoBehaviour
     public void AddFunds(int value)
     {
         money += value;
-        levelsUIScript.UpdateFunds(money);
+        EventManager.SendEvent(new TopBarUIUpdateEvent(null, null, null, null, money));
     }
 }

@@ -46,6 +46,10 @@ public class ProceduralMap : MonoBehaviour
         } while (levelParamsArg.minimalMaxCaveSize > componentSizes[maxCompNum]);
 
         finishedGeneratingMapEvent();
+        if (contentsMap != null)
+        {
+            contentsMap.Initialize(rArg, levelParamsArg);
+        }
     }
 
     public Vector3 GetLevelCenterPosition()
