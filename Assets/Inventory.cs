@@ -9,7 +9,7 @@ public class Inventory : MonoBehaviour
 
     private void Awake()
     {
-        EventManager.AddListener<CardSoldEvent>(NewCardEventDispatcher);
+        EventManager.AddListener<ShopCardTappedEvent>(NewCardEventDispatcher);
         EventManager.AddListener<CardMovedToDeckEvent>(CardMovedToDeckEventDispatcher);
         EventManager.AddListener<CardMovedToInventoryEvent>(CardMovedToInventoryEventDispatcher);
     }
@@ -28,7 +28,7 @@ public class Inventory : MonoBehaviour
 
     void NewCardEventDispatcher(IEvent evArg)
     {
-        CardSoldEvent ev = evArg as CardSoldEvent;
+        ShopCardTappedEvent ev = evArg as ShopCardTappedEvent;
         Add(ev.card);
     }
 

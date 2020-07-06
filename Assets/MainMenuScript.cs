@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
+using TMPro;
 public class MainMenuScript : MonoBehaviour
 {
     public GameObject continueButton;
@@ -12,6 +12,7 @@ public class MainMenuScript : MonoBehaviour
     public GameObject hallOfFamePanel;
     public GameObject menuPanel;
     public SceneFader sceneLoader;
+    public TextMeshProUGUI gemText;
     GameObject currentPanel;
 
     private void Awake()
@@ -30,6 +31,8 @@ public class MainMenuScript : MonoBehaviour
         deckEditPanel.SetActive(false);
         hallOfFamePanel.SetActive(false);
         leaderboardsPanel.SetActive(false);
+
+        EventManager.AddListener<UpdateGemShopUIEvent>(HandleGemUpdate);
     }
 
     private void Update()
@@ -40,6 +43,12 @@ public class MainMenuScript : MonoBehaviour
             currentPanel = menuPanel;
             menuPanel.SetActive(true);
         }
+    }
+
+    public void HandleGemUpdate(IEvent evArg)
+    {
+        UpdateGemShopUIEvent evData = evArg as UpdateGemShopUIEvent;
+        gemText.text = "<sprite=\"Gem2\" index=0>" + evData.gems;
     }
 
     bool IsMenuSceneLoaded()

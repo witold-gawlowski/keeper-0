@@ -122,7 +122,7 @@ public class BlockButtonScript : MonoBehaviour
 
         if(type == ButtonType.Gemshop)
         {
-            EventManager.SendEvent(new CardSoldEvent(associatedCard));
+            EventManager.SendEvent(new ShopCardTappedEvent(associatedCard));
         }
         
         if(type == ButtonType.Deck)
