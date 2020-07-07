@@ -71,7 +71,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 5223a147a108ac04aa4c0d134a08d8e6, type: 3}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 0.5377358, g: 0.5377358, b: 0.5377358, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -129,8 +129,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   square: {fileID: 8562417976350379660, guid: a33eca05f65bcb54cb9097a587b37edf, type: 3}
   levelSpriteObject: {fileID: 6374640656941069188}
-  boundaryMap: {fileID: 0}
-  contentsMap: {fileID: 0}
 --- !u!114 &6374640658024995756
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -159,4 +157,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 6374640656941069189}
-  gemsMapRenderer: {fileID: 0}

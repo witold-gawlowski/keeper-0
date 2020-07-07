@@ -17,7 +17,7 @@ public class LevelsUIScript : MonoBehaviour
     public Text cashText;
     public Text completedLevelsText;
 
-    GameObject lastLevelSelected;
+    public GameObject lastLevelSelected;
 
     private void Awake()
     {
@@ -59,6 +59,7 @@ public class LevelsUIScript : MonoBehaviour
 
     public void OnBoughtLevelTapEvent(GameObject level)
     {
+        print("onbountleveltapevent");
         selectedLevelPanelScript.Initialize(level, true);
         selectedLevelPanelScript.gameObject.SetActive(true);
         lastLevelSelected = level;
@@ -66,6 +67,7 @@ public class LevelsUIScript : MonoBehaviour
 
     public void OnNonBoughtLevelTapEvent(GameObject level)
     {
+        print("onNONbountleveltapevent");
         selectedLevelPanelScript.Initialize(level, false);
         selectedLevelPanelScript.gameObject.SetActive(true);
         lastLevelSelected = level;
@@ -84,6 +86,7 @@ public class LevelsUIScript : MonoBehaviour
     public void DeleteLastSelectedLevel()
     {
         DeleteButtonForLevelFromParent(lastLevelSelected, inventoryItemsParent.transform);
+        DeleteButtonForLevelFromParent(lastLevelSelected, oldItemsParent.transform);
     }
 
     public void DeleteButtonForLevelFromParent(GameObject level, Transform parent)
@@ -127,13 +130,17 @@ public class LevelsUIScript : MonoBehaviour
     public void DeleteButtonForLevel(GameObject level)
     {
         DeleteButtonForLevelFromParent(level, shopItemsParent.transform);
-        DeleteButtonForLevelFromParent(level, inventoryItemsParent.transform);
-        DeleteButtonForLevelFromParent(level, inventoryItemsParent.transform);
+        DeleteButtonForLevelFromParent(level, oldItemsParent.transform);
     }
 
     public void UpdateRawReward(GameObject level, int valueArg)
     {
-        foreach (Transform t in shopItemsParent.transform)
+        UpdateRawReward(level, valueArg,  shopItemsParent.transform);
+        UpdateRawReward(level, valueArg, oldItemsParent.transform);
+    }
+    public void UpdateRawReward(GameObject level, int valueArg, Transform parent)
+    {
+        foreach (Transform t in parent)
         {
             LevelButtonScript levelButtonScriptTemp = t.GetComponent<LevelButtonScript>();
             if (levelButtonScriptTemp != null && levelButtonScriptTemp.GetAssociatedLevel().Equals(level))

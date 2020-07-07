@@ -79,13 +79,13 @@ public class DragScript : MonoBehaviour
                 Vector2Int snappedBlockPosition = new Vector2Int(
                     Mathf.RoundToInt(draggedBlockScript.transform.position.x),
                     Mathf.RoundToInt(draggedBlockScript.transform.position.y));
+                int gemsFound = map.CountGems(draggedBlockScript.relativeTilePositions, snappedBlockPosition);
                 map.Block(draggedBlockScript.relativeTilePositions, snappedBlockPosition);
                 if (!firstBlockPlaced)
                 {
                     firstBlockPlaced = true;
                 }
                 blockFeederScript.Pop();
-                int gemsFound = map.OverlapCount(draggedBlockScript.relativeTilePositions, snappedBlockPosition);
                 blockPlacedEvent(draggedBlockScript.value, draggedBlockScript.GetArea());
                 print("overlap " + gemsFound);
                 EventManager.SendEvent(new GemsFoundEvent(gemsFound));

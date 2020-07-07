@@ -8,6 +8,7 @@ public class SnapshotCreatorScript : MonoBehaviour
     public System.Action<Sprite> finishedGeneratingSnapshotEvent;
     public SpriteRenderer spriteRenderer;
     public Texture2D mapTexture;
+    public Texture2D backgroundTexture;
     public ProceduralMap map;
 
     private void Awake()
@@ -18,6 +19,11 @@ public class SnapshotCreatorScript : MonoBehaviour
     public Sprite GetLevelSprite()
     {
         return spriteRenderer.sprite;
+    }
+
+    public Sprite GetBackgroundSprite()
+    {
+        return Sprite.Create(backgroundTexture, new Rect(0, 0, map.GetWidth(), map.GetHeight()), new Vector2(0.5f, 0.5f));
     }
 
     private void OnFishedGeneratingMap()
@@ -36,6 +42,8 @@ public class SnapshotCreatorScript : MonoBehaviour
         int h = map.GetHeight();
         mapTexture = new Texture2D(w, h);
         mapTexture.filterMode = FilterMode.Point;
+        backgroundTexture = new Texture2D(w, h);
+        backgroundTexture.filterMode = FilterMode.Point;
         Color color;
         for (int x=0; x<w; x++)
         {
@@ -54,8 +62,10 @@ public class SnapshotCreatorScript : MonoBehaviour
                     color = Color.black;
                 }
                 mapTexture.SetPixel(x, y, color);
+                backgroundTexture.SetPixel(x, y, Color.white);
             }
         }
         mapTexture.Apply();
+        backgroundTexture.Apply();
     }
 }

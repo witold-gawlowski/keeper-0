@@ -300,6 +300,10 @@ public class ProceduralMap : MonoBehaviour
                 {
                     map[tx + dx[j], ty + dy[j]] = 2;
                 }
+                if (map[tx + dx[j], ty + dy[j]] == 4)
+                {
+                    map[tx + dx[j], ty + dy[j]] = 5;
+                }
             }
         }
     }
@@ -319,7 +323,6 @@ public class ProceduralMap : MonoBehaviour
     //make sure it  works before using
     public int OverlapCount(List<Vector2Int> blockGeometry, Vector2Int blockPosition)
     {
-        
         int result = 0;
         for (int i = 0; i < blockGeometry.Count; i++)
         {
@@ -331,8 +334,22 @@ public class ProceduralMap : MonoBehaviour
         }
         return result;
     }
-   
-    
+
+    public int CountGems(List<Vector2Int> blockGeometry, Vector2Int blockPosition)
+    {
+        int result = 0;
+        for (int i = 0; i < blockGeometry.Count; i++)
+        {
+            Vector2Int tilePosition = blockGeometry[i] + blockPosition;
+            if (map[tilePosition.x, tilePosition.y] == 4 || map[tilePosition.x, tilePosition.y] == 5)
+            {
+                result++;
+            }
+        }
+        return result;
+    }
+
+
 
 
     public bool AreFree(List<Vector2Int> blockGeometry, Vector2Int blockPosition, bool alsoCheckForNeighbor = false)
@@ -349,7 +366,7 @@ public class ProceduralMap : MonoBehaviour
             {
                 return false;
             }
-            if(!hasNeighbor && map[tilePosition.x, tilePosition.y] == 2)
+            if(!hasNeighbor && (map[tilePosition.x, tilePosition.y] == 2 || map[tilePosition.x, tilePosition.y] == 5))
             {
                 hasNeighbor = true;
             }

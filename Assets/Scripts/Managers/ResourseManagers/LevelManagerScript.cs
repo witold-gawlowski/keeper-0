@@ -147,6 +147,7 @@ public class LevelManagerScript : MonoBehaviour
         for (int i = 0; i < newLevelsInCurrentRound; i++)
         {
             GameObject newLevel = Instantiate(levelPrefab, Vector3.zero, Quaternion.identity);
+            newLevel.name = newLevel.name + i;
             SnapshotCreatorScript snapshotCreatorScript = newLevel.GetComponent<SnapshotCreatorScript>();
             ProceduralMap proceduralMap = newLevel.GetComponent<ProceduralMap>();
             
