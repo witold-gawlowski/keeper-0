@@ -20,16 +20,13 @@ public class DragScript : MonoBehaviour
     public BlockUIQueue blockUIQueue;
 
     bool snapped;
-    private ProceduralMap map;
-    private ProceduralMap gemMap;
+    public ProceduralMap map;
     public bool firstBlockPlaced;
 
 
     public void SetProceduralMap(GameObject levelInstanceObject)
     {
         map = levelInstanceObject.GetComponent<ProceduralMap>();
-        gemMap = map.contentsMap;
-
     }
 
     public void OnStartBuilding()
@@ -88,8 +85,9 @@ public class DragScript : MonoBehaviour
                     firstBlockPlaced = true;
                 }
                 blockFeederScript.Pop();
+                int gemsFound = map.OverlapCount(draggedBlockScript.relativeTilePositions, snappedBlockPosition);
                 blockPlacedEvent(draggedBlockScript.value, draggedBlockScript.GetArea());
-                int gemsFound = gemMap.OverlapCount(draggedBlockScript.relativeTilePositions, snappedBlockPosition);
+                print("overlap " + gemsFound);
                 EventManager.SendEvent(new GemsFoundEvent(gemsFound));
                 draggedBlockScript.SetColorPlaced();
                 draggedBlockScript = null;

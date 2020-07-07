@@ -34,6 +34,7 @@ public class LevelMoneyManagerScript : MonoBehaviour
         dragScript.blockPlacedEvent += BlockPlacedEventHandler;
         levelCompletedEvent += InitializeSummaryUI;
         levelCompletedEvent += buildingUIScript.OnLevelCompleteEvent;
+        EventManager.AddListener<GemsFoundEvent>(GemsFoundHandler);
     }
 
     public void Initialize(int mapTotalFreeAreaArg, float completionThresholdArg, int rawRewardArg)
@@ -43,6 +44,7 @@ public class LevelMoneyManagerScript : MonoBehaviour
         rawReward = rawRewardArg;
         totalBlockValue = 0;
         totalBlockArea = 0;
+        gems = 0;
     }
 
     public void BlockPlacedEventHandler(int rewardValueArg, int blockAreaArg)
@@ -50,6 +52,11 @@ public class LevelMoneyManagerScript : MonoBehaviour
         AddBlockValue(rewardValueArg, blockAreaArg);
         progressUpdatedEvent(GetCompletedFraction()/completionThreshold);
         CheckCompleteness();
+    }
+
+    public int GetGems()
+    {
+        return gems;
     }
 
     private void CheckCompleteness()

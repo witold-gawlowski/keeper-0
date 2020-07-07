@@ -8,8 +8,6 @@ public class ProceduralMap : MonoBehaviour
     public GameObject square;
     public GameObject levelSpriteObject;
     public int[,] map;
-    public ProceduralMap boundaryMap;
-    public ProceduralMap contentsMap;
     int[,] tempMap;
     int[,] components;
     Dictionary<int, int> componentSizes;
@@ -18,6 +16,7 @@ public class ProceduralMap : MonoBehaviour
     int height;
     int steps;
     float initialDensity;
+    float initialGemDensity = 0.2f;
     int dieLimit;
     int spawnLimit;
 
@@ -45,11 +44,10 @@ public class ProceduralMap : MonoBehaviour
             maxCompNum = GetMaxComponentNumber();
         } while (levelParamsArg.minimalMaxCaveSize > componentSizes[maxCompNum]);
 
+        CreateGems(rArg);
+
         finishedGeneratingMapEvent();
-        if (contentsMap != null)
-        {
-            contentsMap.Initialize(rArg, levelParamsArg);
-        }
+
     }
 
     public Vector3 GetLevelCenterPosition()
@@ -188,6 +186,19 @@ public class ProceduralMap : MonoBehaviour
         }
     }
 
+    public void CreateGems(Randomizer rArg)
+    {
+        for (int i = 0; i < width; i++)
+        {
+            for (int j = 0; j < height; j++)
+            {
+                if(map[i, j] == 0)
+                {
+                    map[i, j] = rArg.Range(0.0f, 1.0f) > initialGemDensity ? 0 : 4;
+                }
+            }
+        }
+    }
 
     public void Generate(Randomizer rArg)
     {
@@ -223,16 +234,9 @@ public class ProceduralMap : MonoBehaviour
                     {
                         for (int q = -1; q <= 1; q++)
                         {
-                            //if (q == 0 && k == 0)
-                            //{
-                            //    break;
-                            //}
                             if (map[i + k, j + q] == 0)
                             {
-                                if (boundaryMap == null || boundaryMap.map[i + k, j + q] == 0)
-                                {
-                                    deadCells++;
-                                }
+                                deadCells++;
                             }
                         }
                     }
@@ -300,9 +304,22 @@ public class ProceduralMap : MonoBehaviour
         }
     }
 
+    void PrintMe()
+    {
+        for (int i = 0; i < width; i++)
+        {
+            string s = "";
+            for (int j = 0; j < height; j++)
+            {
+                s += map[i, j];
+            }
+            print(s + "/n");
+        }
+    }
     //make sure it  works before using
     public int OverlapCount(List<Vector2Int> blockGeometry, Vector2Int blockPosition)
     {
+        
         int result = 0;
         for (int i = 0; i < blockGeometry.Count; i++)
         {
@@ -314,6 +331,8 @@ public class ProceduralMap : MonoBehaviour
         }
         return result;
     }
+   
+    
 
 
     public bool AreFree(List<Vector2Int> blockGeometry, Vector2Int blockPosition, bool alsoCheckForNeighbor = false)

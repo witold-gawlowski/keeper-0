@@ -17,6 +17,7 @@ public class LevelsUIScript : MonoBehaviour
     public Text cashText;
     public Text completedLevelsText;
 
+    GameObject lastLevelSelected;
 
     private void Awake()
     {
@@ -60,12 +61,14 @@ public class LevelsUIScript : MonoBehaviour
     {
         selectedLevelPanelScript.Initialize(level, true);
         selectedLevelPanelScript.gameObject.SetActive(true);
+        lastLevelSelected = level;
     }
 
     public void OnNonBoughtLevelTapEvent(GameObject level)
     {
         selectedLevelPanelScript.Initialize(level, false);
         selectedLevelPanelScript.gameObject.SetActive(true);
+        lastLevelSelected = level;
     }
 
     public void UpdateCompletedLevels(int value, int maxLevels)
@@ -76,6 +79,11 @@ public class LevelsUIScript : MonoBehaviour
     public void UpdateFunds(int value)
     {
         cashText.text = "$" + value;
+    }
+
+    public void DeleteLastSelectedLevel()
+    {
+        DeleteButtonForLevelFromParent(lastLevelSelected, inventoryItemsParent.transform);
     }
 
     public void DeleteButtonForLevelFromParent(GameObject level, Transform parent)

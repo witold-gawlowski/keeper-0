@@ -36,18 +36,22 @@ public class SnapshotCreatorScript : MonoBehaviour
         int h = map.GetHeight();
         mapTexture = new Texture2D(w, h);
         mapTexture.filterMode = FilterMode.Point;
-        Color color = Color.white;
+        Color color;
         for (int x=0; x<w; x++)
         {
             for(int y=0; y<h; y++)
             {
                 if (map.map[x, y] == 0)
                 {
-                    color.a = 0;
+                    color = Color.clear;
+                }
+                else if(map.map[x,y] == 4)
+                {
+                    color = Color.green;
                 }
                 else
                 {
-                    color.a = 1;
+                    color = Color.black;
                 }
                 mapTexture.SetPixel(x, y, color);
             }

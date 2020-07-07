@@ -66,20 +66,18 @@ public class GlobalManagerScript : MonoBehaviour
         blockShopScript.OnNewRoundStart();
         levelManagerScript.OnStartNewRound();
         buttonSortScript.Sort();
-       
-        EventManager.SendEvent(new TopBarUIUpdateEvent(null, roundCount, levelManagerScript.GetLevelTarget(),  null, null));
+
         EventManager.SendEvent(new TopBarUIUpdateEvent(
         levelManagerScript.seed,
         GetCurrentLevel(),
         levelManagerScript.GetLevelTarget(),
-        0, accountManager.startingMoney));
+        levelMoneyManagerScript.GetGems(), accountManager.GetMoney()));
     }
 
        
     private void OnLevelRun(GameObject level)
     {
         OnLevelCompletedActions += () => levelManagerScript.DestroyLevel(level);
-        OnLevelCompletedActions += () => levelsUIScript.DeleteButtonForLevel(level);
         OnLevelFinishedActions += () => level.GetComponent<ProceduralMap>().ClearBlocks();
         blockManagerScript.OnStartBuilding(level);
         dragScript.gameObject.SetActive(true);
@@ -99,11 +97,18 @@ public class GlobalManagerScript : MonoBehaviour
 
     private void OnLevelCompleted()
     {
+        levelsUIScript.DeleteLastSelectedLevel();
         OnLevelCompletedActions();
         OnLevelFinished();
         accountManager.AddFunds(levelMoneyManagerScript.GetTotalReward());
         roundCount++;
         StartNewRoundEvent();
+        EventManager.SendEvent(new TopBarUIUpdateEvent(
+            levelManagerScript.seed,
+            roundCount,
+            levelManagerScript.GetLevelTarget(),
+            levelMoneyManagerScript.GetGems(),
+            accountManager.GetMoney()));
     }
 
     private void OnLevelFinished()
