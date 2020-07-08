@@ -6,16 +6,27 @@ public class IEvent { }
 
 public class EventManager : MonoBehaviour
 {
-    //private void Awake()
-    //{
-    //    genericEvents = new Dictionary<System.Type, EventDelegate>();
-    //    listeners = new Dictionary<EventDelegate, EventDelegate>();
-    //}
-
+    
     public delegate void EventDelegate(IEvent e);
 
     static Dictionary<System.Type, EventDelegate> genericEvents = new Dictionary<System.Type, EventDelegate>();
     static Dictionary<EventDelegate, EventDelegate> listeners = new Dictionary<EventDelegate, EventDelegate>();
+
+    public static EventManager instance;
+
+
+    private void Awake()
+    {
+        if(instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        }
+    }
+
 
     public static void AddListener<T>(EventDelegate listener) where T : IEvent{
         EventDelegate del = (e) => listener((T) e);

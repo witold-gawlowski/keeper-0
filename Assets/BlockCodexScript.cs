@@ -12,7 +12,15 @@ public class BlockCodexScript : MonoBehaviour
 
     private void Awake()
     {
-        instance = this;
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        }
+
         InitializeSprites();
     }
 

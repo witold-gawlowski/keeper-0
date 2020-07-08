@@ -38,6 +38,16 @@ public class Inventory : MonoBehaviour
         EventManager.SendEvent(awakeEvent);
     }
 
+    public void Load(string sourceArg)
+    {
+
+    }
+
+    public override string ToString()
+    {
+        return "";
+    }
+
 
     void Add(Card cardArg)
     {

@@ -32,6 +32,16 @@ public class Deck : MonoBehaviour
         return queue.Count == 0;
     }
 
+    public override string ToString()
+    {
+        return "";
+    }
+
+    public void Load(string sourceArg)
+    {
+        
+    }
+
     public Card Draw()
     {
         Card result = queue[0];

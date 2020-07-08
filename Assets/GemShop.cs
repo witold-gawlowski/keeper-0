@@ -23,6 +23,11 @@ public class GemShop : MonoBehaviour
         TrySell(ev.card);
     }
 
+    public void LoadGems(int gemsArg)
+    {
+        gems = gemsArg;
+    }
+
     void Start()
     {
         UpdateGemShopUIEvent awakeEvent = new UpdateGemShopUIEvent(cards, gems);
