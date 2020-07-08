@@ -7,7 +7,8 @@ public class GemShopUIScript : MonoBehaviour
 {
     public GameObject buttonPrefab;
     public BlockButtonScript buttons;
-    public GameObject buttonsParent;
+    public GameObject buttonsParentI;
+    public GameObject buttonsParentII;
 
     private void Awake()
     {
@@ -27,7 +28,11 @@ public class GemShopUIScript : MonoBehaviour
 
     void ClearButtons()
     {
-        foreach(Transform tLocal in buttonsParent.transform)
+        foreach(Transform tLocal in buttonsParentI.transform)
+        {
+            Destroy(tLocal.gameObject);
+        }
+        foreach (Transform tLocal in buttonsParentII.transform)
         {
             Destroy(tLocal.gameObject);
         }
@@ -35,7 +40,12 @@ public class GemShopUIScript : MonoBehaviour
 
     void CreateButton(Card cardArg)
     {
-        GameObject newBlockButton = Instantiate(buttonPrefab, buttonsParent.transform);
+        Transform targetParent = buttonsParentI.transform;
+        if (buttonsParentI.transform.childCount >= 3)
+        {
+            targetParent = buttonsParentII.transform;
+        }
+        GameObject newBlockButton = Instantiate(buttonPrefab, targetParent);
         BlockButtonScript newBlockButtonScript = newBlockButton.GetComponent<BlockButtonScript>();
         Sprite spriteTemp = BlockCodexScript.instance.GetSpriteForPrefab(cardArg.block); 
         newBlockButtonScript.InitializeGemShopButton(spriteTemp, cardArg);
