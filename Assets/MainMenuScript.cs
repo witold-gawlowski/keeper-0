@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
+using System.Text.RegularExpressions;
+
 public class MainMenuScript : MonoBehaviour
 {
     public GameObject continueButton;
@@ -13,6 +15,7 @@ public class MainMenuScript : MonoBehaviour
     public GameObject menuPanel;
     public SceneFader sceneLoader;
     public TextMeshProUGUI gemText;
+    public TMP_InputField seedInputField;
     GameObject currentPanel;
 
     private void Awake()
@@ -33,6 +36,12 @@ public class MainMenuScript : MonoBehaviour
         leaderboardsPanel.SetActive(false);
 
         EventManager.AddListener<UpdateGemShopUIEvent>(HandleGemUpdate);
+    }
+
+    public void OnInputSeeedSelected()
+    {
+        print("selected input seed");
+        seedInputField.caretPosition = 2;
     }
 
     private void Update()
