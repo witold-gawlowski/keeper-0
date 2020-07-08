@@ -3,6 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+public class RunFinishedEvent : IEvent
+{
+    public int gems;
+    public int runNumber;
+    public bool completed;
+    public RunFinishedEvent(int gemsArg, int runNumberArg, bool completedArg)
+    {
+        gems = gemsArg;
+        runNumber = runNumberArg;
+        completed = completedArg;
+    }
+}
+
 public class GlobalManagerScript : MonoBehaviour
 {
     public System.Action OnLevelCompletedActions;
@@ -23,7 +36,6 @@ public class GlobalManagerScript : MonoBehaviour
     public SummaryUIScript summaryUIScript;
     public BlockUIQueue blockUIQueue;
     public BlockShuffleContainer blockShuffleContainer;
-    public SceneFader fader;
 
     int roundCount;
 
@@ -46,20 +58,9 @@ public class GlobalManagerScript : MonoBehaviour
         StartNewRoundEvent();
     }
 
-    public void HandleBackButtonTap()
-    {
-        EventManager.Clear();
-        StartCoroutine(fader.FadeAndLoadScene(SceneFader.FadeDirection.In, "MainMenuScene"));
-        //SceneManager.LoadScene("MainMenuScene", LoadSceneMode.Single);
-    }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            HandleBackButtonTap();
-        }
-    }
+
+
 
     private void OnStartNewRound()
     {
@@ -97,17 +98,23 @@ public class GlobalManagerScript : MonoBehaviour
 
     private void OnLevelCompleted()
     {
+        accountManager.AddGems(levelMoneyManagerScript.GetGems());
         levelsUIScript.DeleteLastSelectedLevel();
         OnLevelCompletedActions();
         OnLevelFinished();
         accountManager.AddFunds(levelMoneyManagerScript.GetTotalReward());
         roundCount++;
+        if(roundCount >= levelManagerScript.GetLevelTarget())
+        {
+            EventManager.SendEvent(new RunFinishedEvent(levelMoneyManagerScript.GetGems(), levelManagerScript.seed, true));
+        }
         StartNewRoundEvent();
+
         EventManager.SendEvent(new TopBarUIUpdateEvent(
             levelManagerScript.seed,
             roundCount,
             levelManagerScript.GetLevelTarget(),
-            levelMoneyManagerScript.GetGems(),
+            accountManager.GetGems(),
             accountManager.GetMoney()));
     }
 

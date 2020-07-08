@@ -36,6 +36,9 @@ public class GlobalUIScript : MonoBehaviour
     public Text completenessText;
     public TextMeshProUGUI runNumberText;
     public Image completnessBar;
+    public SceneFader fader;
+    public GameObject quitConfirmPanel;
+
 
     private void Awake()
     {
@@ -46,6 +49,27 @@ public class GlobalUIScript : MonoBehaviour
         inventoryUI.SetActive(false);
         shopUI.SetActive(true);
         EventManager.AddListener<TopBarUIUpdateEvent>(BriefingTopBarUIUpdateDispatcher);
+        EventManager.AddListener<RunFinishedEvent>(OnRunFinishEventDispatcher);
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            HandleBackButtonTap();
+        }
+    }
+
+
+    public void OnRunFinishEventDispatcher(IEvent evArg)
+    {
+        StartCoroutine(fader.FadeAndLoadScene(SceneFader.FadeDirection.In, "MainMenuScene"));
+        EventManager.Clear();
+    }
+
+    public void HandleBackButtonTap()
+    {
+        quitConfirmPanel.SetActive(true);
     }
 
     public void BriefingTopBarUIUpdateDispatcher(IEvent evArg)

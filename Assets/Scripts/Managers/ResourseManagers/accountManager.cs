@@ -7,9 +7,11 @@ public class accountManager : MonoBehaviour
     public LevelsUIScript levelsUIScript;
     int money;
     public int startingMoney = 1000;
+    int gems = 0;
     private void Awake()
     {
         money = startingMoney;
+        gems = 0;
     }
     private void Start()
     {
@@ -29,6 +31,15 @@ public class accountManager : MonoBehaviour
     public int GetMoney()
     {
         return money;
+    }
+    public int GetGems()
+    {
+        return gems;
+    }
+
+    public void AddGems(int value)
+    {
+        gems += value;
     }
 
     public void AddFunds(int value)
