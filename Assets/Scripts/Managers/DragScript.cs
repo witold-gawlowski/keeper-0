@@ -18,7 +18,7 @@ public class DragScript : MonoBehaviour
     public LevelMoneyManagerScript levelMoneyManagerScript;
     public BuildingUIScript buildingUI;
     public BlockUIQueue blockUIQueue;
-
+    public bool useMouse = true;
     bool snapped;
     public ProceduralMap map;
     public bool firstBlockPlaced;
@@ -39,14 +39,29 @@ public class DragScript : MonoBehaviour
     void Update()
     {
         Touch[] touches = Input.touches;
-        if (touches.Length > 0)
+        if (touches.Length > 0 || Input.GetMouseButton(0))
         {
-            Touch mainTouch = touches[0];
-            Vector3 newPosition = Camera.main.ScreenToWorldPoint(mainTouch.position);
-            newPosition.z = 0;
-            if (mainTouch.phase == TouchPhase.Began)
+            Touch mainTouch = new Touch();
+            Vector3 newPosition;
+            if (touches.Length != 0)
             {
-                if (!EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))
+                mainTouch = touches[0];
+                newPosition = Camera.main.ScreenToWorldPoint(mainTouch.position);
+            }
+            else
+            {
+                newPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            }
+            
+            newPosition.z = 0;
+            if ((!useMouse && mainTouch.phase == TouchPhase.Began) || Input.GetMouseButtonDown(0))
+            {
+                int pointerID = 0;
+                if (!Input.GetMouseButton(0))
+                {
+                    pointerID = Input.GetTouch(0).fingerId;
+                }
+                if (!EventSystem.current.IsPointerOverGameObject(pointerID))
                 {
                     GameObject draggedBlock = null;
                     if (blockFeederScript.Top() != null)
@@ -72,7 +87,7 @@ public class DragScript : MonoBehaviour
                 }
             }
         }
-        if (touches.Length > 0 && touches[0].phase == TouchPhase.Ended && draggedBlockScript != null)
+        if (((touches.Length > 0 && touches[0].phase == TouchPhase.Ended)||Input.GetMouseButtonUp(0)) && draggedBlockScript != null)
         {
             if (snapped)
             {
