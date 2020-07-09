@@ -50,6 +50,7 @@ public class LevelManagerScript : MonoBehaviour
 
     private void Awake()
     {
+        seed = SeedScript.instance.seed;
         randomizer = new Randomizer(seed);
         levelScheduler = GetComponentInChildren<LevelSchedulerScript>();
         levelScheduler.Init(randomizer);

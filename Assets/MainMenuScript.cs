@@ -70,6 +70,7 @@ public class MainMenuScript : MonoBehaviour
     {
         //SceneManager.LoadScene("MenuScene");
         StartCoroutine(sceneLoader.FadeAndLoadScene(SceneFader.FadeDirection.In, "MenuScene"));
+        SeedScript.instance.seed = int.Parse(seedInputField.text);
     }
 
     public void OnContinueButtonTap()
