@@ -13,9 +13,12 @@ public class SelectedLevelPanelScript : MonoBehaviour
     public GameObject buildbutton;
     public Image levelMinimap;
     public Image backgroundImage;
+    public GameObject noBlocksPopup;
+    bool isInventoryEmpty;
 
-    public void Initialize(GameObject levelArg, bool isBoughtArg)
+    public void Initialize(GameObject levelArg, bool isBoughtArg, bool isInventoryEmptyArg = false)
     {
+        isInventoryEmpty = isInventoryEmptyArg;
         SnapshotCreatorScript snapshotCreatorScript = levelArg.GetComponent<SnapshotCreatorScript>();
         levelMinimap.sprite = snapshotCreatorScript.GetLevelSprite();
         backgroundImage.sprite = snapshotCreatorScript.GetBackgroundSprite();
@@ -24,7 +27,8 @@ public class SelectedLevelPanelScript : MonoBehaviour
         {
             buyButton.SetActive(false);
             buildbutton.SetActive(true);
-        }else
+        }
+        else
         {
             buyButton.SetActive(true);
             buildbutton.SetActive(false);
@@ -38,7 +42,14 @@ public class SelectedLevelPanelScript : MonoBehaviour
 
     public void OnBuildButtonTap()
     {
-        RunLevelEvent(selectedLevel);
+        if (isInventoryEmpty)
+        {
+            noBlocksPopup.SetActive(true);
+        }
+        else
+        {
+            RunLevelEvent(selectedLevel);
+        }
     }
 
     public void OnRemoveButtonTap()

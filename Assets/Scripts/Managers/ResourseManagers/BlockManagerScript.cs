@@ -28,6 +28,18 @@ public class BlockManagerScript : MonoBehaviour
         RemoveBlock(a.blockPrefab);
     }
 
+    public bool IsInventoryEmpty()
+    {
+        foreach(KeyValuePair<GameObject, int> kvp in blockInventory)
+        {
+            if (kvp.Value > 0)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
     public void OnStartBuilding(GameObject level)
     {
         blockShuffleContainer.Initialize(seed);
