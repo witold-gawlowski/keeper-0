@@ -350,9 +350,7 @@ public class ProceduralMap : MonoBehaviour
     }
 
 
-
-
-    public bool AreFree(List<Vector2Int> blockGeometry, Vector2Int blockPosition, bool alsoCheckForNeighbor = false)
+    public bool AreFree(List<Vector2Int> blockGeometry, Vector2Int blockPosition, bool alsoCheckForNeighbor = false, bool blockIsdigger = false)
     {
         bool hasNeighbor = false;
         for(int i=0; i<blockGeometry.Count; i++)
@@ -362,7 +360,7 @@ public class ProceduralMap : MonoBehaviour
             {
                 return false;
             }
-            else if (map[tilePosition.x, tilePosition.y] == 1 || map[tilePosition.x, tilePosition.y] == 3)
+            else if ((map[tilePosition.x, tilePosition.y] == 1 && blockIsdigger == false)|| map[tilePosition.x, tilePosition.y] == 3)
             {
                 return false;
             }

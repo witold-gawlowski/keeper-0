@@ -11,6 +11,8 @@ public class BlockScript : MonoBehaviour
     public Color placedColor2 = new Color(0.6f, 0.2f, 0.2f, 1.0f);
     public Color hangingColor = new Color(0.8f, 0.2f, 0.2f, 1.0f);
     public Vector3 geometricMiddlePosition;
+    public bool isStarter = false;
+    public bool isDigger = false;
 
     void Start()
     {

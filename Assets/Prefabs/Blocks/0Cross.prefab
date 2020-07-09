@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7082414660671302750}
   - component: {fileID: 1998661198221863030}
   m_Layer: 0
-  m_Name: Block_Cross
+  m_Name: 0Cross
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -52,3 +52,8 @@ MonoBehaviour:
   - {x: 2, y: 0}
   tile: {fileID: 8562417976350379660, guid: a33eca05f65bcb54cb9097a587b37edf, type: 3}
   value: 130
+  placedColor2: {r: 0.6, g: 0.2, b: 0.2, a: 1}
+  hangingColor: {r: 0.8, g: 0.2, b: 0.2, a: 1}
+  geometricMiddlePosition: {x: 0, y: 0, z: 0}
+  isStarter: 0
+  isDigger: 1

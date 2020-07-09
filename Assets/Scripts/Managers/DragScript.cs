@@ -22,6 +22,8 @@ public class DragScript : MonoBehaviour
     bool snapped;
     public ProceduralMap map;
     public bool firstBlockPlaced;
+    float tapLengthCounter;
+    public float rotateTimeWindow = 0.5f;
 
 
     public void SetProceduralMap(GameObject levelInstanceObject)
@@ -52,7 +54,7 @@ public class DragScript : MonoBehaviour
             {
                 newPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             }
-            
+
             newPosition.z = 0;
             if ((!useMouse && mainTouch.phase == TouchPhase.Began) || Input.GetMouseButtonDown(0))
             {
@@ -61,6 +63,7 @@ public class DragScript : MonoBehaviour
                 {
                     pointerID = Input.GetTouch(0).fingerId;
                 }
+                tapLengthCounter = 0;
                 if (!EventSystem.current.IsPointerOverGameObject(pointerID))
                 {
                     GameObject draggedBlock = null;
@@ -73,6 +76,10 @@ public class DragScript : MonoBehaviour
                     }
                 }
             }
+            else
+            {
+                tapLengthCounter += Time.deltaTime;
+            }
 
             snapped = false;
             if (draggedBlockScript != null)
@@ -80,7 +87,9 @@ public class DragScript : MonoBehaviour
                 Vector3 fingerShiftedNewPosition = newPosition + new Vector3(-3, 3) - draggedBlockScript.geometricMiddlePosition;
                 draggedBlockScript.transform.position = fingerShiftedNewPosition;
                 Vector2Int snappedPointerPosition = new Vector2Int(Mathf.RoundToInt(fingerShiftedNewPosition.x), Mathf.RoundToInt(fingerShiftedNewPosition.y));
-                if (map.AreFree(draggedBlockScript.relativeTilePositions, snappedPointerPosition, firstBlockPlaced))
+                bool blockIsDigger = draggedBlockScript.isDigger;
+                bool blockIsStarter = draggedBlockScript.isStarter;
+                if (map.AreFree(draggedBlockScript.relativeTilePositions, snappedPointerPosition, firstBlockPlaced && !blockIsStarter, blockIsDigger))
                 {
                     draggedBlockScript.transform.position = new Vector3(snappedPointerPosition.x, snappedPointerPosition.y);
                     snapped = true;
@@ -109,12 +118,16 @@ public class DragScript : MonoBehaviour
             }
             else
             {
-                buildingUI.TriggerRotateEvent();
+                if (tapLengthCounter < rotateTimeWindow)
+                {
+                    buildingUI.TriggerRotateEvent();
+                }
                 blockUIQueue.SetTopVisible(true);
                 Destroy(draggedBlockScript.gameObject);
                 draggedBlockScript.transform.position = blockSpawnerScript.transform.position;
                 draggedBlockScript = null;
             }
+            print(tapLengthCounter);
         }
 
     }
