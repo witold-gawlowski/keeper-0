@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Deck : MonoBehaviour
 {
-    public List<Card> cards;
-
+    List<Card> cards;
+    public List<Card> staringCards;
     public List<Card> queue;
 
     public static Deck instance;
@@ -19,6 +19,32 @@ public class Deck : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
+        Load();
+    }
+
+    public void Load()
+    {
+        if (PlayerPrefs.HasKey("deck"))
+        {
+
+            string deckString = PlayerPrefs.GetString("deck");
+            FromString(deckString);
+        }
+        else
+        {
+            cards = staringCards;
+        }
+    }
+
+    public List<Card> GetCards()
+    {
+        return cards;
+    }
+
+    public void Save()
+    {
+        PlayerPrefs.SetString("deck", ToString());
+        PlayerPrefs.Save();
     }
 
     public void Shuffle()
@@ -43,19 +69,26 @@ public class Deck : MonoBehaviour
     {
         cards.Add(cardArg);
         EventManager.SendEvent(new UpdateDeckUIEvent(cards));
+        Save();
     }
     public void Remove(Card cardArg)
     {
         cards.Remove(cardArg);
         EventManager.SendEvent(new UpdateDeckUIEvent(cards));
+        Save();
     }
 
     public void FromString(string sourceArg)
     {
-        string[] words = sourceArg.Split(';');
-        foreach (string s in words)
+        if (sourceArg != "")
         {
-            cards.Add(new Card(s));
+            cards = new List<Card>();
+            string[] words = sourceArg.Split(';');
+            foreach (string s in words)
+            {
+                Card newCard = CardCodex.instance.GetCardByID(s);
+                cards.Add(newCard);
+            }
         }
     }
 
@@ -64,9 +97,9 @@ public class Deck : MonoBehaviour
         string result = "";
         foreach (Card c in cards)
         {
-            result += c.ToString() + ";";
+            result += c.id + ";";
         }
-        result.TrimEnd(';');
+        result = result.TrimEnd(new char[] { ';' });
         return result;
     }
 

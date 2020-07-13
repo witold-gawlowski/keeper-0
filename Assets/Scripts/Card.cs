@@ -23,17 +23,4 @@ public class Card: ScriptableObject
         gemCost = gemCostArg;
     }
 
-    public Card(string stringArg)
-    {
-        string[] words = stringArg.Split(',');
-        block = BlockCodexScript.instance.GetBlockObjectForName(words[0]);
-        quantity = int.Parse(words[1]);
-        cashCost = int.Parse(words[2]);
-        gemCost = int.Parse(words[3]);
-    }
-
-    public override string ToString()
-    {
-        return block.name + "," + quantity + "," + cashCost + "," + gemCost;
-    }
 }

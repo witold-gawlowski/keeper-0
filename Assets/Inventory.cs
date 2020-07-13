@@ -5,13 +5,34 @@ public class CardMovedToDeckEvent : IEvent {public Card c; public CardMovedToDec
 public class UpdateInventoryUIEvent : IEvent { public List<Card> cards; public UpdateInventoryUIEvent(List<Card> cArg) { cards = cArg; } }
 public class Inventory : MonoBehaviour
 {
-    public List<Card> cards;
+    List<Card> cards;
+    public List<Card> startingCards;
 
     private void Awake()
     {
-        EventManager.AddListener<ShopCardTappedEvent>(NewCardEventDispatcher);
+        Load();
+        //EventManager.AddListener<ShopCardTappedEvent>(NewCardEventDispatcher);
         EventManager.AddListener<CardMovedToDeckEvent>(CardMovedToDeckEventDispatcher);
         EventManager.AddListener<CardMovedToInventoryEvent>(CardMovedToInventoryEventDispatcher);
+    }
+
+    public void Load()
+    {
+        if (PlayerPrefs.HasKey("inventory"))
+        {
+            string inventoryString = PlayerPrefs.GetString("inventory");
+            FromString(inventoryString);
+        }
+        else
+        {
+            cards = startingCards;
+        }
+    }
+
+    public void Save()
+    {
+        PlayerPrefs.SetString("inventory", ToString());
+        PlayerPrefs.Save();
     }
 
     public void CardMovedToDeckEventDispatcher(IEvent evArg)
@@ -26,11 +47,11 @@ public class Inventory : MonoBehaviour
         Add(evData.c);
     }
 
-    void NewCardEventDispatcher(IEvent evArg)
-    {
-        ShopCardTappedEvent ev = evArg as ShopCardTappedEvent;
-        Add(ev.card);
-    }
+    //void NewCardEventDispatcher(IEvent evArg)
+    //{
+    //    ShopCardTappedEvent ev = evArg as ShopCardTappedEvent;
+    //    Add(ev.card);
+    //}
 
     private void Start()
     {
@@ -40,10 +61,15 @@ public class Inventory : MonoBehaviour
 
     public void FromString(string sourceArg)
     {
-        string[] words = sourceArg.Split(';');
-        foreach(string s in words)
+        if (sourceArg != "")
         {
-            cards.Add(new Card(s));
+            cards = new List<Card>();
+            string[] words = sourceArg.Split(';');
+            foreach (string s in words)
+            {
+                Card newCard = CardCodex.instance.GetCardByID(s);
+                cards.Add(newCard);
+            }
         }
     }
 
@@ -52,22 +78,23 @@ public class Inventory : MonoBehaviour
         string result = "";
         foreach(Card c in cards)
         {
-            result += c.ToString() + ";";
+            result += c.id + ";";
         }
-        result.TrimEnd(';');
+        result = result.TrimEnd(new char[] { ';' });
         return result;
     }
-
-
-    void Add(Card cardArg)
+    
+    public void Add(Card cardArg)
     {
         cards.Add(cardArg);
         EventManager.SendEvent(new UpdateInventoryUIEvent(cards));
+        Save();
     }
 
     void Remove(Card cardArg)
     {
         cards.Remove(cardArg);
         EventManager.SendEvent(new UpdateInventoryUIEvent(cards));
+        Save();
     }
 }

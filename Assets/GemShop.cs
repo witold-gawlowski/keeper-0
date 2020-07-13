@@ -12,14 +12,17 @@ public class GemShop : MonoBehaviour
     public List<Card> cards;
     const int bigPrime = int.MaxValue;
     int numberOfCardsInOffer = 5;
-    public int gems = 5;
+    int gems;
+    int startingGems = 5;
     public CompletedLevelsManager completedLevelsManager;
     public CardCodex cardCodex;
+    public Inventory inventory;
 
     void Awake()
     {
         EventManager.AddListener<ShopCardTappedEvent>(CardSoldEventHandler);
         EventManager.AddListener<RunFinishedEvent>(RunFinishedEventHandler);
+        Load();
     }
 
     void Start()
@@ -29,11 +32,32 @@ public class GemShop : MonoBehaviour
         CreateOffer(completedLevelsFootprint);
         UpdateUI();
     }
+
+    public void Load()
+    {
+        if (PlayerPrefs.HasKey("gems"))
+        {
+            int gems = PlayerPrefs.GetInt("gems");
+            LoadGems(gems);
+        }
+        else
+        {
+            gems = startingGems;
+        }
+    }
+
+    public void Save()
+    {
+        PlayerPrefs.SetInt("gems", gems);
+        PlayerPrefs.Save();
+    }
+
     void CardSoldEventHandler(IEvent evArg)
     {
         ShopCardTappedEvent ev = evArg as ShopCardTappedEvent;
         TrySell(ev.card);
     }
+
 
     public void LoadGems(int gemsArg)
     {
@@ -97,7 +121,9 @@ public class GemShop : MonoBehaviour
         {
             gems -= cardArg.gemCost;
             cards.Remove(cardArg);
+            inventory.Add(cardArg);
             EventManager.SendEvent(new UpdateGemShopUIEvent(cards, gems));
+            Save();
         }
     }
 }

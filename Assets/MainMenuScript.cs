@@ -40,7 +40,6 @@ public class MainMenuScript : MonoBehaviour
 
     public void OnInputSeeedSelected()
     {
-        print("selected input seed");
         seedInputField.caretPosition = 2;
     }
 

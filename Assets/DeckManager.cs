@@ -17,7 +17,7 @@ public class DeckManager : MonoBehaviour
 
     private void Start()
     {
-        UpdateDeckUIEvent awakeEvent = new UpdateDeckUIEvent(deck.cards);
+        UpdateDeckUIEvent awakeEvent = new UpdateDeckUIEvent(deck.GetCards());
         EventManager.SendEvent(awakeEvent);
     }
 
