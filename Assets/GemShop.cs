@@ -21,12 +21,13 @@ public class GemShop : MonoBehaviour
     void Awake()
     {
         EventManager.AddListener<ShopCardTappedEvent>(CardSoldEventHandler);
-        EventManager.AddListener<RunFinishedEvent>(RunFinishedEventHandler);
+
         Load();
     }
 
     void Start()
     {
+        RunFinishedEventHandler();
         List<int> completedLevels = completedLevelsManager.GetLevels();
         int completedLevelsFootprint = GetLevelsFootprint(completedLevels);
         CreateOffer(completedLevelsFootprint);
@@ -86,11 +87,10 @@ public class GemShop : MonoBehaviour
         return result;
     }
 
-    public void RunFinishedEventHandler(IEvent evArg)
+    public void RunFinishedEventHandler()
     {
-        RunFinishedEvent evData = evArg as RunFinishedEvent;
-        int completedLevelNumber = evData.runNumber;
-        bool isFinishedLevelCompleted = evData.completed;
+        int completedLevelNumber = RunResultScript.instance.runNumber;
+        bool isFinishedLevelCompleted = RunResultScript.instance.completed;
         int footprint = GetLatestFootprint(completedLevelNumber, isFinishedLevelCompleted);
         CreateOffer(footprint);
     }
