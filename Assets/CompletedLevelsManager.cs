@@ -2,6 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public class UpdateCompletedLevelsUIEvent: IEvent {
+    public List<int> levels;
+    public UpdateCompletedLevelsUIEvent(List<int> levelsArg)
+    {
+        levels = levelsArg;
+    }
+}
+
 public class CompletedLevelsManager : MonoBehaviour
 {
     List<int> levels;
@@ -24,6 +32,7 @@ public class CompletedLevelsManager : MonoBehaviour
     public void RegisterLevel(int intArg)
     {
         levels.Add(intArg);
+        EventManager.SendEvent(new UpdateCompletedLevelsUIEvent(levels));
     }
 
     public List<int> GetLevels()
