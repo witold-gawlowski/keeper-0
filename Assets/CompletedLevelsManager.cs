@@ -5,26 +5,43 @@ using UnityEngine;
 public class CompletedLevelsManager : MonoBehaviour
 {
     List<int> levels;
- 
+
+    private void Awake()
+    {
+        string initString = "";
+        if (PlayerPrefs.HasKey("completedLevels"))
+        {
+            initString = PlayerPrefs.GetString("completedLevels");
+        }
+        Initialize(initString);
+    }
+
+    private void Start()
+    {
+        
+    }
 
     public void RegisterLevel(int intArg)
     {
         levels.Add(intArg);
     }
 
- 
-
     public List<int> GetLevels()
     {
         return levels;
     }
 
-    public void FromString(string sArg)
+    public void Initialize(string sArg)
     {
-        string[] words = sArg.Split(';');
-        foreach(string intString in words)
+        levels = new List<int>();
+        if (sArg != "")
         {
-            levels.Add(int.Parse(intString));
+            string[] words = sArg.Split(';');
+            foreach (string intString in words)
+            {
+                print("intString " + intString);
+                levels.Add(int.Parse(intString));
+            }
         }
     }
 
@@ -37,4 +54,5 @@ public class CompletedLevelsManager : MonoBehaviour
         }
         return result;
     }
+
 }

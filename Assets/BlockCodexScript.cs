@@ -59,6 +59,7 @@ public class BlockCodexScript : MonoBehaviour
 
     void InitializeDictionary()
     {
+        dictionary = new Dictionary<string, GameObject>();
         foreach (GameObject blockObjectTemp in blockConfig)
         {
             dictionary.Add(blockObjectTemp.name, blockObjectTemp.gameObject);

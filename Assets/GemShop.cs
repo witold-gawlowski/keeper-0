@@ -14,6 +14,7 @@ public class GemShop : MonoBehaviour
     int numberOfCardsInOffer = 5;
     public int gems = 5;
     public CompletedLevelsManager completedLevelsManager;
+    public CardCodex cardCodex;
 
     void Awake()
     {
@@ -23,6 +24,9 @@ public class GemShop : MonoBehaviour
 
     void Start()
     {
+        List<int> completedLevels = completedLevelsManager.GetLevels();
+        int completedLevelsFootprint = GetLevelsFootprint(completedLevels);
+        CreateOffer(completedLevelsFootprint);
         UpdateUI();
     }
     void CardSoldEventHandler(IEvent evArg)
@@ -73,12 +77,8 @@ public class GemShop : MonoBehaviour
         Randomizer r = new Randomizer(completedLevelsFootprint);
         for(int i=0; i<numberOfCardsInOffer; i++)
         {
-            int quantity = new[] {1, 3, 5 }[r.Range(0, 3)];
-            int cashCost = new[] { 100, 200, 300, 500 }[r.Range(0, 4)];
-            int gemCost = new[] { 2, 3, 5, 7 }[r.Range(0, 4)];
-            GameObject block = BlockCodexScript.instance.GetRandomBlock(r);
-            Card newCard = new Card(block, quantity, cashCost, gemCost);
-            cards.Add(newCard);
+            Card randomCard = cardCodex.GetRandomCard(r);
+            cards.Add(randomCard);
         }
         UpdateUI();
     }
