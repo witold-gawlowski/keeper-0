@@ -10,6 +10,7 @@ public class UpdateGemShopUIEvent : IEvent {
 public class GemShop : MonoBehaviour
 {
     public List<Card> cards;
+    const int bigPrime = int.MaxValue;
     int numberOfCardsInOffer = 5;
     public int gems = 5;
     public CompletedLevelsManager completedLevelsManager;
@@ -17,8 +18,13 @@ public class GemShop : MonoBehaviour
     void Awake()
     {
         EventManager.AddListener<ShopCardTappedEvent>(CardSoldEventHandler);
+        EventManager.AddListener<RunFinishedEvent>(RunFinishedEventHandler);
     }
-    
+
+    void Start()
+    {
+        UpdateUI();
+    }
     void CardSoldEventHandler(IEvent evArg)
     {
         ShopCardTappedEvent ev = evArg as ShopCardTappedEvent;
@@ -30,9 +36,40 @@ public class GemShop : MonoBehaviour
         gems = gemsArg;
     }
 
-    public void CreateOffer()
+    public int GetLevelsFootprint(List<int> levelsArg)
     {
-        int completedLevelsFootprint = completedLevelsManager.GetCompletedLevelsFootprint();
+        int result = 1;
+        foreach (int levelNumber in levelsArg)
+        {
+            result *= levelNumber;
+            result %= bigPrime;
+        }
+        return result;
+    }
+
+    int GetLatestFootprint(int latestLevelNumberArg, bool completedArg)
+    {
+        List<int> completedLevelsTemp = completedLevelsManager.GetLevels();
+        if (completedArg && completedLevelsTemp.Contains(latestLevelNumberArg))
+        {
+            completedLevelsTemp.Add(latestLevelNumberArg);
+        }
+        int result = GetLevelsFootprint(completedLevelsTemp);
+        return result;
+    }
+
+    public void RunFinishedEventHandler(IEvent evArg)
+    {
+        RunFinishedEvent evData = evArg as RunFinishedEvent;
+        int completedLevelNumber = evData.runNumber;
+        bool isFinishedLevelCompleted = evData.completed;
+        int footprint = GetLatestFootprint(completedLevelNumber, isFinishedLevelCompleted);
+        CreateOffer(footprint);
+    }
+
+    public void CreateOffer(int completedLevelsFootprint)
+    {
+        cards.Clear();
         Randomizer r = new Randomizer(completedLevelsFootprint);
         for(int i=0; i<numberOfCardsInOffer; i++)
         {
@@ -43,13 +80,16 @@ public class GemShop : MonoBehaviour
             Card newCard = new Card(block, quantity, cashCost, gemCost);
             cards.Add(newCard);
         }
+        UpdateUI();
     }
 
-    void Start()
+    void UpdateUI()
     {
         UpdateGemShopUIEvent awakeEvent = new UpdateGemShopUIEvent(cards, gems);
         EventManager.SendEvent(awakeEvent);
     }
+
+    
 
     private void TrySell(Card cardArg)
     {

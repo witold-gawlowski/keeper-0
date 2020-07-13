@@ -5,23 +5,14 @@ using UnityEngine;
 public class CompletedLevelsManager : MonoBehaviour
 {
     List<int> levels;
-    const int bigPrime = int.MaxValue;
+ 
 
     public void RegisterLevel(int intArg)
     {
         levels.Add(intArg);
     }
 
-    public int GetCompletedLevelsFootprint()
-    {
-        int result = 1;
-        foreach(int levelNumber in levels)
-        {
-            result *= levelNumber;
-            result %= bigPrime;
-        }
-        return result;
-    }
+ 
 
     public List<int> GetLevels()
     {
