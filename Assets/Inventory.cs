@@ -25,7 +25,13 @@ public class Inventory : MonoBehaviour
         }
         else
         {
-            cards = startingCards;
+            if (startingCards == null)
+            {
+                cards = new List<Card>();
+            }
+            else{
+                cards = startingCards;
+            }
         }
     }
 
@@ -61,9 +67,9 @@ public class Inventory : MonoBehaviour
 
     public void FromString(string sourceArg)
     {
+        cards = new List<Card>();
         if (sourceArg != "")
         {
-            cards = new List<Card>();
             string[] words = sourceArg.Split(';');
             foreach (string s in words)
             {

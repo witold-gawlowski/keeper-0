@@ -19,8 +19,15 @@ public class GemShopUIScript : MonoBehaviour
     {
         UpdateGemShopUIEvent gemShopAwakeEvent = eventArg as UpdateGemShopUIEvent;
         List<Card> cardsTemp = gemShopAwakeEvent.cards;
+
+        StartCoroutine(asd(cardsTemp));
+    }
+
+    public IEnumerator asd(List<Card> cardsTemp)
+    {
         ClearButtons();
-        foreach(Card  cTemp in cardsTemp)
+        yield return new WaitForEndOfFrame();
+        foreach (Card cTemp in cardsTemp)
         {
             CreateButton(cTemp);
         }

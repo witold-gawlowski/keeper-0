@@ -5,7 +5,7 @@ using UnityEngine;
 public class Deck : MonoBehaviour
 {
     List<Card> cards;
-    public List<Card> staringCards;
+    public List<Card> startingCards;
     public List<Card> queue;
 
     public static Deck instance;
@@ -32,7 +32,14 @@ public class Deck : MonoBehaviour
         }
         else
         {
-            cards = staringCards;
+            if (startingCards == null)
+            {
+                cards = new List<Card>();
+            }
+            else
+            {
+                cards = startingCards;
+            }
         }
     }
 
@@ -80,9 +87,9 @@ public class Deck : MonoBehaviour
 
     public void FromString(string sourceArg)
     {
+        cards = new List<Card>();
         if (sourceArg != "")
         {
-            cards = new List<Card>();
             string[] words = sourceArg.Split(';');
             foreach (string s in words)
             {

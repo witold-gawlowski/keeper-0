@@ -9,7 +9,7 @@ public class UpdateGemShopUIEvent : IEvent {
 }
 public class GemShop : MonoBehaviour
 {
-    public List<Card> cards;
+    List<Card> cards;
     const int bigPrime = int.MaxValue;
     int numberOfCardsInOffer = 5;
     int gems;
@@ -27,7 +27,10 @@ public class GemShop : MonoBehaviour
 
     void Start()
     {
-        RunFinishedEventHandler();
+        if (RunResultScript.instance != null)
+        {
+            RunFinishedEventHandler();
+        }
         List<int> completedLevels = completedLevelsManager.GetLevels();
         int completedLevelsFootprint = GetLevelsFootprint(completedLevels);
         CreateOffer(completedLevelsFootprint);
@@ -93,18 +96,18 @@ public class GemShop : MonoBehaviour
         bool isFinishedLevelCompleted = RunResultScript.instance.completed;
         int footprint = GetLatestFootprint(completedLevelNumber, isFinishedLevelCompleted);
         CreateOffer(footprint);
+        UpdateUI();
     }
 
     public void CreateOffer(int completedLevelsFootprint)
     {
-        cards.Clear();
+        cards = new List<Card>();
         Randomizer r = new Randomizer(completedLevelsFootprint);
         for(int i=0; i<numberOfCardsInOffer; i++)
         {
             Card randomCard = cardCodex.GetRandomCard(r);
             cards.Add(randomCard);
         }
-        UpdateUI();
     }
 
     void UpdateUI()

@@ -33,14 +33,16 @@ public class CompletedLevelsUIScript : MonoBehaviour
         for(int i=0; i<numberOfLevels; i++)
         {
             int givenNumber = levelsArg[i];
-            currentChunkText += givenNumber + " ";
             int chunkNumber = ChunkNumber(givenNumber);
-            if (chunkNumber != ChunkNumber(givenNumber - 1))
+            currentChunkText += givenNumber + " ";
+            bool endChunk = (i == numberOfLevels - 1) || (chunkNumber != ChunkNumber(levelsArg[i+1]));
+            if (endChunk)
             {
                 textChunks.Add(currentChunkText);
                 currentChunkText = "";
             }
         }
+
 
         foreach(string sChunk in textChunks)
         {

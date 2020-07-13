@@ -14,7 +14,35 @@ public class CompletedLevelsManager : MonoBehaviour
 {
     List<int> levels;
 
-    private void Awake()
+    void Awake()
+    {
+        Load();
+    }
+
+    void Start()
+    {
+        EventManager.SendEvent(new UpdateCompletedLevelsUIEvent(levels));
+    }
+
+    public void RegisterLevel(int intArg)
+    {
+        levels.Add(intArg);
+        Save();
+        EventManager.SendEvent(new UpdateCompletedLevelsUIEvent(levels));
+    }
+
+    public List<int> GetLevels()
+    {
+        return levels;
+    }
+
+    void Save()
+    {
+        PlayerPrefs.SetString("completedLevels", ToString());
+        PlayerPrefs.Save();
+    }
+
+    void Load()
     {
         string initString = "";
         if (PlayerPrefs.HasKey("completedLevels"))
@@ -22,22 +50,6 @@ public class CompletedLevelsManager : MonoBehaviour
             initString = PlayerPrefs.GetString("completedLevels");
         }
         Initialize(initString);
-    }
-
-    private void Start()
-    {
-        
-    }
-
-    public void RegisterLevel(int intArg)
-    {
-        levels.Add(intArg);
-        EventManager.SendEvent(new UpdateCompletedLevelsUIEvent(levels));
-    }
-
-    public List<int> GetLevels()
-    {
-        return levels;
     }
 
     public void Initialize(string sArg)
@@ -48,7 +60,6 @@ public class CompletedLevelsManager : MonoBehaviour
             string[] words = sArg.Split(';');
             foreach (string intString in words)
             {
-                print("intString " + intString);
                 levels.Add(int.Parse(intString));
             }
         }
@@ -61,6 +72,7 @@ public class CompletedLevelsManager : MonoBehaviour
         {
             result += i + ";"; 
         }
+        result = result.TrimEnd(new char[] { ';' });
         return result;
     }
 
