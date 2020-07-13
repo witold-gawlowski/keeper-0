@@ -32,16 +32,6 @@ public class Deck : MonoBehaviour
         return queue.Count == 0;
     }
 
-    public override string ToString()
-    {
-        return "";
-    }
-
-    public void Load(string sourceArg)
-    {
-        
-    }
-
     public Card Draw()
     {
         Card result = queue[0];
@@ -59,4 +49,25 @@ public class Deck : MonoBehaviour
         cards.Remove(cardArg);
         EventManager.SendEvent(new UpdateDeckUIEvent(cards));
     }
+
+    public void FromString(string sourceArg)
+    {
+        string[] words = sourceArg.Split(';');
+        foreach (string s in words)
+        {
+            cards.Add(new Card(s));
+        }
+    }
+
+    public override string ToString()
+    {
+        string result = "";
+        foreach (Card c in cards)
+        {
+            result += c.ToString() + ";";
+        }
+        result.TrimEnd(';');
+        return result;
+    }
+
 }

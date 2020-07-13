@@ -19,6 +19,31 @@ public class BlockScriptEditor : Editor
         imageSize = Mathf.Max(boxDiam.x, boxDiam.y) * 9 + 30;
     }
 
+    public override void OnInspectorGUI()
+    {
+        DrawDefaultInspector();
+        if (GUILayout.Button("Draw block icon"))
+        {
+            Texture2D tex = new Texture2D(imageSize, imageSize, TextureFormat.ARGB32, false);
+            tex.filterMode = FilterMode.Point;
+            ClearTexture(ref tex);
+            int middleTileIndex = GetMiddleTileIndex();
+            middleTilePosition = relativeTilePositions[middleTileIndex];
+            DrawTiles(ref tex);
+            DrawSeparators(ref tex);
+
+            tex.Apply();
+
+            byte[] bytes = tex.EncodeToPNG();
+            Object.DestroyImmediate(tex);
+
+            string blockName = (target as BlockScript).name;
+            File.WriteAllBytes("D:/Documents/Keeper-0/Assets/Resources/Blocks/" + blockName + ".png", bytes);
+
+
+        }
+    }
+
     public Vector2 GetBlockMiddlePosition()
     {
         Vector2Int firstPoint = relativeTilePositions[0];
@@ -150,28 +175,5 @@ public class BlockScriptEditor : Editor
         }
     }
 
-    public override void OnInspectorGUI()
-    {
-        DrawDefaultInspector();
-        if (GUILayout.Button("Draw block icon"))
-        {
-            Texture2D tex = new Texture2D(imageSize, imageSize, TextureFormat.ARGB32, false);
-            tex.filterMode = FilterMode.Point;
-            ClearTexture(ref tex);
-            int middleTileIndex = GetMiddleTileIndex();
-            middleTilePosition = relativeTilePositions[middleTileIndex];
-            DrawTiles(ref  tex);
-            DrawSeparators(ref tex);
-
-            tex.Apply();
-
-            byte[] bytes = tex.EncodeToPNG();
-            Object.DestroyImmediate(tex);
-
-            string blockName = (target as BlockScript).name;
-            File.WriteAllBytes("D:/Documents/Keeper-0/Assets/Resources/Blocks/"+ blockName+".png", bytes);
-
-
-        }
-    }
+    
 }

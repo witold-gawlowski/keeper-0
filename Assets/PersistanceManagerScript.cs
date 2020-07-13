@@ -11,13 +11,13 @@ public class PersistanceManagerScript : MonoBehaviour
     public void LoadInventory()
     {
         string inventoryString = PlayerPrefs.GetString("inventory");
-        inventory.Load(inventoryString);
+        inventory.FromString(inventoryString);
     }
 
     public void LoadDeck()
     {
         string deckString = PlayerPrefs.GetString("deck");
-        deck.Load(deckString);
+        deck.FromString(deckString);
     }
 
     public void SaveInventory()

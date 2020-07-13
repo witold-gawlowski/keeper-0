@@ -38,14 +38,24 @@ public class Inventory : MonoBehaviour
         EventManager.SendEvent(awakeEvent);
     }
 
-    public void Load(string sourceArg)
+    public void FromString(string sourceArg)
     {
-
+        string[] words = sourceArg.Split(';');
+        foreach(string s in words)
+        {
+            cards.Add(new Card(s));
+        }
     }
 
     public override string ToString()
     {
-        return "";
+        string result = "";
+        foreach(Card c in cards)
+        {
+            result += c.ToString() + ";";
+        }
+        result.TrimEnd(';');
+        return result;
     }
 
 

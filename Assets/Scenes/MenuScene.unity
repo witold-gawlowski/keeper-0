@@ -762,36 +762,6 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: 70
   m_LayoutPriority: 1
---- !u!1 &141580894
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 141580895}
-  m_Layer: 0
-  m_Name: New Sprite
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &141580895
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 141580894}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 536.73785, y: 1830.4594, z: -67.413055}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 7
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &164918886
 GameObject:
   m_ObjectHideFlags: 0
@@ -4108,8 +4078,10 @@ MonoBehaviour:
   levelMoneyManagerScript: {fileID: 1799857387}
   buildingUI: {fileID: 1965867163}
   blockUIQueue: {fileID: 1992855447}
+  useMouse: 1
   map: {fileID: 0}
   firstBlockPlaced: 0
+  rotateTimeWindow: 0.5
 --- !u!4 &878351333
 Transform:
   m_ObjectHideFlags: 0

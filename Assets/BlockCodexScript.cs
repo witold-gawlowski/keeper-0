@@ -8,6 +8,7 @@ public class BlockCodexScript : MonoBehaviour
 
     Dictionary<GameObject, Sprite> blockImages;
     public List<GameObject> blockConfig;
+    Dictionary<string, GameObject> dictionary;
 
 
     private void Awake()
@@ -22,6 +23,14 @@ public class BlockCodexScript : MonoBehaviour
         }
 
         InitializeSprites();
+        InitializeDictionary();
+    }
+
+    public GameObject GetRandomBlock(Randomizer rArg)
+    {
+        int numberOfBlocks = blockConfig.Count;
+        int randomIndex = rArg.Range(0, numberOfBlocks);
+        return blockConfig[randomIndex];
     }
 
     public Sprite GetSpriteForPrefab(GameObject blockPrefab)
@@ -41,6 +50,19 @@ public class BlockCodexScript : MonoBehaviour
             result.Add(blockObjectTemp);
         }
         return result;
+    }
+
+    public GameObject GetBlockObjectForName(string nameArg)
+    {
+        return dictionary[nameArg];
+    }
+
+    void InitializeDictionary()
+    {
+        foreach (GameObject blockObjectTemp in blockConfig)
+        {
+            dictionary.Add(blockObjectTemp.name, blockObjectTemp.gameObject);
+        }
     }
 
     void InitializeSprites()

@@ -59,11 +59,17 @@ public class LevelMoneyManagerScript : MonoBehaviour
         return gems;
     }
 
+    IEnumerator LevelCompleteDelay()
+    {
+        yield return new WaitForSeconds(0.5f);
+        levelCompletedEvent();
+    }
+
     private void CheckCompleteness()
     {
         if(GetCompletedFraction() >= completionThreshold)
         {
-            levelCompletedEvent();
+            StartCoroutine(LevelCompleteDelay());
         }
     }
 
