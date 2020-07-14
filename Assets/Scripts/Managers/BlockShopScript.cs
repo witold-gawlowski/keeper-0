@@ -5,7 +5,7 @@ using UnityEngine;
 public class UpdateOfferUIEvent : IEvent { public List<Card> cards; public UpdateOfferUIEvent(List<Card> cardsArg) { cards = cardsArg;}}
 public class BlockShopScript : MonoBehaviour
 {
-    List<Card> offer;
+    public List<Card> offer;
     public accountManager accountManager;
     public BlockManagerScript blockManagerScript;
     public BlocksUIScript blocksUIScript;

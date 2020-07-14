@@ -19,19 +19,27 @@ public class GemShopUIScript : MonoBehaviour
     {
         UpdateGemShopUIEvent gemShopAwakeEvent = eventArg as UpdateGemShopUIEvent;
         List<Card> cardsTemp = gemShopAwakeEvent.cards;
-
-        StartCoroutine(asd(cardsTemp));
+        RepopulateShopUI(cardsTemp);
     }
 
-    public IEnumerator asd(List<Card> cardsTemp)
+    public void RepopulateShopUI(List<Card> cardsArg)
     {
         ClearButtons();
-        yield return new WaitForEndOfFrame();
-        foreach (Card cTemp in cardsTemp)
+        int parentIchildCount = 0;
+        foreach (Card cTemp in cardsArg)
         {
-            CreateButton(cTemp);
+            if (parentIchildCount < 3)
+            {
+                CreateButton(cTemp, buttonsParentI);
+                parentIchildCount++;
+            }
+            else
+            {
+                CreateButton(cTemp, buttonsParentII);
+            }
         }
     }
+
 
     void ClearButtons()
     {
@@ -45,14 +53,9 @@ public class GemShopUIScript : MonoBehaviour
         }
     }
 
-    void CreateButton(Card cardArg)
+    void CreateButton(Card cardArg, GameObject targetParent)
     {
-        Transform targetParent = buttonsParentI.transform;
-        if (buttonsParentI.transform.childCount >= 3)
-        {
-            targetParent = buttonsParentII.transform;
-        }
-        GameObject newBlockButton = Instantiate(buttonPrefab, targetParent);
+        GameObject newBlockButton = Instantiate(buttonPrefab, targetParent.transform);
         BlockButtonScript newBlockButtonScript = newBlockButton.GetComponent<BlockButtonScript>();
         Sprite spriteTemp = BlockCodexScript.instance.GetSpriteForPrefab(cardArg.block); 
         newBlockButtonScript.InitializeGemShopButton(spriteTemp, cardArg);

@@ -3657,7 +3657,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b508b8b336579364391cb1d9465ae9d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingCards: []
+  startingCards:
+  - {fileID: 11400000, guid: ccc23bea58c9fd54e986b1113d253daf, type: 2}
   queue: []
 --- !u!4 &1443011650
 Transform:
@@ -4050,7 +4051,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f9e68d7b95f285418de7c742782f964, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingCards: []
+  startingCards:
+  - {fileID: 11400000, guid: 5a9d5e32ca6da18479c2fc3f29be1a23, type: 2}
 --- !u!1 &1534899163 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1194460521469437388, guid: 6529bdff2f321154a814e804c5db6f8f,
@@ -6045,7 +6047,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: MEMORANDUM
+  m_Text: COMPLETED THINGS
 --- !u!222 &2110172965
 CanvasRenderer:
   m_ObjectHideFlags: 0

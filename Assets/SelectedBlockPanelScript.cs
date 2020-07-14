@@ -50,6 +50,10 @@ public class SelectedBlockPanelScript : MonoBehaviour
     public void UpdateCount(GameObject dummy, int countArg)
     {
         countText.text = "Count: " + countArg;
+        if(countArg == 0)
+        {
+            this.gameObject.SetActive(false);
+        }
     }
 
     public void SetBuyEventHandler(System.Action<Card> handlerArg)

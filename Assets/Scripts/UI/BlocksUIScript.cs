@@ -33,7 +33,7 @@ public class BlocksUIScript : MonoBehaviour
     public SelectedBlockPanelScript selectedBlockPanelScript;
     public BlockManagerScript blockManagerScript;
     public BlockShopScript blockShopScript;
-    List<GameObject> currentShopOfferButtons;
+    public List<GameObject> currentShopOfferButtons;
     Dictionary<GameObject, BlockButtonScript> inventoryButtons;
 
     public void Awake()
@@ -74,8 +74,8 @@ public class BlocksUIScript : MonoBehaviour
             Card itemTemp = offerButton.GetComponent<BlockButtonScript>().associatedCard;
             if (itemTemp == item)
             {
-                currentShopOfferButtons.Remove(offerButton);
                 Destroy(offerButton);
+                currentShopOfferButtons.Remove(offerButton);
                 return;
             }
         }

@@ -61,7 +61,6 @@ public class LevelsUIScript : MonoBehaviour
     public void OnBoughtLevelTapEvent(GameObject level)
     {
         bool inventoryEmpty = blockManagerScript.IsInventoryEmpty();
-        print("onbountleveltapevent");
         selectedLevelPanelScript.Initialize(level, true, inventoryEmpty);
         selectedLevelPanelScript.gameObject.SetActive(true);
         lastLevelSelected = level;
@@ -69,7 +68,6 @@ public class LevelsUIScript : MonoBehaviour
 
     public void OnNonBoughtLevelTapEvent(GameObject level)
     {
-        print("onNONbountleveltapevent");
         selectedLevelPanelScript.Initialize(level, false);
         selectedLevelPanelScript.gameObject.SetActive(true);
         lastLevelSelected = level;

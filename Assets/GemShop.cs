@@ -22,7 +22,7 @@ public class GemShop : MonoBehaviour
     {
         EventManager.AddListener<ShopCardTappedEvent>(CardSoldEventHandler);
 
-        Load();
+       
     }
 
     void Start()
@@ -31,9 +31,14 @@ public class GemShop : MonoBehaviour
         {
             RunFinishedEventHandler();
         }
-        List<int> completedLevels = completedLevelsManager.GetLevels();
-        int completedLevelsFootprint = GetLevelsFootprint(completedLevels);
-        CreateOffer(completedLevelsFootprint);
+
+        Load();
+        if (cards == null)
+        {
+            List<int> completedLevels = completedLevelsManager.GetLevels();
+            int completedLevelsFootprint = GetLevelsFootprint(completedLevels);
+            CreateOffer(completedLevelsFootprint);
+        }
         UpdateUI();
     }
 
@@ -48,13 +53,46 @@ public class GemShop : MonoBehaviour
         {
             gems = startingGems;
         }
+
+        if (PlayerPrefs.HasKey("gemShop"))
+        {
+            string inventoryString = PlayerPrefs.GetString("gemShop");
+            FromString(inventoryString);
+        }
+    }
+
+    public void FromString(string sourceArg)
+    {
+        cards = new List<Card>();
+        if (sourceArg != "")
+        {
+            string[] words = sourceArg.Split(';');
+            foreach (string s in words)
+            {
+                Card newCard = CardCodex.instance.GetCardByID(s);
+                cards.Add(newCard);
+            }
+        }
+    }
+
+    public override string ToString()
+    {
+        string result = "";
+        foreach (Card c in cards)
+        {
+            result += c.id + ";";
+        }
+        result = result.TrimEnd(new char[] { ';' });
+        return result;
     }
 
     public void Save()
     {
         PlayerPrefs.SetInt("gems", gems);
+        PlayerPrefs.SetString("gemShop", ToString());
         PlayerPrefs.Save();
     }
+
 
     void CardSoldEventHandler(IEvent evArg)
     {
