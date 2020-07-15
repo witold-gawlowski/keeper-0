@@ -16,6 +16,7 @@ public class MainMenuScript : MonoBehaviour
     public SceneFader sceneLoader;
     public TextMeshProUGUI gemText;
     public TMP_InputField seedInputField;
+    public TextMeshProUGUI seedInputText;
     GameObject currentPanel;
 
     private void Awake()
@@ -34,7 +35,7 @@ public class MainMenuScript : MonoBehaviour
         deckEditPanel.SetActive(false);
         hallOfFamePanel.SetActive(false);
         leaderboardsPanel.SetActive(false);
-
+        seedInputField.text = (Random.Range(int.MinValue, int.MaxValue).ToString());
         EventManager.AddListener<UpdateGemShopUIEvent>(HandleGemUpdate);
     }
 

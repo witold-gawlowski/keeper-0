@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class LevelButtonScript : MonoBehaviour
 {
@@ -100,7 +101,7 @@ public class LevelButtonScript : MonoBehaviour
     {
         priceText.SetActive(true);
         returnValueText.GetComponent<Text>().text = "x" + returnValueArg.ToString();
-        completionThresholdText.GetComponent<Text>().text = completionThresholdArg.ToString("0.00");
+        completionThresholdText.GetComponent<TextMeshProUGUI>().text = "<sprite=\"target2\" index=0>" + (Mathf.RoundToInt(completionThresholdArg*100)).ToString() +"%";
         associatedLevel = level;
         priceText.GetComponent<Text>().text = "$"+cost.ToString();
         onTapHandler = buyTapHandlerArg;

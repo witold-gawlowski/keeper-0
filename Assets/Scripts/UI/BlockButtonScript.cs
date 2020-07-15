@@ -13,7 +13,7 @@ public class BlockButtonScript : MonoBehaviour
     public System.Action<Card> buttonTapEvent;
     public Card associatedCard;
     public GameObject associatedBlockPrefab;
-    public Text costText;
+    public TextMeshProUGUI costText;
     public Text countText;
     public GameObject blockImagePrefab;
     public GameObject imagesParent;
