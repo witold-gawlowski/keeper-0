@@ -74,9 +74,8 @@ MonoBehaviour:
     m_RotationOrder: 4
   priceMean: 615
   priceStandardDeviation: 80
-  returnValueMean: 1.136
-  returnValueDeviation: 0.137
-  rewardValue: 1374
+  rewardValueMean: 617
+  rewardValueDeviation: 121
   completionsFractionMean: 0.249
   completionFractionDispersion: 0.048
   persistenceInterval: 5

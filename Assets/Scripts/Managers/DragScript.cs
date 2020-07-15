@@ -111,7 +111,6 @@ public class DragScript : MonoBehaviour
                 }
                 blockFeederScript.Pop();
                 blockPlacedEvent(draggedBlockScript.value, draggedBlockScript.GetArea());
-                print("overlap " + gemsFound);
                 EventManager.SendEvent(new GemsFoundEvent(gemsFound));
                 draggedBlockScript.SetColorPlaced();
                 draggedBlockScript = null;

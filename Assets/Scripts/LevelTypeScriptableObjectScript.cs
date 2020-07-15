@@ -28,9 +28,9 @@ public class LevelTypeScriptableObjectScript: ScriptableObject
     [Space(20)]
 
     [Header("Reward")]
-    [Range(200, 5000)]
+    [Range(200, 1500)]
     public float rewardValueMean;
-    [Range(20, 3000)]
+    [Range(50, 500)]
     public float rewardValueDeviation;
     [Space(20)]
 

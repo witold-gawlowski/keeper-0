@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class RunResultScript : MonoBehaviour
 {
-    public int gems;
-    public int runNumber;
-    public bool completed;
+    public int gems = 0 ;
+    public int runNumber = -1;
+    public bool completed = false ;
     public static RunResultScript instance;
     private void Awake()
     {

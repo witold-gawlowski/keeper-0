@@ -29,9 +29,8 @@ MonoBehaviour:
     m_RotationOrder: 4
   priceMean: 0
   priceStandardDeviation: 0
-  returnValueMean: 0
-  returnValueDeviation: 0
-  rewardValue: 1000
+  rewardValueMean: 491
+  rewardValueDeviation: 90
   completionsFractionMean: 0.6
   completionFractionDispersion: 0.16
   persistenceInterval: 0

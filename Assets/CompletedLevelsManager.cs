@@ -21,6 +21,10 @@ public class CompletedLevelsManager : MonoBehaviour
 
     void Start()
     {
+        if (RunResultScript.instance!= null && RunResultScript.instance.completed)
+        {
+            RegisterLevel(RunResultScript.instance.runNumber);
+        }
         EventManager.SendEvent(new UpdateCompletedLevelsUIEvent(levels));
     }
 

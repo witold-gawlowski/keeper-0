@@ -17,7 +17,7 @@ public class CompletedLevelsUIScript : MonoBehaviour
     public void UpdateCompletedLevelsUIEventDispatcher(IEvent evArg)
     {
         UpdateCompletedLevelsUIEvent evData = evArg as UpdateCompletedLevelsUIEvent;
-        UpdateLevelChunks(evData.levels);
+        UpdateUI(evData.levels);
     }
 
     int ChunkNumber(int nArg)
@@ -27,7 +27,11 @@ public class CompletedLevelsUIScript : MonoBehaviour
 
     void UpdateUI(List<int> levelsArg)
     {
-        if(levelsArg.Count == 0)
+        foreach (Transform t in chunksParentObject.transform)
+        {
+            Destroy(t.gameObject);
+        }
+        if (levelsArg.Count == 0)
         {
             noLevelsText.SetActive(true);
         }
