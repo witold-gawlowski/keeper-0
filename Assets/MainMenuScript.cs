@@ -35,7 +35,7 @@ public class MainMenuScript : MonoBehaviour
         deckEditPanel.SetActive(false);
         hallOfFamePanel.SetActive(false);
         leaderboardsPanel.SetActive(false);
-        seedInputField.text = (Random.Range(int.MinValue, int.MaxValue).ToString());
+        seedInputField.text = (Random.Range(0, int.MaxValue).ToString());
         EventManager.AddListener<UpdateGemShopUIEvent>(HandleGemUpdate);
     }
 

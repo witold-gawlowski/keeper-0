@@ -9163,7 +9163,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelsUIScript: {fileID: 1054924736}
-  startingMoney: 10000
+  startingMoney: 700
 --- !u!1 &2024050006
 GameObject:
   m_ObjectHideFlags: 0

@@ -143,6 +143,7 @@ public class LevelManagerScript : MonoBehaviour
     public void RosterUpdateRoutine()
     {
         int currentLevel = globalManager.GetCurrentLevel();
+        int totalRoundCount = levelScheduler.GetLevelCount();
         int newLevelsInCurrentRound = levelScheduler.GetNumberOfNewMaps(currentLevel);
         LevelTypeScriptableObjectScript nextLevelParams = levelScheduler.GetMapType(currentLevel);
         for (int i = 0; i < newLevelsInCurrentRound; i++)
@@ -153,8 +154,8 @@ public class LevelManagerScript : MonoBehaviour
             ProceduralMap proceduralMap = newLevel.GetComponent<ProceduralMap>();
             
             int newLevelCost = Mathf.RoundToInt(nextLevelParams.GetCost(randomizer) * GetProgressionCostMultiplier()/10)*10;
-            float newReturnValue = nextLevelParams.GetReturnValue(randomizer);
-            int rawReward = nextLevelParams.rewardValue;
+            float newReturnValue = nextLevelParams.GetReward(randomizer);
+            int rawReward = nextLevelParams.GetReward(randomizer);
             int persistence = nextLevelParams.persistenceInterval;
             float newLevelCompletionThresholdFraction = nextLevelParams.GetCompletionThresholdFraction(randomizer);
             int age = 0; 
@@ -162,7 +163,7 @@ public class LevelManagerScript : MonoBehaviour
             GameObject newLevelButton = levelsUIScript.SpawnShopLevelButton(newLevel, newLevelCost, newReturnValue, newLevelCompletionThresholdFraction, rawReward, persistence);
             LevelButtonScript newLevelButtonScript = newLevelButton.GetComponent<LevelButtonScript>();
             snapshotCreatorScript.finishedGeneratingSnapshotEvent += newLevelButtonScript.SetSprite;
-            proceduralMap.Initialize(randomizer, nextLevelParams);
+            proceduralMap.Initialize(randomizer, nextLevelParams, currentLevel, totalRoundCount);
         }
     }
 

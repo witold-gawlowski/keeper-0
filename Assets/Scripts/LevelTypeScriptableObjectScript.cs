@@ -27,13 +27,11 @@ public class LevelTypeScriptableObjectScript: ScriptableObject
     public int priceStandardDeviation;
     [Space(20)]
 
-    [Header("Return")]
-    [Range(1, 2)]
-    public float returnValueMean;
-    [Range(0.05f, 0.4f)]
-    public float returnValueDeviation;
+    [Header("Reward")]
     [Range(200, 5000)]
-    public int rewardValue;
+    public float rewardValueMean;
+    [Range(20, 3000)]
+    public float rewardValueDeviation;
     [Space(20)]
 
     [Header("Completion")]
@@ -55,14 +53,14 @@ public class LevelTypeScriptableObjectScript: ScriptableObject
 
    
 
-    public float GetReturnValue(Randomizer rArg)
+    public int GetReward(Randomizer rArg)
     {
-        float result = Tools.RandomGaussian01(rArg) * returnValueDeviation + returnValueMean;
-        if(result < 1.05f)
+        float result = Tools.RandomGaussian01(rArg) * rewardValueDeviation + rewardValueMean;
+        if(result < 200)
         {
-            result = 1.05f;
+            result = 200;
         }
-        return Mathf.RoundToInt(result/0.05f)*0.05f;
+        return Mathf.RoundToInt(result);
     }
 
     public int GetCost(Randomizer rArg)

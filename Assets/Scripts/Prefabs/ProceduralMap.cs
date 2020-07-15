@@ -19,11 +19,15 @@ public class ProceduralMap : MonoBehaviour
     float initialGemDensity = 0.2f;
     int dieLimit;
     int spawnLimit;
+    int maxRoundNumber;
+    int currentRoundNumber;
 
     int currentDFSComponent;
 
-    public void Initialize(Randomizer rArg, LevelTypeScriptableObjectScript levelParamsArg)
+    public void Initialize(Randomizer rArg, LevelTypeScriptableObjectScript levelParamsArg, int currentRoundArg, int totalRoundCount)
     {
+        currentRoundNumber = currentRoundArg;
+        maxRoundNumber = totalRoundCount;
         dieLimit = levelParamsArg.deathLimit;
         spawnLimit = levelParamsArg.lifeLimit;
         initialDensity = levelParamsArg.initialDensity;
@@ -194,7 +198,7 @@ public class ProceduralMap : MonoBehaviour
             {
                 if(map[i, j] == 0)
                 {
-                    map[i, j] = rArg.Range(0.0f, 1.0f) > initialGemDensity ? 0 : 4;
+                    map[i, j] = rArg.Range(0.0f, 1.0f) > initialGemDensity*currentRoundNumber/maxRoundNumber ? 0 : 4;
                 }
             }
         }
