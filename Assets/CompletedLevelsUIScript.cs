@@ -7,6 +7,7 @@ public class CompletedLevelsUIScript : MonoBehaviour
 {
     public GameObject levelsChunkPrefab;
     public GameObject chunksParentObject;
+    public GameObject noLevelsText;
     public int chunkSize = 44;
     private void Awake()
     {
@@ -24,10 +25,23 @@ public class CompletedLevelsUIScript : MonoBehaviour
         return (nArg - 1) / chunkSize;
     }
 
+    void UpdateUI(List<int> levelsArg)
+    {
+        if(levelsArg.Count == 0)
+        {
+            noLevelsText.SetActive(true);
+        }
+        else
+        {
+            noLevelsText.SetActive(false);
+            UpdateLevelChunks(levelsArg);
+        }
+    }
+
     public void UpdateLevelChunks(List<int> levelsArg)
     {
-        levelsArg.Sort();
         int numberOfLevels = levelsArg.Count;
+        levelsArg.Sort();
         string currentChunkText = "";
         List<string> textChunks = new List<string>();
         for(int i=0; i<numberOfLevels; i++)

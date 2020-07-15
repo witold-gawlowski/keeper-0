@@ -3,9 +3,12 @@
 // Save the Scene and close the editor
 
 using UnityEditor;
-using UnityEditor.SceneManagement;
 using System.IO;
 using UnityEngine;
+
+#if UNITY_EDITOR
+
+
 public class CardCreator
 {
     [MenuItem("My Scripts/Create Cards")]
@@ -34,3 +37,4 @@ public class CardCreator
    
     }
 }
+    #endif
