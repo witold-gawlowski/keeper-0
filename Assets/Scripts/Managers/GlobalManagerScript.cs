@@ -106,7 +106,7 @@ public class GlobalManagerScript : MonoBehaviour
         roundCount++;
         if(roundCount > levelManagerScript.GetLevelTarget())
         {
-            EventManager.SendEvent(new RunFinishedEvent(levelMoneyManagerScript.GetGems(), levelManagerScript.seed, true));
+            EventManager.SendEvent(new RunFinishedEvent(accountManager.GetGems(), levelManagerScript.seed, true));
         }
         else
         {

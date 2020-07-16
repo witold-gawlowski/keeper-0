@@ -13,21 +13,31 @@ public class UpdateCompletedLevelsUIEvent: IEvent {
 public class CompletedLevelsManager : MonoBehaviour
 {
     List<int> levels;
-
+    const int bigPrime = int.MaxValue;
     void Awake()
     {
         Load();
-    }
-
-    void Start()
-    {
-        if (RunResultScript.instance!= null && RunResultScript.instance.completed)
+        if (RunResultScript.instance != null && RunResultScript.instance.completed)
         {
             RegisterLevel(RunResultScript.instance.runNumber);
         }
         EventManager.SendEvent(new UpdateCompletedLevelsUIEvent(levels));
     }
 
+    void Start()
+    {
+        
+    }
+    public int GetLevelsFootprint()
+    {
+        int result = 1;
+        foreach (int levelNumber in levels)
+        {
+            result *= levelNumber;
+            result %= bigPrime;
+        }
+        return result;
+    }
     public void RegisterLevel(int intArg)
     {
         levels.Add(intArg);

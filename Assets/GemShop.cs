@@ -10,7 +10,6 @@ public class UpdateGemShopUIEvent : IEvent {
 public class GemShop : MonoBehaviour
 {
     List<Card> cards;
-    const int bigPrime = int.MaxValue;
     int numberOfCardsInOffer = 5;
     int gems;
     int startingGems = 5;
@@ -20,46 +19,74 @@ public class GemShop : MonoBehaviour
 
     void Awake()
     {
-        EventManager.AddListener<ShopCardTappedEvent>(CardSoldEventHandler);
-
-       
+        EventManager.AddListener<ShopCardTappedEvent>(CardSoldEventHandler);       
     }
 
     void Start()
     {
-        if (RunResultScript.instance != null)
-        {
-            RunFinishedEventHandler();
-        }
-
-        Load();
-        if (cards == null)
-        {
-            List<int> completedLevels = completedLevelsManager.GetLevels();
-            int completedLevelsFootprint = GetLevelsFootprint(completedLevels);
-            CreateOffer(completedLevelsFootprint);
-        }
+        SetupGemCount();
+        SetupShopCards();
         UpdateUI();
     }
 
-    public void Load()
+    void SetupGemCount()
     {
-        if (PlayerPrefs.HasKey("gems"))
+        if(RunResultScript.instance == null)
         {
-            int gems = PlayerPrefs.GetInt("gems");
-            LoadGems(gems);
+            if (PlayerPrefs.HasKey("gems"))
+            {
+                gems = PlayerPrefs.GetInt("gems");
+            }
+            else
+            {
+                gems = startingGems;
+                SaveGems();
+            }
         }
         else
         {
-            gems = startingGems;
+            gems = PlayerPrefs.GetInt("gems");
+            gems += RunResultScript.instance.gems;
+            SaveGems();
         }
+    }
+    void SetupShopCards()
+    {
+        if (RunResultScript.instance == null)
+        {
+            if (PlayerPrefs.HasKey("gemShop"))
+            {
+                LoadShopCards();
+            }
+            else
+            {
+                int footprint = completedLevelsManager.GetLevelsFootprint();
+                CreateOffer(footprint);
+            }
+        }
+        else
+        {
+            if (RunResultScript.instance.completed)
+            {
+                int footprint = completedLevelsManager.GetLevelsFootprint();
+                CreateOffer(footprint);
+            }
+            else
+            {
+                LoadShopCards();
+            }
+        }
+    }
 
+    public void LoadShopCards()
+    {
         if (PlayerPrefs.HasKey("gemShop"))
         {
             string inventoryString = PlayerPrefs.GetString("gemShop");
             FromString(inventoryString);
         }
     }
+
 
     public void FromString(string sourceArg)
     {
@@ -86,11 +113,14 @@ public class GemShop : MonoBehaviour
         return result;
     }
 
-    public void Save()
+    void SaveGems()
     {
         PlayerPrefs.SetInt("gems", gems);
+    }
+
+    public void SaveShopCards()
+    {
         PlayerPrefs.SetString("gemShop", ToString());
-        PlayerPrefs.Save();
     }
 
 
@@ -106,34 +136,19 @@ public class GemShop : MonoBehaviour
         gems = gemsArg;
     }
 
-    public int GetLevelsFootprint(List<int> levelsArg)
-    {
-        int result = 1;
-        foreach (int levelNumber in levelsArg)
-        {
-            result *= levelNumber;
-            result %= bigPrime;
-        }
-        return result;
-    }
+  
 
-    int GetLatestFootprint(int latestLevelNumberArg, bool completedArg)
-    {
-        List<int> completedLevelsTemp = completedLevelsManager.GetLevels();
-        if (completedArg && completedLevelsTemp.Contains(latestLevelNumberArg))
-        {
-            completedLevelsTemp.Add(latestLevelNumberArg);
-        }
-        int result = GetLevelsFootprint(completedLevelsTemp);
-        return result;
-    }
 
-    public void RunFinishedEventHandler()
+
+    public void AccreditGems()
     {
         int completedLevelNumber = RunResultScript.instance.runNumber;
         bool isFinishedLevelCompleted = RunResultScript.instance.completed;
-        int footprint = GetLatestFootprint(completedLevelNumber, isFinishedLevelCompleted);
-        CreateOffer(footprint);
+        if (isFinishedLevelCompleted)
+        {
+            gems += RunResultScript.instance.gems;
+            EventManager.SendEvent(new UpdateGemShopUIEvent(cards, gems));
+        }
         UpdateUI();
     }
 
@@ -163,8 +178,9 @@ public class GemShop : MonoBehaviour
             gems -= cardArg.gemCost;
             cards.Remove(cardArg);
             inventory.Add(cardArg);
+            SaveGems();
+            SaveShopCards();
             EventManager.SendEvent(new UpdateGemShopUIEvent(cards, gems));
-            Save();
         }
     }
 }
