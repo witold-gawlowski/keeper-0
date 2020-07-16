@@ -21,10 +21,10 @@ public class ProceduralMap : MonoBehaviour
     int spawnLimit;
     int maxRoundNumber;
     int currentRoundNumber;
-
+    bool alreadyCompleted;
     int currentDFSComponent;
 
-    public void Initialize(Randomizer rArg, LevelTypeScriptableObjectScript levelParamsArg, int currentRoundArg, int totalRoundCount)
+    public void Initialize(Randomizer rArg, LevelTypeScriptableObjectScript levelParamsArg, int currentRoundArg, int totalRoundCount, bool alreadyCompltedArg)
     {
         currentRoundNumber = currentRoundArg;
         maxRoundNumber = totalRoundCount;
@@ -33,6 +33,7 @@ public class ProceduralMap : MonoBehaviour
         initialDensity = levelParamsArg.initialDensity;
         steps = levelParamsArg.steps;
         width = levelParamsArg.width;
+        alreadyCompleted = alreadyCompltedArg;
         height = levelParamsArg.height;
         levelSpriteObject.transform.localPosition = GetLevelCenterPosition();
 
@@ -48,7 +49,10 @@ public class ProceduralMap : MonoBehaviour
             maxCompNum = GetMaxComponentNumber();
         } while (levelParamsArg.minimalMaxCaveSize > componentSizes[maxCompNum]);
 
-        CreateGems(rArg);
+        if (!alreadyCompleted)
+        {
+            CreateGems(rArg);
+        }
 
         finishedGeneratingMapEvent();
 

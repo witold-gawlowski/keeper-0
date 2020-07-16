@@ -46,11 +46,13 @@ public class LevelManagerScript : MonoBehaviour
     public int rewardReductionConstant = 200;
     int levelTarget;
     public int seed = 101;
+    bool seedALreadyCompleted;
     Randomizer randomizer;
 
     private void Awake()
     {
         seed = SeedScript.instance.seed;
+        seedALreadyCompleted = SeedScript.instance.alreadyCompleted;
         randomizer = new Randomizer(seed);
         levelScheduler = GetComponentInChildren<LevelSchedulerScript>();
         levelScheduler.Init(randomizer);
@@ -163,7 +165,7 @@ public class LevelManagerScript : MonoBehaviour
             GameObject newLevelButton = levelsUIScript.SpawnShopLevelButton(newLevel, newLevelCost, newReturnValue, newLevelCompletionThresholdFraction, rawReward, persistence);
             LevelButtonScript newLevelButtonScript = newLevelButton.GetComponent<LevelButtonScript>();
             snapshotCreatorScript.finishedGeneratingSnapshotEvent += newLevelButtonScript.SetSprite;
-            proceduralMap.Initialize(randomizer, nextLevelParams, currentLevel, totalRoundCount);
+            proceduralMap.Initialize(randomizer, nextLevelParams, currentLevel, totalRoundCount, seedALreadyCompleted);
         }
     }
 

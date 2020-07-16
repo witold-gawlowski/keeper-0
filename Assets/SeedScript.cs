@@ -5,6 +5,7 @@ using UnityEngine;
 public class SeedScript : MonoBehaviour
 {
     public int seed;
+    public bool alreadyCompleted;
     public static SeedScript instance;
     private void Awake()
     {

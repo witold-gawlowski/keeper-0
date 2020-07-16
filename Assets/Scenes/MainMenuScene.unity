@@ -4601,6 +4601,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   continueButton: {fileID: 1365267348}
+  completedLevelsManager: {fileID: 739046195}
   leaderboardsPanel: {fileID: 715171812}
   shopPanel: {fileID: 1672384014}
   deckEditPanel: {fileID: 915128164191295596}
@@ -5610,6 +5611,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   seed: 0
+  alreadyCompleted: 0
 --- !u!114 &1845822428
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -46,8 +46,11 @@ public class GemShop : MonoBehaviour
         else
         {
             gems = PlayerPrefs.GetInt("gems");
-            gems += RunResultScript.instance.gems;
-            SaveGems();
+            if (RunResultScript.instance.completed)
+            {
+                gems += RunResultScript.instance.gems;
+                SaveGems();
+            }
         }
     }
     void SetupShopCards()
@@ -62,6 +65,7 @@ public class GemShop : MonoBehaviour
             {
                 int footprint = completedLevelsManager.GetLevelsFootprint();
                 CreateOffer(footprint);
+                SaveShopCards();
             }
         }
         else
@@ -70,6 +74,7 @@ public class GemShop : MonoBehaviour
             {
                 int footprint = completedLevelsManager.GetLevelsFootprint();
                 CreateOffer(footprint);
+                SaveShopCards();
             }
             else
             {
@@ -136,21 +141,7 @@ public class GemShop : MonoBehaviour
         gems = gemsArg;
     }
 
-  
-
-
-
-    public void AccreditGems()
-    {
-        int completedLevelNumber = RunResultScript.instance.runNumber;
-        bool isFinishedLevelCompleted = RunResultScript.instance.completed;
-        if (isFinishedLevelCompleted)
-        {
-            gems += RunResultScript.instance.gems;
-            EventManager.SendEvent(new UpdateGemShopUIEvent(cards, gems));
-        }
-        UpdateUI();
-    }
+ 
 
     public void CreateOffer(int completedLevelsFootprint)
     {

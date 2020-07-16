@@ -8,6 +8,7 @@ using System.Text.RegularExpressions;
 public class MainMenuScript : MonoBehaviour
 {
     public GameObject continueButton;
+    public CompletedLevelsManager completedLevelsManager;
     public GameObject leaderboardsPanel;
     public GameObject shopPanel;
     public GameObject deckEditPanel;
@@ -70,7 +71,16 @@ public class MainMenuScript : MonoBehaviour
     {
         //SceneManager.LoadScene("MenuScene");
         StartCoroutine(sceneLoader.FadeAndLoadScene(SceneFader.FadeDirection.In, "MenuScene"));
-        SeedScript.instance.seed = int.Parse(seedInputField.text);
+        int seedTemp = int.Parse(seedInputField.text);
+        SeedScript.instance.seed = seedTemp;
+        if (completedLevelsManager.IsSeedCompleted(seedTemp))
+        {
+            SeedScript.instance.alreadyCompleted = true;
+        }
+        else
+        {
+            SeedScript.instance.alreadyCompleted = false;
+        }
     }
 
     public void OnContinueButtonTap()

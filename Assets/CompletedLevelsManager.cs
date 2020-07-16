@@ -45,6 +45,15 @@ public class CompletedLevelsManager : MonoBehaviour
         EventManager.SendEvent(new UpdateCompletedLevelsUIEvent(levels));
     }
 
+    public bool IsSeedCompleted(int seedArg)
+    {
+        if (levels.Contains(seedArg))
+        {
+            return true;
+        }
+        return false;
+    }
+
     public List<int> GetLevels()
     {
         return levels;

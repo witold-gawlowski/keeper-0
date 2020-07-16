@@ -38,7 +38,7 @@ public class LevelDrawer : MonoBehaviour
                 {
                     sr.enabled = true;
                 }
-                proceduralMap.Initialize(randomizer, type, 1, 1);
+                proceduralMap.Initialize(randomizer, type, 1, 1, false);
                 levelTypeGameObject.SetActive(false);
             }
             numberOfTypes = levelTypes.Length;
