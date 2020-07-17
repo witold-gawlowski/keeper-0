@@ -44,6 +44,18 @@ public class BlockScriptEditor : Editor
         }
     }
 
+    public Vector2 GetBlockMiddlePosition2()
+    {
+        Vector2 result = Vector2.zero;
+        int countTemp = 0;
+        foreach (Vector2Int v2i in relativeTilePositions)
+        {
+            result += v2i;
+            countTemp++;
+        }
+        return result / countTemp;
+    }
+
     public Vector2 GetBlockMiddlePosition()
     {
         Vector2Int firstPoint = relativeTilePositions[0];
@@ -88,8 +100,14 @@ public class BlockScriptEditor : Editor
         }
         return result;
     }
-
     Vector2Int GetTilePositionInPixels(Vector2Int tileRelativePosition)
+    {
+        Vector2 abcFloat = GetBlockMiddlePosition() * tileSize;
+        Vector2Int abc = new Vector2Int(Mathf.RoundToInt(abcFloat.x), Mathf.RoundToInt(abcFloat.y));
+        return (tileRelativePosition) * tileSize - abc + pixelShift + Vector2Int.one * imageSize / 2;
+    }
+
+    Vector2Int GetTilePositionInPixels2(Vector2Int tileRelativePosition)
     {
         return (tileRelativePosition - middleTilePosition) * tileSize + pixelShift + Vector2Int.one * imageSize/2;
     }

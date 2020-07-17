@@ -8,7 +8,7 @@ public class BuildingUIScript : MonoBehaviour
 {
     public System.Action RotateButtonTapEvent;
     public Text rewardValueText;
-    public System.Action BuildingCanceledEvent;
+    
     public GameObject rotateButton;
     public GameObject summaryPanel;
     public GameObject sellButton;
@@ -30,11 +30,6 @@ public class BuildingUIScript : MonoBehaviour
     public void OnLevelCompleteEvent()
     {
         summaryPanel.SetActive(true);
-    }
-
-    public void OnExitButtonTap()
-    {
-        BuildingCanceledEvent();
     }
 
     public void OnProgressUpdate(float fractionArg)

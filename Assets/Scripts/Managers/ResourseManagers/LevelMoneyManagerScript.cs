@@ -47,6 +47,11 @@ public class LevelMoneyManagerScript : MonoBehaviour
         gems = 0;
     }
 
+    public void PlaceHugeblock()
+    {
+        BlockPlacedEventHandler(1000, 1000);
+    }
+
     public void BlockPlacedEventHandler(int rewardValueArg, int blockAreaArg)
     {
         AddBlockValue(rewardValueArg, blockAreaArg);

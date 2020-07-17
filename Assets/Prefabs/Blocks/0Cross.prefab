@@ -56,4 +56,4 @@ MonoBehaviour:
   hangingColor: {r: 0.8, g: 0.2, b: 0.2, a: 1}
   geometricMiddlePosition: {x: 0, y: 0, z: 0}
   isStarter: 0
-  isDigger: 1
+  isDigger: 0

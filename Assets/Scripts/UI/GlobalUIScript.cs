@@ -24,6 +24,7 @@ public class TopBarUIUpdateEvent:IEvent
 public class GlobalUIScript : MonoBehaviour
 {
 
+    public System.Action BuildingCanceledEvent;
     LevelsUIScript levelUIScript;
     public GameObject briefing;
     public GameObject inventoryUI;
@@ -52,14 +53,24 @@ public class GlobalUIScript : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            HandleBackButtonTap();
+            if (briefing.activeInHierarchy)
+            {
+                HandleBriefingBackButtonTap();
+            }
+            else if (buildingUI.activeInHierarchy)
+            {
+                HandleBuildingBackbuttonTap();
+            }
+            
         }
     }
 
+    void HandleBuildingBackbuttonTap()
+    {
+        BuildingCanceledEvent();
+    }
 
-   
-
-    public void HandleBackButtonTap()
+    public void HandleBriefingBackButtonTap()
     {
         quitConfirmPanel.SetActive(true);
     }

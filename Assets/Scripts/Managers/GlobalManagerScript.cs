@@ -38,13 +38,14 @@ public class GlobalManagerScript : MonoBehaviour
     public BlockShuffleContainer blockShuffleContainer;
     public SceneFader fader;
     public RunCompletedPanelScript runCompletedPanelScript;
+    
 
     int roundCount;
 
     private void Awake()
     {
         summaryUIScript.LevelCompletedEvent += OnLevelCompleted;
-        buildingUIScript.BuildingCanceledEvent += OnLevelFinished;
+        globalUIScript.BuildingCanceledEvent += OnLevelFinished;
         levelsUIScript.AddRunLevelEventHandler(OnLevelRun);
         StartNewRoundEvent += OnStartNewRound;
         buildingUIScript.RotateButtonTapEvent += blockSpawnerScript.HandleRotEvent;
@@ -60,7 +61,7 @@ public class GlobalManagerScript : MonoBehaviour
         StartNewRoundEvent();
     }
 
-    void OnRunCompleted()
+    public void OnRunCompleted()
     {
         runCompletedPanelScript.gameObject.SetActive(true);
         runCompletedPanelScript.UpdateText(SeedScript.instance.seed, accountManager.GetGems());
