@@ -40,9 +40,12 @@ public class CompletedLevelsManager : MonoBehaviour
     }
     public void RegisterLevel(int intArg)
     {
-        levels.Add(intArg);
-        Save();
-        EventManager.SendEvent(new UpdateCompletedLevelsUIEvent(levels));
+        if (!levels.Contains(intArg))
+        {
+            levels.Add(intArg);
+            Save();
+            EventManager.SendEvent(new UpdateCompletedLevelsUIEvent(levels));
+        }
     }
 
     public bool IsSeedCompleted(int seedArg)

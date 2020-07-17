@@ -53,7 +53,6 @@ public class SceneFader : MonoBehaviour
     #region HELPERS
     public IEnumerator FadeAndLoadScene(FadeDirection fadeDirection, string sceneToLoad)
     {
-        Debug.Log("fade");
         yield return Fade(fadeDirection);
         SceneManager.LoadScene(sceneToLoad);
     }

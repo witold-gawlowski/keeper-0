@@ -36,6 +36,8 @@ public class GlobalManagerScript : MonoBehaviour
     public SummaryUIScript summaryUIScript;
     public BlockUIQueue blockUIQueue;
     public BlockShuffleContainer blockShuffleContainer;
+    public SceneFader fader;
+    public RunCompletedPanelScript runCompletedPanelScript;
 
     int roundCount;
 
@@ -58,24 +60,34 @@ public class GlobalManagerScript : MonoBehaviour
         StartNewRoundEvent();
     }
 
-
-
-
+    void OnRunCompleted()
+    {
+        runCompletedPanelScript.gameObject.SetActive(true);
+        runCompletedPanelScript.UpdateText(SeedScript.instance.seed, accountManager.GetGems());
+        EventManager.SendEvent(new RunFinishedEvent(accountManager.GetGems(), levelManagerScript.seed, true));
+        EventManager.Clear();
+    }
 
     private void OnStartNewRound()
     {
-        blockShopScript.OnNewRoundStart();
-        levelManagerScript.OnStartNewRound();
-        buttonSortScript.Sort();
+        if (roundCount > levelManagerScript.GetLevelTarget())
+        {
+            OnRunCompleted();
+        }
+        else
+        {
+            blockShopScript.OnNewRoundStart();
+            levelManagerScript.OnStartNewRound();
+            buttonSortScript.Sort();
 
-        EventManager.SendEvent(new TopBarUIUpdateEvent(
-        levelManagerScript.seed,
-        GetCurrentLevel(),
-        levelManagerScript.GetLevelTarget(),
-        levelMoneyManagerScript.GetGems(), accountManager.GetMoney()));
+            EventManager.SendEvent(new TopBarUIUpdateEvent(
+            levelManagerScript.seed,
+            GetCurrentLevel(),
+            levelManagerScript.GetLevelTarget(),
+            levelMoneyManagerScript.GetGems(), accountManager.GetMoney()));
+        }
     }
 
-       
     private void OnLevelRun(GameObject level)
     {
         OnLevelCompletedActions += () => levelManagerScript.DestroyLevel(level);
@@ -96,6 +108,8 @@ public class GlobalManagerScript : MonoBehaviour
 
     }
 
+
+
     private void OnLevelCompleted()
     {
         accountManager.AddGems(levelMoneyManagerScript.GetGems());
@@ -104,22 +118,15 @@ public class GlobalManagerScript : MonoBehaviour
         OnLevelFinished();
         accountManager.AddFunds(levelMoneyManagerScript.GetTotalReward());
         roundCount++;
-        if(roundCount > levelManagerScript.GetLevelTarget())
-        {
-            EventManager.SendEvent(new RunFinishedEvent(accountManager.GetGems(), levelManagerScript.seed, true));
-        }
-        else
-        {
-            StartNewRoundEvent();
+         
 
-            EventManager.SendEvent(new TopBarUIUpdateEvent(
-                levelManagerScript.seed,
-                roundCount,
-                levelManagerScript.GetLevelTarget(),
-                accountManager.GetGems(),
-                accountManager.GetMoney()));
-        }
-        
+        EventManager.SendEvent(new TopBarUIUpdateEvent(
+            levelManagerScript.seed,
+            roundCount,
+            levelManagerScript.GetLevelTarget(),
+            accountManager.GetGems(),
+            accountManager.GetMoney()));
+        StartNewRoundEvent();
     }
 
     private void OnLevelFinished()

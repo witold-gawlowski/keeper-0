@@ -23,7 +23,6 @@ public class TopBarUIUpdateEvent:IEvent
 
 public class GlobalUIScript : MonoBehaviour
 {
-    public static GlobalUIScript instance;
 
     LevelsUIScript levelUIScript;
     public GameObject briefing;
@@ -36,20 +35,17 @@ public class GlobalUIScript : MonoBehaviour
     public Text completenessText;
     public TextMeshProUGUI runNumberText;
     public Image completnessBar;
-    public SceneFader fader;
+    
     public GameObject quitConfirmPanel;
 
 
     private void Awake()
     {
-        instance = this;
-
         levelUIScript = briefing.GetComponent<LevelsUIScript>();
         levelUIScript.AddRunLevelEventHandler(OnLevelRun);
         inventoryUI.SetActive(false);
         shopUI.SetActive(true);
         EventManager.AddListener<TopBarUIUpdateEvent>(BriefingTopBarUIUpdateDispatcher);
-        EventManager.AddListener<RunFinishedEvent>(OnRunFinishEventDispatcher);
     }
 
     private void Update()
@@ -61,11 +57,7 @@ public class GlobalUIScript : MonoBehaviour
     }
 
 
-    public void OnRunFinishEventDispatcher(IEvent evArg)
-    {
-        StartCoroutine(fader.FadeAndLoadScene(SceneFader.FadeDirection.In, "MainMenuScene"));
-        EventManager.Clear();
-    }
+   
 
     public void HandleBackButtonTap()
     {

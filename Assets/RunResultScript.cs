@@ -19,7 +19,7 @@ public class RunResultScript : MonoBehaviour
             Destroy(this.gameObject);
         }
 
-        EventManager.AddListener<RunFinishedEvent>(RunFinishedEventDispatcher);
+        EventManager.AddListener<RunFinishedEvent>(instance.RunFinishedEventDispatcher);
     }
 
     void RunFinishedEventDispatcher(IEvent evArg)
