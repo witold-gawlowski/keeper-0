@@ -19,7 +19,7 @@ public class Deck : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
-        Load();
+        instance.Load();
     }
 
     public void Load()
@@ -61,6 +61,11 @@ public class Deck : MonoBehaviour
     }
 
     public bool IsDeckEmpty()
+    {
+        return cards.Count == 0;
+    }
+
+    public bool IQueueEmpty()
     {
         return queue.Count == 0;
     }

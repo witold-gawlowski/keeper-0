@@ -14,6 +14,7 @@ public class MainMenuScript : MonoBehaviour
     public GameObject deckEditPanel;
     public GameObject hallOfFamePanel;
     public GameObject menuPanel;
+    public GameObject DeckEmptyInfoPanel;
     public SceneFader sceneLoader;
     public TextMeshProUGUI gemText;
     public TMP_InputField seedInputField;
@@ -77,16 +78,23 @@ public class MainMenuScript : MonoBehaviour
     public void OnStartButtonTap()
     {
         //SceneManager.LoadScene("MenuScene");
-        StartCoroutine(sceneLoader.FadeAndLoadScene(SceneFader.FadeDirection.In, "MenuScene"));
-        int seedTemp = int.Parse(seedInputField.text);
-        SeedScript.instance.seed = seedTemp;
-        if (completedLevelsManager.IsSeedCompleted(seedTemp))
+        if (Deck.instance.IsDeckEmpty())
         {
-            SeedScript.instance.alreadyCompleted = true;
+            DeckEmptyInfoPanel.SetActive(true);
         }
         else
         {
-            SeedScript.instance.alreadyCompleted = false;
+            StartCoroutine(sceneLoader.FadeAndLoadScene(SceneFader.FadeDirection.In, "MenuScene"));
+            int seedTemp = int.Parse(seedInputField.text);
+            SeedScript.instance.seed = seedTemp;
+            if (completedLevelsManager.IsSeedCompleted(seedTemp))
+            {
+                SeedScript.instance.alreadyCompleted = true;
+            }
+            else
+            {
+                SeedScript.instance.alreadyCompleted = false;
+            }
         }
     }
 

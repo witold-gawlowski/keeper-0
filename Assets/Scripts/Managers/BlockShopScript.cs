@@ -72,7 +72,7 @@ public class BlockShopScript : MonoBehaviour
 
     void OnCardSold()
     {
-        if (!deck.IsDeckEmpty())
+        if (!deck.IQueueEmpty())
         {
             Card nextCCard = deck.Draw();
             offer.Add(nextCCard);
@@ -80,7 +80,6 @@ public class BlockShopScript : MonoBehaviour
         }
         else if (offer.Count == 0)
         {
-            deck.Shuffle();
             RerollOffer();
         }
     }
@@ -88,23 +87,22 @@ public class BlockShopScript : MonoBehaviour
     void RerollOffer()
     {
         offer = new List<Card>();
-        if (deck.IsDeckEmpty())
+        if (!deck.IQueueEmpty())
         {
-            deck.Shuffle();
-        }
-        for (int i=0; i<5; i++)
-        {
-            if (!deck.IsDeckEmpty())
+            for (int i = 0; i < 5; i++)
             {
-                Card nextCard = deck.Draw();
-                offer.Add(nextCard);
+                if (!deck.IQueueEmpty())
+                {
+                    Card nextCard = deck.Draw();
+                    offer.Add(nextCard);
+                }
+                else
+                {
+                    break;
+                }
             }
-            else
-            {
-                break;
-            }
+            EventManager.SendEvent(new UpdateOfferUIEvent(offer));
         }
-        EventManager.SendEvent(new UpdateOfferUIEvent(offer));
     }
     
 
@@ -149,6 +147,7 @@ public class BlockShopScript : MonoBehaviour
 
     public void OnNewRoundStart()
     {
+        deck.Shuffle();
         RerollOffer();
     }
    
