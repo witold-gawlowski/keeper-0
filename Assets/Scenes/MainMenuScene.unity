@@ -5750,22 +5750,22 @@ PrefabInstance:
     - target: {fileID: 3383185644560353614, guid: 56b07961a1344d6499fa0216c00403df,
         type: 3}
       propertyPath: m_AnchorMin.x
-      value: 0.1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3383185644560353614, guid: 56b07961a1344d6499fa0216c00403df,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3383185644560353614, guid: 56b07961a1344d6499fa0216c00403df,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0.9
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3383185644560353614, guid: 56b07961a1344d6499fa0216c00403df,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0.8
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3383185644560353614, guid: 56b07961a1344d6499fa0216c00403df,
         type: 3}

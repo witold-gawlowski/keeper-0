@@ -58,7 +58,6 @@ public class BlocksUIScript : MonoBehaviour
     }
     public void DeleteShopItemButton(Card item)
     {
-        print("delete shop iptem button");
         foreach(Transform offerButton in shopItemsParent.transform)
         {
             Card itemTemp = offerButton.GetComponent<BlockButtonScript>().associatedCard;

@@ -44,8 +44,8 @@ public class GlobalUIScript : MonoBehaviour
     {
         levelUIScript = briefing.GetComponent<LevelsUIScript>();
         levelUIScript.AddRunLevelEventHandler(OnLevelRun);
-        inventoryUI.SetActive(false);
-        shopUI.SetActive(true);
+        inventoryUI.SetActive(true);
+        shopUI.SetActive(false);
         EventManager.AddListener<TopBarUIUpdateEvent>(BriefingTopBarUIUpdateDispatcher);
     }
 
