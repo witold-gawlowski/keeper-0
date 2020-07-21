@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-public class CompleteRunCheatButtonScript : MonoBehaviour
+public class UniversalCheatScript : MonoBehaviour
 {
     public UnityEvent fireRunCompleteCheat;
     public float timer;

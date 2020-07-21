@@ -157,7 +157,7 @@ public class BlockShopScript : MonoBehaviour
         {
             offer.Remove(item);
             blockManagerScript.IncreaseInventoryBlockCount(item.block, item.quantity);
-            blocksUIScript.DeleteOfferItemButton(item);
+            blocksUIScript.DeleteShopItemButton(item);
             OnCardSold();
         }
     }

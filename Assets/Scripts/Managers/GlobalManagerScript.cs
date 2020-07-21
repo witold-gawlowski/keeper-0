@@ -31,7 +31,6 @@ public class GlobalManagerScript : MonoBehaviour
     public BlockManagerScript blockManagerScript;
     public GlobalUIScript globalUIScript;
     public BlockShopScript blockShopScript;
-    public BlocksUIScript blockUIScript;
     public ButtonSortScript buttonSortScript;
     public SummaryUIScript summaryUIScript;
     public BlockUIQueue blockUIQueue;

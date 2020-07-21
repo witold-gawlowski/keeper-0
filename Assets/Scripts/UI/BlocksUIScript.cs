@@ -33,7 +33,8 @@ public class BlocksUIScript : MonoBehaviour
     public SelectedBlockPanelScript selectedBlockPanelScript;
     public BlockManagerScript blockManagerScript;
     public BlockShopScript blockShopScript;
-    public List<GameObject> currentShopOfferButtons;
+    public GameObject emptyInventoryInfoText;
+    public GameObject emptyShopInfoText;
     Dictionary<GameObject, BlockButtonScript> inventoryButtons;
 
     public void Awake()
@@ -41,54 +42,39 @@ public class BlocksUIScript : MonoBehaviour
         selectedBlockPanelScript.SetBuyEventHandler(blockShopScript.Sell);
         EventManager.onInventoryBlockTap += HandleInventoryBlockButtonTap;
         EventManager.onBlockDeleted += UpdateInventoryBlockCount;
-        EventManager.AddListener<UpdateOfferUIEvent>(HandleUpdateOfferEvent);
+        EventManager.AddListener<UpdateOfferUIEvent>(HandleUpdateShopOfferEvent);
     }
        
-    public void Start()
+    void Start()
     {
-        CreateInventoryButtons();
+        InitializeInventoryButtons();
     }
 
-    public void HandleUpdateOfferEvent(IEvent evArg)
+    public void HandleUpdateShopOfferEvent(IEvent evArg)
     {
         UpdateOfferUIEvent evData = evArg as UpdateOfferUIEvent;
-        ClearOfferButtons();
-        CreateAllShopButtons(evData.cards);
+        ClearShopButtons();
+        CreateShopButtons(evData.cards);
     }
-
-    public void ClearOfferButtons()
+    public void DeleteShopItemButton(Card item)
     {
-        if (currentShopOfferButtons != null)
-        {
-            foreach (GameObject shopOfferObject in currentShopOfferButtons)
-            {
-                Destroy(shopOfferObject);
-            }
-        }
-    }
-
-    public void DeleteOfferItemButton(Card item)
-    {
-        foreach(GameObject offerButton in currentShopOfferButtons)
+        print("delete shop iptem button");
+        foreach(Transform offerButton in shopItemsParent.transform)
         {
             Card itemTemp = offerButton.GetComponent<BlockButtonScript>().associatedCard;
             if (itemTemp == item)
             {
-                Destroy(offerButton);
-                currentShopOfferButtons.Remove(offerButton);
-                return;
+                Destroy(offerButton.gameObject);
             }
         }
+        StartCoroutine(UpdateEmptyShopInfoVisibility());
     }
-
     public void HandleShopBlockButtonTap(Card itemArg)
     {
         selectedBlockPanelScript.gameObject.SetActive(true);
         Sprite correspondingBlockSprite = BlockCodexScript.instance.GetSpriteForPrefab(itemArg.block);
         selectedBlockPanelScript.InitializeShopPanel(itemArg, correspondingBlockSprite);
     }
-
-
     public void HandleInventoryBlockButtonTap(GameObject blockPrefabArg)
     {
         selectedBlockPanelScript.gameObject.SetActive(true);
@@ -96,27 +82,21 @@ public class BlocksUIScript : MonoBehaviour
         int count = blockManagerScript.GetInventoryBlockCount(blockPrefabArg);
         selectedBlockPanelScript.InitializeInventoryPanel(correspondingBlockSprite, blockPrefabArg, count);
     }
-
-
-    public void CreateAllShopButtons(List<Card> listOfItems)
+    public void CreateShopButtons(List<Card> listOfItems)
     {
-        currentShopOfferButtons = new List<GameObject>();
         foreach(Card itemTemp in listOfItems)
         {
             Sprite itemSprite = BlockCodexScript.instance.GetSpriteForPrefab(itemTemp.block);
             GameObject newShopButton = CreateShopButton(itemSprite, itemTemp);
-            currentShopOfferButtons.Add(newShopButton);
         }
     }
-
-    public void RemoveUsedBlocks()
-    {
-        foreach(KeyValuePair<GameObject, BlockButtonScript> keyValuePair in inventoryButtons)
-        {
-            UpdateInventoryBlockCount(keyValuePair.Key, blockManagerScript.GetInventoryBlockCount(keyValuePair.Key));
-        }
-    }
-
+    //public void RemoveUsedBlocks()
+    //{
+    //    foreach(KeyValuePair<GameObject, BlockButtonScript> keyValuePair in inventoryButtons)
+    //    {
+    //        UpdateInventoryBlockCount(keyValuePair.Key, blockManagerScript.GetInventoryBlockCount(keyValuePair.Key));
+    //    }
+    //}
     public void UpdateInventoryBlockCount(GameObject blockTypeArg, int newCountArg)
     {
         BlockButtonScript correspondingButtonScript = inventoryButtons[blockTypeArg];
@@ -129,9 +109,34 @@ public class BlocksUIScript : MonoBehaviour
             correspondingButtonScript.gameObject.SetActive(true);
             correspondingButtonScript.UpdateCount(newCountArg);
         }
+        StartCoroutine(UpdateEmptyInventoryInfoVisibility());
     }
-
-    public void CreateInventoryButtons()
+    IEnumerator UpdateEmptyShopInfoVisibility()
+    {
+        yield return new WaitForEndOfFrame();
+        if (shopItemsParent.transform.childCount == 0)
+        {
+            emptyShopInfoText.SetActive(true);
+        }
+        else
+        {
+            emptyShopInfoText.SetActive(false);
+        }
+    }
+    IEnumerator UpdateEmptyInventoryInfoVisibility()
+    {
+        yield return new WaitForEndOfFrame();
+        foreach(Transform t in inventoryItemsParent.transform)
+        {
+            if (t.gameObject.activeInHierarchy)
+            {
+                emptyInventoryInfoText.SetActive(false);
+                yield break;
+            }
+        }
+        emptyInventoryInfoText.SetActive(true);
+    }
+    void InitializeInventoryButtons()
     {
         inventoryButtons = new Dictionary<GameObject, BlockButtonScript>();
         foreach(GameObject blockObjectTemp in BlockCodexScript.instance.blockConfig)
@@ -142,7 +147,6 @@ public class BlocksUIScript : MonoBehaviour
             inventoryButtons.Add(blockObjectTemp, newBlockButtonScript);
         }
     }
-
     GameObject CreateInventoryButton(Sprite spriteArg, GameObject gameObjectArg)
     {
         GameObject newBlockButton = Instantiate(blockButtonPrefab,  inventoryItemsParent.transform);
@@ -150,12 +154,20 @@ public class BlocksUIScript : MonoBehaviour
         newBlockButtonScript.InitializeInventoryIIButton(spriteArg, gameObjectArg);
         return newBlockButton;
     }
-
+    void ClearShopButtons()
+    {
+        foreach (Transform shopOfferObject in shopItemsParent.transform)
+        {
+            Destroy(shopOfferObject.gameObject);
+        }
+        StartCoroutine(UpdateEmptyShopInfoVisibility());
+    }
     GameObject CreateShopButton(Sprite spriteArg, Card shopItem)
     {
         GameObject newBlockButton = Instantiate(blockButtonPrefab, shopItemsParent.transform);
         BlockButtonScript newBlockButtonScript = newBlockButton.GetComponent<BlockButtonScript>();
         newBlockButtonScript.InitializeShopButton(spriteArg, shopItem, HandleShopBlockButtonTap);
+        StartCoroutine(UpdateEmptyShopInfoVisibility());
         return newBlockButton;
     }
 

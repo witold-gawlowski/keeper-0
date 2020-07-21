@@ -1,9 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
+using UnityEditor.SceneManagement;
 
 public static class Tools
 {
+    
     [System.Serializable]
     public class Distribution
     {
@@ -91,4 +94,5 @@ public static class Tools
 
         return result;
     }
+   
 }

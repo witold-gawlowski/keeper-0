@@ -63,6 +63,12 @@ public class MainMenuScript : MonoBehaviour
         }
     }
 
+    public void ClearPlayePrefs()
+    {
+        print("player prefs cleared!");
+        PlayerPrefs.DeleteAll();
+    }
+
     public void HandleGemUpdate(IEvent evArg)
     {
         UpdateGemShopUIEvent evData = evArg as UpdateGemShopUIEvent;
