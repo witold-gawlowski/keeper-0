@@ -3814,7 +3814,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1796637315}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &682157686
 MonoBehaviour:
@@ -4057,6 +4057,52 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
+--- !u!1 &780344708
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 780344709}
+  - component: {fileID: 780344710}
+  m_Layer: 0
+  m_Name: DynamicColorManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &780344709
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 780344708}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1060127714}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &780344710
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 780344708}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a174a3e99568e04ba4ee8f361078722, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fromColor: {r: 0.8113208, g: 0.18752226, b: 0.18752226, a: 1}
+  toColor: {r: 0, g: 0.3863957, b: 1, a: 1}
+  block: {fileID: 0}
 --- !u!1 &792937464
 GameObject:
   m_ObjectHideFlags: 0
@@ -4415,6 +4461,7 @@ MonoBehaviour:
   blockSpawnerScript: {fileID: 91179821}
   levelMoneyManagerScript: {fileID: 1799857387}
   buildingUI: {fileID: 1965867163}
+  dynamicColorScript: {fileID: 780344710}
   blockUIQueue: {fileID: 1992855447}
   useMouse: 1
   map: {fileID: 0}
@@ -4433,7 +4480,7 @@ Transform:
   m_Children:
   - {fileID: 91179822}
   - {fileID: 2024050007}
-  m_Father: {fileID: 1796637315}
+  m_Father: {fileID: 1060127714}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &911021693
@@ -5408,6 +5455,39 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1058748423}
   m_CullTransparentMesh: 0
+--- !u!1 &1060127713
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1060127714}
+  m_Layer: 0
+  m_Name: BuildingPhaseManagers
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1060127714
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1060127713}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 878351333}
+  - {fileID: 1799857386}
+  - {fileID: 780344709}
+  m_Father: {fileID: 1796637315}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1124367278
 GameObject:
   m_ObjectHideFlags: 0
@@ -6673,7 +6753,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1796637315}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1377942661
 MonoBehaviour:
@@ -8826,14 +8906,12 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 878351333}
+  - {fileID: 1060127714}
   - {fileID: 2041666677}
-  - {fileID: 1799857386}
   - {fileID: 2002959901}
   - {fileID: 2041774211}
   - {fileID: 1377942660}
   - {fileID: 682157685}
-  - {fileID: 1984506280}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -8861,12 +8939,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1799857385}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1796637315}
-  m_RootOrder: 2
+  m_Father: {fileID: 1060127714}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1799857387
 MonoBehaviour:
@@ -9641,49 +9719,6 @@ MonoBehaviour:
   summaryUIScript: {fileID: 496892175}
   blockUIQueue: {fileID: 0}
   progressBarImage: {fileID: 1369946377}
---- !u!1 &1984506279
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1984506280}
-  - component: {fileID: 1984506281}
-  m_Layer: 0
-  m_Name: GemManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1984506280
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1984506279}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1796637315}
-  m_RootOrder: 7
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1984506281
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1984506279}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c18f68da65dab934dae3e5c37ca6256a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1992855445
 GameObject:
   m_ObjectHideFlags: 0
@@ -9746,7 +9781,7 @@ GameObject:
   - component: {fileID: 2002959901}
   - component: {fileID: 2002959902}
   m_Layer: 0
-  m_Name: AccountManger
+  m_Name: MoneyManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9764,7 +9799,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1796637315}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2002959902
 MonoBehaviour:
@@ -9914,7 +9949,7 @@ Transform:
   m_Children:
   - {fileID: 1147298681}
   m_Father: {fileID: 1796637315}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2041774212
 MonoBehaviour:

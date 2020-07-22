@@ -13,6 +13,8 @@ public class BlockScript : MonoBehaviour
     public Vector3 geometricMiddlePosition;
     public bool isStarter = false;
     public bool isDigger = false;
+    public DynamicColorScript dynamicColorScript;
+
 
     void Start()
     {
@@ -24,6 +26,7 @@ public class BlockScript : MonoBehaviour
         {
             Instantiate(tile, new Vector3(v2.x, v2.y, 0) + transform.position, Quaternion.identity, transform);
         }
+        dynamicColorScript.childTiles = GetComponentsInChildren<SpriteRenderer>();
         geometricMiddlePosition = GetGeometricMiddle();
     }
 
@@ -55,6 +58,8 @@ public class BlockScript : MonoBehaviour
         }
         return new Vector2Int(maxX-minX, maxY-minY);
     }
+
+  
 
     public void ChangeColorToSnappedColor()
     {

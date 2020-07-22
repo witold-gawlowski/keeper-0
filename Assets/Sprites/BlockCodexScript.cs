@@ -37,7 +37,7 @@ public class BlockCodexScript : MonoBehaviour
     {
         if (!blockImages.ContainsKey(blockPrefab))
         {
-            print("missing  image!");
+            print("missing  image! " + blockPrefab.name);
         }
         return blockImages[blockPrefab];
     }

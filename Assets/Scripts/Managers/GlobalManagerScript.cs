@@ -103,10 +103,7 @@ public class GlobalManagerScript : MonoBehaviour
         dragScript.SetProceduralMap(level);
         Camera.main.transform.position = levelMap.GetLevelCenterPosition() - new Vector3(0, 3, 10);
         buildingUIScript.OnStartBuilding();
-
     }
-
-
 
     private void OnLevelCompleted()
     {
@@ -116,7 +113,6 @@ public class GlobalManagerScript : MonoBehaviour
         OnLevelFinished();
         accountManager.AddFunds(levelMoneyManagerScript.GetTotalReward());
         roundCount++;
-         
 
         EventManager.SendEvent(new TopBarUIUpdateEvent(
             levelManagerScript.seed,
@@ -137,20 +133,6 @@ public class GlobalManagerScript : MonoBehaviour
         dragScript.gameObject.SetActive(false);
         levelManagerScript.HideNotOwnedLevels();
         levelManagerScript.DecayLevelRewardsAndHideNewIcons();
-    }
-
-    private bool CanPlayerContinue()
-    {
-        int funds = accountManager.GetMoney();
-        int MinRosterPrice = levelManagerScript.GetMinRosterPrice();
-        if(levelManagerScript.GetOwnedLevelsNumber() ==0)
-        {
-            if(funds < MinRosterPrice)
-            {
-                return false;
-            }
-        }
-        return true;
     }
 
     public int GetCurrentLevel()

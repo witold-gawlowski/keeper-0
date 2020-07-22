@@ -17,6 +17,7 @@ public class DragScript : MonoBehaviour
     public BlockSpawnerScript blockSpawnerScript;
     public LevelMoneyManagerScript levelMoneyManagerScript;
     public BuildingUIScript buildingUI;
+    public DynamicColorScript dynamicColorScript;
     public BlockUIQueue blockUIQueue;
     public bool useMouse = true;
     bool snapped;
@@ -35,6 +36,7 @@ public class DragScript : MonoBehaviour
     public void OnStartBuilding()
     {
         firstBlockPlaced = false;
+        dynamicColorScript.Init();
     }
 
 
@@ -74,6 +76,8 @@ public class DragScript : MonoBehaviour
                         blockSpawnerScript.SpawnNextBlock();
                         draggedBlock = blockSpawnerScript.nextBlock;
                         draggedBlockScript = draggedBlock.GetComponent<BlockScript>();
+                        dynamicColorScript.SetBlock(draggedBlock);
+                        dynamicColorScript.enabled = true;
                     }
                 }
             }
@@ -95,10 +99,15 @@ public class DragScript : MonoBehaviour
                     draggedBlockScript.transform.position = new Vector3(snappedPointerPosition.x, snappedPointerPosition.y);
                     snapped = true;
                     draggedBlockScript.ChangeColorToSnappedColor();
+                    dynamicColorScript.enabled = false;
                 }
                 if (snappedLastFrame == true && !snapped)
                 {
-                    draggedBlockScript.ChangeColorToHangingColor();
+                    dynamicColorScript.enabled = true;
+                }
+                if(snappedLastFrame == false && snapped)
+                {
+                    dynamicColorScript.enabled = false;
                 }
             }
             snappedLastFrame = snapped;
@@ -118,6 +127,7 @@ public class DragScript : MonoBehaviour
                 }
                 blockFeederScript.Pop();
                 blockPlacedEvent(draggedBlockScript.value, draggedBlockScript.GetArea());
+                dynamicColorScript.RegisterTiles(draggedBlockScript.relativeTilePositions, snappedBlockPosition);
                 EventManager.SendEvent(new GemsFoundEvent(gemsFound));
                 draggedBlockScript = null;
             }
