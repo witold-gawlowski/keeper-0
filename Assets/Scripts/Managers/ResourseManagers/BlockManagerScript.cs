@@ -45,8 +45,9 @@ public class BlockManagerScript : MonoBehaviour
         blockShuffleContainer.Initialize(seed);
         List<GameObject> blocksQueue = blockShuffleContainer.GetBlocks();
         List<BlockUIQueue.BlockUIData> blockUIData = new List<BlockUIQueue.BlockUIData>();
-        foreach(GameObject blockQueueObject in blocksQueue)
-        {
+        for(int i=0; i<blocksQueue.Count; i++) {
+            bool isFirst = i == 0;
+            GameObject blockQueueObject = blocksQueue[i];
             Sprite tempSprite = BlockCodexScript.instance.GetSpriteForPrefab(blockQueueObject);
             BlockScript blockQueueObjectScript = blockQueueObject.GetComponent<BlockScript>();
             int blockRewardValue = Mathf.RoundToInt(levelManagerScript.GetReturnValue(level) * blockQueueObjectScript.value);

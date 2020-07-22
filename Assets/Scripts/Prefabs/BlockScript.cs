@@ -56,11 +56,19 @@ public class BlockScript : MonoBehaviour
         return new Vector2Int(maxX-minX, maxY-minY);
     }
 
-    public void SetColorPlaced()
+    public void ChangeColorToSnappedColor()
     {
         foreach(SpriteRenderer sr  in GetComponentsInChildren<SpriteRenderer>())
         {
             sr.color = placedColor2;
+        }
+    }
+
+    public void ChangeColorToHangingColor()
+    {
+        foreach (SpriteRenderer sr in GetComponentsInChildren<SpriteRenderer>())
+        {
+            sr.color = hangingColor;
         }
     }
 

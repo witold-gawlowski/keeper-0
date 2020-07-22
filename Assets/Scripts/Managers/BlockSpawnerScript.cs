@@ -9,6 +9,7 @@ public class BlockSpawnerScript : MonoBehaviour
     public GameObject nextBlock;
     public BlockManagerScript blockManager;
     int rotationCountBeforeSpawning;
+    public Color firstBlockColor = Color.white;
 
     public void Awake()
     {

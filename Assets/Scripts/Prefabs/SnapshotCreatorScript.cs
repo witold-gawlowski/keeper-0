@@ -7,6 +7,7 @@ public class SnapshotCreatorScript : MonoBehaviour
 
     public System.Action<Sprite> finishedGeneratingSnapshotEvent;
     public SpriteRenderer spriteRenderer;
+    public SpriteRenderer backGroundSpriteRenderer;
     public Texture2D mapTexture;
     public Texture2D backgroundTexture;
     public ProceduralMap map;
@@ -30,6 +31,7 @@ public class SnapshotCreatorScript : MonoBehaviour
     {
         CreateTexture();
         spriteRenderer.sprite = Sprite.Create(mapTexture, new Rect(0, 0, map.GetWidth(), map.GetHeight()), new Vector2(0.5f, 0.5f));
+        backGroundSpriteRenderer.sprite = Sprite.Create(backgroundTexture, new Rect(0, 0, map.GetWidth(), map.GetHeight()), new Vector2(0.5f, 0.5f));
         if (finishedGeneratingSnapshotEvent != null)
         {
             finishedGeneratingSnapshotEvent(spriteRenderer.sprite);

@@ -10,7 +10,7 @@ PrefabInstance:
     - target: {fileID: 582720744970519140, guid: 87e7ca4ce4737c247b7251c11696c561,
         type: 3}
       propertyPath: m_Name
-      value: Block_Fat_L
+      value: 2L
       objectReference: {fileID: 0}
     - target: {fileID: 582720744970519141, guid: 87e7ca4ce4737c247b7251c11696c561,
         type: 3}

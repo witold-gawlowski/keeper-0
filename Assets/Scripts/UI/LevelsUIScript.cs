@@ -194,7 +194,6 @@ public class LevelsUIScript : MonoBehaviour
         return newLevelButton;
     }
 
-
     public void OnBackButtonTap()
     {
         selectedLevelPanelScript.gameObject.SetActive(false);

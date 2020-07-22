@@ -20,6 +20,7 @@ public class DragScript : MonoBehaviour
     public BlockUIQueue blockUIQueue;
     public bool useMouse = true;
     bool snapped;
+    bool snappedLastFrame;
     public ProceduralMap map;
     public bool firstBlockPlaced;
     float tapLengthCounter;
@@ -93,8 +94,14 @@ public class DragScript : MonoBehaviour
                 {
                     draggedBlockScript.transform.position = new Vector3(snappedPointerPosition.x, snappedPointerPosition.y);
                     snapped = true;
+                    draggedBlockScript.ChangeColorToSnappedColor();
+                }
+                if (snappedLastFrame == true && !snapped)
+                {
+                    draggedBlockScript.ChangeColorToHangingColor();
                 }
             }
+            snappedLastFrame = snapped;
         }
         if (((touches.Length > 0 && touches[0].phase == TouchPhase.Ended)||Input.GetMouseButtonUp(0)) && draggedBlockScript != null)
         {
@@ -112,7 +119,6 @@ public class DragScript : MonoBehaviour
                 blockFeederScript.Pop();
                 blockPlacedEvent(draggedBlockScript.value, draggedBlockScript.GetArea());
                 EventManager.SendEvent(new GemsFoundEvent(gemsFound));
-                draggedBlockScript.SetColorPlaced();
                 draggedBlockScript = null;
             }
             else
@@ -126,7 +132,6 @@ public class DragScript : MonoBehaviour
                 draggedBlockScript.transform.position = blockSpawnerScript.transform.position;
                 draggedBlockScript = null;
             }
-            print(tapLengthCounter);
         }
 
     }

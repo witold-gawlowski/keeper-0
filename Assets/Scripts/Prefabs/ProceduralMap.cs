@@ -7,6 +7,7 @@ public class ProceduralMap : MonoBehaviour
     public System.Action finishedGeneratingMapEvent;
     public GameObject square;
     public GameObject levelSpriteObject;
+    public GameObject levelBackgroundSpriteObject;
     public int[,] map;
     int[,] tempMap;
     int[,] components;
@@ -36,7 +37,7 @@ public class ProceduralMap : MonoBehaviour
         alreadyCompleted = alreadyCompltedArg;
         height = levelParamsArg.height;
         levelSpriteObject.transform.localPosition = GetLevelCenterPosition();
-
+        levelBackgroundSpriteObject.transform.localPosition = GetLevelCenterPosition();
         int maxCompNum = -1;
         do {
             Generate(rArg);

@@ -126,7 +126,7 @@ PrefabInstance:
     - target: {fileID: 8788037283467384516, guid: 2ab79e1c5512c41449a014a19e44b1e6,
         type: 3}
       propertyPath: m_Name
-      value: Block_Square_4x4 Variant
+      value: 2Square
       objectReference: {fileID: 0}
     - target: {fileID: 8788037283467384517, guid: 2ab79e1c5512c41449a014a19e44b1e6,
         type: 3}

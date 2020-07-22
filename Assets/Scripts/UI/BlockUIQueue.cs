@@ -9,6 +9,7 @@ public class BlockUIQueue : MonoBehaviour
     public class BlockUIData{
         public Sprite sprite;
         public int valueToDisplay;
+        public bool starter;
         public BlockUIData(Sprite spriteArg, int valueToDisplayArg)
         {
             sprite = spriteArg;

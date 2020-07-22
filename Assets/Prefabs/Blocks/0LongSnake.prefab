@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8564226537785472387}
   - component: {fileID: 1094198719335051691}
   m_Layer: 0
-  m_Name: Block_LongSnake
+  m_Name: 0LongSnake
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -52,3 +52,8 @@ MonoBehaviour:
   - {x: 2, y: 2}
   tile: {fileID: 8562417976350379660, guid: a33eca05f65bcb54cb9097a587b37edf, type: 3}
   value: 130
+  placedColor2: {r: 0.8301887, g: 0.6335573, b: 0.4268423, a: 1}
+  hangingColor: {r: 0.3679245, g: 0.22995281, b: 0.12322001, a: 1}
+  geometricMiddlePosition: {x: 0, y: 0, z: 0}
+  isStarter: 0
+  isDigger: 0

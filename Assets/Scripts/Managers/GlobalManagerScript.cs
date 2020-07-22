@@ -31,7 +31,6 @@ public class GlobalManagerScript : MonoBehaviour
     public BlockManagerScript blockManagerScript;
     public GlobalUIScript globalUIScript;
     public BlockShopScript blockShopScript;
-    public ButtonSortScript buttonSortScript;
     public SummaryUIScript summaryUIScript;
     public BlockUIQueue blockUIQueue;
     public BlockShuffleContainer blockShuffleContainer;
@@ -78,7 +77,6 @@ public class GlobalManagerScript : MonoBehaviour
         {
             blockShopScript.OnNewRoundStart();
             levelManagerScript.OnStartNewRound();
-            buttonSortScript.Sort();
 
             EventManager.SendEvent(new TopBarUIUpdateEvent(
             levelManagerScript.seed,
