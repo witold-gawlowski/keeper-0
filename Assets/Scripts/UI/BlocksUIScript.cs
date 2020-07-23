@@ -35,6 +35,7 @@ public class BlocksUIScript : MonoBehaviour
     public BlockShopScript blockShopScript;
     public GameObject emptyInventoryInfoText;
     public GameObject emptyShopInfoText;
+    bool dirty;
     Dictionary<GameObject, BlockButtonScript> inventoryButtons;
 
     public void Awake()
@@ -43,8 +44,20 @@ public class BlocksUIScript : MonoBehaviour
         EventManager.onInventoryBlockTap += HandleInventoryBlockButtonTap;
         EventManager.onBlockDeleted += UpdateInventoryBlockCount;
         EventManager.AddListener<UpdateOfferUIEvent>(HandleUpdateShopOfferEvent);
+        dirty = false;
     }
-       
+
+    private void OnEnable()
+    {
+        print("on enable block ui script");
+        if (dirty)
+        {
+            UpdateEmptyInventoryInfoVisibility();
+            UpdateEmptyShopInfoVisibility();
+            dirty = false;
+        }
+    }
+
     void Start()
     {
         InitializeInventoryButtons();
@@ -66,7 +79,14 @@ public class BlocksUIScript : MonoBehaviour
                 Destroy(offerButton.gameObject);
             }
         }
-        StartCoroutine(UpdateEmptyShopInfoVisibility());
+        if (this.isActiveAndEnabled)
+        {
+            StartCoroutine(UpdateEmptyShopInfoVisibility());
+        }
+        else
+        {
+            dirty = true;
+        }
     }
     public void HandleShopBlockButtonTap(Card itemArg)
     {
@@ -108,10 +128,18 @@ public class BlocksUIScript : MonoBehaviour
             correspondingButtonScript.gameObject.SetActive(true);
             correspondingButtonScript.UpdateCount(newCountArg);
         }
-        StartCoroutine(UpdateEmptyInventoryInfoVisibility());
+        if (this.isActiveAndEnabled)
+        {
+            StartCoroutine(UpdateEmptyInventoryInfoVisibility());
+        }
+        else
+        {
+            dirty = true;
+        }
     }
     IEnumerator UpdateEmptyShopInfoVisibility()
     {
+        print("UpdateEmptyShopInfoVisibility");
         yield return new WaitForEndOfFrame();
         if (shopItemsParent.transform.childCount == 0)
         {
@@ -124,6 +152,7 @@ public class BlocksUIScript : MonoBehaviour
     }
     IEnumerator UpdateEmptyInventoryInfoVisibility()
     {
+        print("UpdateEmptyInventoryInfoVisibility");
         yield return new WaitForEndOfFrame();
         foreach(Transform t in inventoryItemsParent.transform)
         {

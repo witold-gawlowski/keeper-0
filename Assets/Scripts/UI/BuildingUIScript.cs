@@ -18,10 +18,16 @@ public class BuildingUIScript : MonoBehaviour
     public Image progressBarImage;
     public Text barText;
     public TextMeshProUGUI gemText;
+    public GameObject outOfBlocksPanel;
 
     public void TriggerRotateEvent()
     {
         RotateButtonTapEvent();
+    }
+
+    public void ShowOutOfBlockPanel()
+    {
+        outOfBlocksPanel.SetActive(true);
     }
     
     public void OnStartBuilding()

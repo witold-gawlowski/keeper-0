@@ -39,6 +39,19 @@ public class DragScript : MonoBehaviour
         dynamicColorScript.Init();
     }
 
+    void OnBlockPlaced(int A, int B)
+    {
+        blockFeederScript.Pop();
+        blockSpawnerScript.ResetRotation();
+        levelMoneyManagerScript.AddBlockValue(A, B);
+        float completedFraction = levelMoneyManagerScript.GetCompletedFraction();
+        float completedTrheshold = levelMoneyManagerScript.completionThreshold;
+        buildingUI.OnProgressUpdate(completedFraction / completedTrheshold);
+        buildingUI.UpdateBarCaption(Mathf.RoundToInt(completedFraction * 100), Mathf.RoundToInt(completedTrheshold * 100));
+        levelMoneyManagerScript.CheckCompleteness();
+        dynamicColorScript.RegisterTiles(draggedBlockScript.relativeTilePositions, snappedBlockPosition);
+        EventManager.SendEvent(new GemsFoundEvent(gemsFound));
+    }
 
     // Update is called once per frame
     void Update()
@@ -125,24 +138,23 @@ public class DragScript : MonoBehaviour
                 {
                     firstBlockPlaced = true;
                 }
-                blockFeederScript.Pop();
-                blockPlacedEvent(draggedBlockScript.value, draggedBlockScript.GetArea());
-                dynamicColorScript.RegisterTiles(draggedBlockScript.relativeTilePositions, snappedBlockPosition);
-                EventManager.SendEvent(new GemsFoundEvent(gemsFound));
+                
+                OnBlockPlaced(draggedBlockScript.value, draggedBlockScript.GetArea());
+                
                 draggedBlockScript = null;
             }
             else
             {
-                if (tapLengthCounter < rotateTimeWindow)
-                {
-                    buildingUI.TriggerRotateEvent();
-                }
+                //if (tapLengthCounter < rotateTimeWindow)
+                //{
+                //    buildingUI.TriggerRotateEvent();
+                //}
                 blockUIQueue.SetTopVisible(true);
                 Destroy(draggedBlockScript.gameObject);
-                dynamicColorScript.enabled = false;
                 draggedBlockScript.transform.position = blockSpawnerScript.transform.position;
                 draggedBlockScript = null;
             }
+            dynamicColorScript.enabled = false;
         }
 
     }

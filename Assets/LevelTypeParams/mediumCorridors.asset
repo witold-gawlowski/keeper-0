@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: mediumCorridors
   m_EditorClassIdentifier: 
   levelName: LevelName
-  width: 12
-  height: 10
+  width: 10
+  height: 12
   steps: 3
   deathLimit: 1
   lifeLimit: 7

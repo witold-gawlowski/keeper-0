@@ -6,7 +6,6 @@ using UnityEngine;
 
 public class LevelMoneyManagerScript : MonoBehaviour
 {
-    public System.Action<float> progressUpdatedEvent;
     public BuildingUIScript buildingUIScript;
     public System.Action levelCompletedEvent;
     public delegate void RewardChangeDelegate(int value);
@@ -19,9 +18,10 @@ public class LevelMoneyManagerScript : MonoBehaviour
     public SummaryUIScript summaryUIScript;
     private int mapTotalFreeArea;
     public AnimationCurve completionPercentToRewardMultiplier;
-    private float completionThreshold;
+    public float completionThreshold;
     int rawReward;
     int gems;
+    public bool isLevelCompleted;
     
     
     public void SetReturnValue(float returnValueArg)
@@ -31,7 +31,6 @@ public class LevelMoneyManagerScript : MonoBehaviour
 
     private void Awake()
     { 
-        dragScript.blockPlacedEvent += BlockPlacedEventHandler;
         levelCompletedEvent += InitializeSummaryUI;
         levelCompletedEvent += buildingUIScript.OnLevelCompleteEvent;
         EventManager.AddListener<GemsFoundEvent>(GemsFoundHandler);
@@ -47,6 +46,7 @@ public class LevelMoneyManagerScript : MonoBehaviour
         gems = 0;
         buildingUIScript.UpdateBarCaption(0, Mathf.RoundToInt(completionThresholdArg));
         buildingUIScript.UpdateGemUI(0);
+        isLevelCompleted = false;
     }
 
     public void PlaceHugeblock()
@@ -54,13 +54,7 @@ public class LevelMoneyManagerScript : MonoBehaviour
         BlockPlacedEventHandler(1000, 1000);
     }
 
-    public void BlockPlacedEventHandler(int rewardValueArg, int blockAreaArg)
-    {
-        AddBlockValue(rewardValueArg, blockAreaArg);
-        progressUpdatedEvent(GetCompletedFraction()/completionThreshold);
-        buildingUIScript.UpdateBarCaption(Mathf.RoundToInt(GetCompletedFraction()*100), Mathf.RoundToInt(completionThreshold*100));
-        CheckCompleteness();
-    }
+
 
     public int GetGems()
     {
@@ -73,10 +67,11 @@ public class LevelMoneyManagerScript : MonoBehaviour
         levelCompletedEvent();
     }
 
-    private void CheckCompleteness()
+    public void CheckCompleteness()
     {
         if(GetCompletedFraction() >= completionThreshold)
         {
+            isLevelCompleted = true;
             StartCoroutine(LevelCompleteDelay());
         }
     }

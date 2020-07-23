@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: LongNiceCaves
   m_EditorClassIdentifier: 
   levelName: LevelName
-  width: 15
-  height: 8
+  width: 8
+  height: 15
   steps: 1
   deathLimit: 4
   lifeLimit: 6

@@ -13,8 +13,10 @@ public class BlockShuffleContainer : MonoBehaviour
     public BlockManagerScript blockManagerScript;
     public GlobalManagerScript globalManager;
     public BlockUIQueue blockUIQueue;
+    public BuildingUIScript buildingUIScript;
     private List<GameObject> pendingRemoval;
     private Dictionary<GameObject, int> blockTypeCounter;
+    public LevelMoneyManagerScript levelMoneyManager;
     List<float> blockSortingValues;
     int seed;
     int bigPrime = 2147483647;
@@ -93,6 +95,10 @@ public class BlockShuffleContainer : MonoBehaviour
         pendingRemoval.Add(Top());
         blocks.RemoveAt(0);
         blockUIQueue.Next();
+        if (Top() == null && ! levelMoneyManager.isLevelCompleted)
+        {
+            buildingUIScript.ShowOutOfBlockPanel();
+        }
         return;
     }
 

@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: WeirdLabirros
   m_EditorClassIdentifier: 
   levelName: LevelName
-  width: 15
-  height: 10
+  width: 10
+  height: 15
   steps: 1
   deathLimit: 1
   lifeLimit: 4

@@ -36,7 +36,7 @@ public class GlobalManagerScript : MonoBehaviour
     public BlockShuffleContainer blockShuffleContainer;
     public SceneFader fader;
     public RunCompletedPanelScript runCompletedPanelScript;
-    
+    public LevelCameraFitteer levelCameraFitter;
 
     int roundCount;
 
@@ -103,6 +103,7 @@ public class GlobalManagerScript : MonoBehaviour
         dragScript.SetProceduralMap(level);
         Camera.main.transform.position = levelMap.GetLevelCenterPosition() - new Vector3(0, 3, 10);
         buildingUIScript.OnStartBuilding();
+        levelCameraFitter.Setup(level);
     }
 
     private void OnLevelCompleted()
