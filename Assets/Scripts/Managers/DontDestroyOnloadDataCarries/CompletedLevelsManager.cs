@@ -14,6 +14,7 @@ public class CompletedLevelsManager : MonoBehaviour
 {
     List<int> levels;
     const int bigPrime = int.MaxValue;
+    
     void Awake()
     {
         Load();
@@ -24,10 +25,31 @@ public class CompletedLevelsManager : MonoBehaviour
         EventManager.SendEvent(new UpdateCompletedLevelsUIEvent(levels));
     }
 
-    void Start()
+    public bool IsTutorialRangeCompleted(int tutorialRangeMaxLevel)
     {
-        
+        for(int i=1; i<=tutorialRangeMaxLevel; i++)
+        {
+            if (!levels.Contains(i))
+            {
+                return false;
+            }
+        }
+        return true;
     }
+
+    public int GetIncompleteTutorialLevel(int tutorialRangeMaxLevel)
+    {
+        for (int i = 1; i <= tutorialRangeMaxLevel; i++)
+        {
+            if (!levels.Contains(i))
+            {
+                return i;
+            }
+        }
+        return 0;
+    }
+
+
     public int GetLevelsFootprint()
     {
         int result = 1;

@@ -139,6 +139,7 @@ public class DragScript : MonoBehaviour
                 }
                 blockUIQueue.SetTopVisible(true);
                 Destroy(draggedBlockScript.gameObject);
+                dynamicColorScript.enabled = false;
                 draggedBlockScript.transform.position = blockSpawnerScript.transform.position;
                 draggedBlockScript = null;
             }

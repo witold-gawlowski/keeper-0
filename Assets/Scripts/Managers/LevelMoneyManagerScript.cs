@@ -45,6 +45,8 @@ public class LevelMoneyManagerScript : MonoBehaviour
         totalBlockValue = 0;
         totalBlockArea = 0;
         gems = 0;
+        buildingUIScript.UpdateBarCaption(0, Mathf.RoundToInt(completionThresholdArg));
+        buildingUIScript.UpdateGemUI(0);
     }
 
     public void PlaceHugeblock()
@@ -56,6 +58,7 @@ public class LevelMoneyManagerScript : MonoBehaviour
     {
         AddBlockValue(rewardValueArg, blockAreaArg);
         progressUpdatedEvent(GetCompletedFraction()/completionThreshold);
+        buildingUIScript.UpdateBarCaption(Mathf.RoundToInt(GetCompletedFraction()*100), Mathf.RoundToInt(completionThreshold*100));
         CheckCompleteness();
     }
 
@@ -82,6 +85,7 @@ public class LevelMoneyManagerScript : MonoBehaviour
     {
         GemsFoundEvent evData = evArg as GemsFoundEvent;
         gems += evData.count;
+        buildingUIScript.UpdateGemUI(gems);
     }
 
     public float GetCompletedFraction()

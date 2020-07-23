@@ -9,6 +9,7 @@ public class DynamicColorScript : MonoBehaviour
     public Color toColor;
     public SpriteRenderer[] childTiles;
     public float dist;
+    public float  gradientSlope = 10;
     public GameObject block;
 
     public void Init()
@@ -32,7 +33,7 @@ public class DynamicColorScript : MonoBehaviour
         {
             dist = Mathf.Min(dist, (block.transform.position - v3).magnitude);
         }
-        Color newCOlor = Color.Lerp(toColor, fromColor, dist / 30);
+        Color newCOlor = Color.Lerp(toColor, fromColor, dist / gradientSlope);
         foreach (SpriteRenderer sr in childTiles)
         {
             sr.color = newCOlor;

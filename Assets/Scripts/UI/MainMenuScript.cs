@@ -19,6 +19,9 @@ public class MainMenuScript : MonoBehaviour
     public TextMeshProUGUI gemText;
     public TMP_InputField seedInputField;
     public TextMeshProUGUI seedInputText;
+    public SeedMapperScript seedMapper;
+    public GameObject tutorialInfoPanel;
+    public int maxTutorialLevel = 10;
     GameObject currentPanel;
 
     private void Awake()
@@ -83,17 +86,23 @@ public class MainMenuScript : MonoBehaviour
 
     public void OnStartButtonTap()
     {
-        //SceneManager.LoadScene("MenuScene");
-        if (Deck.instance.IsDeckEmpty())
+        int seedTemp = int.Parse(seedInputField.text);
+        int mappedSeed = seedMapper.Map(seedTemp);
+        if (!completedLevelsManager.IsTutorialRangeCompleted(maxTutorialLevel) && (seedTemp <1|| seedTemp > maxTutorialLevel))
+        {
+            tutorialInfoPanel.SetActive(true);
+            int incompleteLevel = completedLevelsManager.GetIncompleteTutorialLevel(maxTutorialLevel);
+            seedInputField.SetTextWithoutNotify(incompleteLevel.ToString());
+        }
+        else if (Deck.instance.IsDeckEmpty())
         {
             DeckEmptyInfoPanel.SetActive(true);
         }
         else
         {
             StartCoroutine(sceneLoader.FadeAndLoadScene(SceneFader.FadeDirection.In, "MenuScene"));
-            int seedTemp = int.Parse(seedInputField.text);
-            SeedScript.instance.seed = seedTemp;
-            if (completedLevelsManager.IsSeedCompleted(seedTemp))
+            SeedScript.instance.seed = mappedSeed;
+            if (completedLevelsManager.IsSeedCompleted(mappedSeed))
             {
                 SeedScript.instance.alreadyCompleted = true;
             }
