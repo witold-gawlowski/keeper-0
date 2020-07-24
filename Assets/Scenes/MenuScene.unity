@@ -1018,8 +1018,8 @@ MonoBehaviour:
   fireRunCompleteCheat:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1799857387}
-        m_MethodName: PlaceHugeblock
+      - m_Target: {fileID: 878351331}
+        m_MethodName: 
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3467,7 +3467,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0aba3d249f1390647b9ddc341f509cce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  camera: {fileID: 621748369}
+  myCamera: {fileID: 0}
 --- !u!1 &630901622
 GameObject:
   m_ObjectHideFlags: 0
@@ -3816,6 +3816,7 @@ GameObject:
   - component: {fileID: 660474552}
   - component: {fileID: 660474551}
   - component: {fileID: 660474550}
+  - component: {fileID: 660474553}
   m_Layer: 5
   m_Name: NextBlockImage
   m_TagString: Untagged
@@ -3933,6 +3934,34 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 660474548}
   m_CullTransparentMesh: 0
+--- !u!114 &660474553
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 660474548}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 13
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 878351332}
+          m_MethodName: OmgDragDown
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &674998058
 GameObject:
   m_ObjectHideFlags: 0
@@ -6882,50 +6911,6 @@ MonoBehaviour:
   m_FlexibleWidth: 5
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
---- !u!1 &1220406544
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1220406545}
-  - component: {fileID: 1220406546}
-  m_Layer: 0
-  m_Name: CompleteLevelCheat
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &1220406545
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1220406544}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -76.62277, y: 226.18066, z: -171}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1965867160}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1220406546
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1220406544}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c4bb7b54a9d434d4bb5701e31dff1b5a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  levelMoneyManagerScript: {fileID: 1799857387}
 --- !u!1 &1222958321
 GameObject:
   m_ObjectHideFlags: 0
@@ -7629,7 +7614,7 @@ RectTransform:
   - {fileID: 170691482}
   - {fileID: 1072602855}
   m_Father: {fileID: 1965867160}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.05, y: 0.92}
   m_AnchorMax: {x: 0.95, y: 0.98}
@@ -9520,6 +9505,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  completionThreshold: 0
+  isLevelCompleted: 0
 --- !u!1 &1803153010
 GameObject:
   m_ObjectHideFlags: 0
@@ -10216,7 +10203,6 @@ RectTransform:
   - {fileID: 660474549}
   - {fileID: 496892172}
   - {fileID: 1446542368}
-  - {fileID: 1220406545}
   - {fileID: 1464957176}
   - {fileID: 248307253}
   m_Father: {fileID: 246450154}
@@ -10474,6 +10460,7 @@ MonoBehaviour:
   globalManager: {fileID: 2041666676}
   blockUIQueue: {fileID: 1992855447}
   buildingUIScript: {fileID: 1965867163}
+  levelMoneyManager: {fileID: 0}
 --- !u!1 &2041666675
 GameObject:
   m_ObjectHideFlags: 0

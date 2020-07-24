@@ -49,10 +49,7 @@ public class LevelMoneyManagerScript : MonoBehaviour
         isLevelCompleted = false;
     }
 
-    public void PlaceHugeblock()
-    {
-        BlockPlacedEventHandler(1000, 1000);
-    }
+    
 
 
 

@@ -5,7 +5,7 @@ using UnityEngine;
 public class LevelCameraFitteer : MonoBehaviour
 {
     ProceduralMap procMap;
-    public Camera camera;
+    public Camera myCamera;
     public void Setup(GameObject levelObjectArg)
     {
         procMap = levelObjectArg.GetComponent<ProceduralMap>();

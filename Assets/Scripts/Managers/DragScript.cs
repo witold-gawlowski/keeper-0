@@ -24,7 +24,6 @@ public class DragScript : MonoBehaviour
     bool snappedLastFrame;
     public ProceduralMap map;
     public bool firstBlockPlaced;
-    float tapLengthCounter;
     public float rotateTimeWindow = 0.5f;
 
 
@@ -39,7 +38,7 @@ public class DragScript : MonoBehaviour
         dynamicColorScript.Init();
     }
 
-    void OnBlockPlaced(int A, int B)
+    public void OnBlockPlaced(int A, int B, int gemsFound, Vector2Int snappedBlockPosition)
     {
         blockFeederScript.Pop();
         blockSpawnerScript.ResetRotation();
@@ -51,6 +50,28 @@ public class DragScript : MonoBehaviour
         levelMoneyManagerScript.CheckCompleteness();
         dynamicColorScript.RegisterTiles(draggedBlockScript.relativeTilePositions, snappedBlockPosition);
         EventManager.SendEvent(new GemsFoundEvent(gemsFound));
+    }
+
+    public void OmgDragDown()
+    {
+        int pointerID = 0;
+        if (!Input.GetMouseButton(0))
+        {
+            pointerID = Input.GetTouch(0).fingerId;
+        }
+        if (!EventSystem.current.IsPointerOverGameObject(pointerID))
+        {
+            GameObject draggedBlock = null;
+            if (blockFeederScript.Top() != null)
+            {
+                blockUIQueue.SetTopVisible(false);
+                blockSpawnerScript.SpawnNextBlock();
+                draggedBlock = blockSpawnerScript.nextBlock;
+                draggedBlockScript = draggedBlock.GetComponent<BlockScript>();
+                dynamicColorScript.SetBlock(draggedBlock);
+                dynamicColorScript.enabled = true;
+            }
+        }
     }
 
     // Update is called once per frame
@@ -74,30 +95,9 @@ public class DragScript : MonoBehaviour
             newPosition.z = 0;
             if ((!useMouse && mainTouch.phase == TouchPhase.Began) || Input.GetMouseButtonDown(0))
             {
-                int pointerID = 0;
-                if (!Input.GetMouseButton(0))
-                {
-                    pointerID = Input.GetTouch(0).fingerId;
-                }
-                tapLengthCounter = 0;
-                if (!EventSystem.current.IsPointerOverGameObject(pointerID))
-                {
-                    GameObject draggedBlock = null;
-                    if (blockFeederScript.Top() != null)
-                    {
-                        blockUIQueue.SetTopVisible(false);
-                        blockSpawnerScript.SpawnNextBlock();
-                        draggedBlock = blockSpawnerScript.nextBlock;
-                        draggedBlockScript = draggedBlock.GetComponent<BlockScript>();
-                        dynamicColorScript.SetBlock(draggedBlock);
-                        dynamicColorScript.enabled = true;
-                    }
-                }
+               //omgdragdown fun goes here 
             }
-            else
-            {
-                tapLengthCounter += Time.deltaTime;
-            }
+
 
             snapped = false;
             if (draggedBlockScript != null)
@@ -139,7 +139,7 @@ public class DragScript : MonoBehaviour
                     firstBlockPlaced = true;
                 }
                 
-                OnBlockPlaced(draggedBlockScript.value, draggedBlockScript.GetArea());
+                OnBlockPlaced(draggedBlockScript.value, draggedBlockScript.GetArea(), gemsFound, snappedBlockPosition);
                 
                 draggedBlockScript = null;
             }

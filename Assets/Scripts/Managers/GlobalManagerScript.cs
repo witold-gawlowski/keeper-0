@@ -48,8 +48,6 @@ public class GlobalManagerScript : MonoBehaviour
         StartNewRoundEvent += OnStartNewRound;
         buildingUIScript.RotateButtonTapEvent += blockSpawnerScript.HandleRotEvent;
         buildingUIScript.RotateButtonTapEvent += blockUIQueue.RotateTop;
-        dragScript.blockPlacedEvent += blockSpawnerScript.ResetRotation;
-        levelMoneyManagerScript.progressUpdatedEvent += buildingUIScript.OnProgressUpdate;
         levelMoneyManagerScript.levelCompletedEvent += blockShuffleContainer.OnLevelCompleted;
     }
 

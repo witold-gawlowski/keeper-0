@@ -22,6 +22,21 @@ PrefabInstance:
       propertyPath: relativeTilePositions.Array.data[2].y
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 227528976595414906, guid: e312e93c2c4a271449e37abd9ef89a49,
+        type: 3}
+      propertyPath: placedColor2.r
+      value: 0.9433962
+      objectReference: {fileID: 0}
+    - target: {fileID: 227528976595414906, guid: e312e93c2c4a271449e37abd9ef89a49,
+        type: 3}
+      propertyPath: placedColor2.g
+      value: 0.82848746
+      objectReference: {fileID: 0}
+    - target: {fileID: 227528976595414906, guid: e312e93c2c4a271449e37abd9ef89a49,
+        type: 3}
+      propertyPath: placedColor2.b
+      value: 0.5562478
+      objectReference: {fileID: 0}
     - target: {fileID: 8853295386183986002, guid: e312e93c2c4a271449e37abd9ef89a49,
         type: 3}
       propertyPath: m_LocalPosition.x
