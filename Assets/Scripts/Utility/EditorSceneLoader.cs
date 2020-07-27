@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEditor;
+#if (UNITY_EDITOR)
 using UnityEditor.SceneManagement;
 
 /// <summary>
@@ -129,3 +130,4 @@ static class SceneAutoLoader
         set { EditorPrefs.SetString(cEditorPrefPreviousScene, value); }
     }
 }
+#endif

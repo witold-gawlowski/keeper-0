@@ -37,11 +37,13 @@ public class GlobalManagerScript : MonoBehaviour
     public SceneFader fader;
     public RunCompletedPanelScript runCompletedPanelScript;
     public LevelCameraFitteer levelCameraFitter;
+    public TutorialScript tutorialScript;
 
     int roundCount;
 
     private void Awake()
     {
+        tutorialScript.Disable();
         summaryUIScript.LevelCompletedEvent += OnLevelCompleted;
         globalUIScript.BuildingCanceledEvent += OnLevelFinished;
         levelsUIScript.AddRunLevelEventHandler(OnLevelRun);
@@ -81,6 +83,7 @@ public class GlobalManagerScript : MonoBehaviour
             GetCurrentLevel(),
             levelManagerScript.GetLevelTarget(),
             levelMoneyManagerScript.GetGems(), accountManager.GetMoney()));
+            
         }
     }
 
@@ -102,6 +105,7 @@ public class GlobalManagerScript : MonoBehaviour
         Camera.main.transform.position = levelMap.GetLevelCenterPosition() - new Vector3(0, 3, 10);
         buildingUIScript.OnStartBuilding();
         levelCameraFitter.Setup(level);
+        tutorialScript.Init();
     }
 
     private void OnLevelCompleted()
@@ -132,6 +136,7 @@ public class GlobalManagerScript : MonoBehaviour
         dragScript.gameObject.SetActive(false);
         levelManagerScript.HideNotOwnedLevels();
         levelManagerScript.DecayLevelRewardsAndHideNewIcons();
+        tutorialScript.Disable();
     }
 
     public int GetCurrentLevel()

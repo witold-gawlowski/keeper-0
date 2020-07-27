@@ -95,10 +95,6 @@ public class BlockShuffleContainer : MonoBehaviour
         pendingRemoval.Add(Top());
         blocks.RemoveAt(0);
         blockUIQueue.Next();
-        if (Top() == null && ! levelMoneyManager.isLevelCompleted)
-        {
-            buildingUIScript.ShowOutOfBlockPanel();
-        }
         return;
     }
 

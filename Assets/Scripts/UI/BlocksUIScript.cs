@@ -49,7 +49,6 @@ public class BlocksUIScript : MonoBehaviour
 
     private void OnEnable()
     {
-        print("on enable block ui script");
         if (dirty)
         {
             UpdateEmptyInventoryInfoVisibility();
@@ -139,7 +138,6 @@ public class BlocksUIScript : MonoBehaviour
     }
     IEnumerator UpdateEmptyShopInfoVisibility()
     {
-        print("UpdateEmptyShopInfoVisibility");
         yield return new WaitForEndOfFrame();
         if (shopItemsParent.transform.childCount == 0)
         {
@@ -152,7 +150,6 @@ public class BlocksUIScript : MonoBehaviour
     }
     IEnumerator UpdateEmptyInventoryInfoVisibility()
     {
-        print("UpdateEmptyInventoryInfoVisibility");
         yield return new WaitForEndOfFrame();
         foreach(Transform t in inventoryItemsParent.transform)
         {

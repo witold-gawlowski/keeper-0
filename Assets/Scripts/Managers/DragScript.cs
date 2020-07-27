@@ -47,30 +47,35 @@ public class DragScript : MonoBehaviour
         float completedTrheshold = levelMoneyManagerScript.completionThreshold;
         buildingUI.OnProgressUpdate(completedFraction / completedTrheshold);
         buildingUI.UpdateBarCaption(Mathf.RoundToInt(completedFraction * 100), Mathf.RoundToInt(completedTrheshold * 100));
-        levelMoneyManagerScript.CheckCompleteness();
-        dynamicColorScript.RegisterTiles(draggedBlockScript.relativeTilePositions, snappedBlockPosition);
         EventManager.SendEvent(new GemsFoundEvent(gemsFound));
+        levelMoneyManagerScript.CheckCompleteness();
+        if (!levelMoneyManagerScript.isLevelCompleted)
+        {
+            if (blockFeederScript.Top() == null)
+            {
+                buildingUI.ShowOutOfBlockPanel();
+            }
+        }
+        dynamicColorScript.RegisterTiles(draggedBlockScript.relativeTilePositions, snappedBlockPosition);
     }
 
     public void OmgDragDown()
     {
+        print("dragdown");
         int pointerID = 0;
         if (!Input.GetMouseButton(0))
         {
             pointerID = Input.GetTouch(0).fingerId;
         }
-        if (!EventSystem.current.IsPointerOverGameObject(pointerID))
+        GameObject draggedBlock = null;
+        if (blockFeederScript.Top() != null)
         {
-            GameObject draggedBlock = null;
-            if (blockFeederScript.Top() != null)
-            {
-                blockUIQueue.SetTopVisible(false);
-                blockSpawnerScript.SpawnNextBlock();
-                draggedBlock = blockSpawnerScript.nextBlock;
-                draggedBlockScript = draggedBlock.GetComponent<BlockScript>();
-                dynamicColorScript.SetBlock(draggedBlock);
-                dynamicColorScript.enabled = true;
-            }
+            blockUIQueue.SetTopVisible(false);
+            blockSpawnerScript.SpawnNextBlock();
+            draggedBlock = blockSpawnerScript.nextBlock;
+            draggedBlockScript = draggedBlock.GetComponent<BlockScript>();
+            dynamicColorScript.SetBlock(draggedBlock);
+            dynamicColorScript.enabled = true;
         }
     }
 
