@@ -159,6 +159,7 @@ public class BlockShopScript : MonoBehaviour
             blockManagerScript.IncreaseInventoryBlockCount(item.block, item.quantity);
             blocksUIScript.DeleteShopItemButton(item);
             OnCardSold();
+            LevelManagerScript.ins.hasBlockInventoryChangedSinceLastLevelUIUpdate = true;
         }
     }
 }

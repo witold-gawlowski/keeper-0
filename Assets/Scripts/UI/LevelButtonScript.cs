@@ -20,9 +20,12 @@ public class LevelButtonScript : MonoBehaviour
     public GameObject rawRewardText;
     public GameObject persistence;
     public RectTransform parentMask;
+    public Image levelBgImage;
+    public Image backgroundImage;
     public RectTransform levelImageRectTransform;
     bool hasSpriteSet;
     public GameObject newIconObject;
+    public GameObject dodgeImage;
 
     public void HideNewIcon()
     {
@@ -58,6 +61,8 @@ public class LevelButtonScript : MonoBehaviour
 
     public void OnEnable()
     {
+        Debug.Log("Level button script on enable");
+        //call event need visuals update
         if (hasSpriteSet)
         {
             StartCoroutine(SetMapImageSize());
@@ -82,6 +87,16 @@ public class LevelButtonScript : MonoBehaviour
     public void UpdateRawReward(int valueArg)
     {
         rawRewardText.GetComponent<Text>().text = "$" + valueArg.ToString();
+    }
+
+    public void SetDefaultLook()
+    {
+        dodgeImage.SetActive(false);
+    }
+
+    public void SetUnableToCompleteLook()
+    {
+        dodgeImage.SetActive(true);
     }
 
     public void OnBuy()

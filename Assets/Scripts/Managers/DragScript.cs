@@ -38,11 +38,16 @@ public class DragScript : MonoBehaviour
         dynamicColorScript.Init();
     }
 
-    public void OnBlockPlaced(int A, int B, int gemsFound, Vector2Int snappedBlockPosition)
+    public void PlaceCheatBlock()
+    {
+        OnBlockPlaced(0, 1000, 0, Vector2Int.zero);
+    }
+
+    public void OnBlockPlaced(int draggedBlockValue, int draggedBlockArea, int gemsFound, Vector2Int snappedBlockPosition)
     {
         blockFeederScript.Pop();
         blockSpawnerScript.ResetRotation();
-        levelMoneyManagerScript.AddBlockValue(A, B);
+        levelMoneyManagerScript.AddBlockValue(draggedBlockValue, draggedBlockArea);
         float completedFraction = levelMoneyManagerScript.GetCompletedFraction();
         float completedTrheshold = levelMoneyManagerScript.completionThreshold;
         buildingUI.OnProgressUpdate(completedFraction / completedTrheshold);
@@ -61,7 +66,6 @@ public class DragScript : MonoBehaviour
 
     public void OmgDragDown()
     {
-        print("dragdown");
         int pointerID = 0;
         if (!Input.GetMouseButton(0))
         {

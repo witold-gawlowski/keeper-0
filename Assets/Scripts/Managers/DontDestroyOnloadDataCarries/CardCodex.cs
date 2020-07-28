@@ -27,6 +27,10 @@ public class CardCodex : MonoBehaviour
         dictionary = new Dictionary<string, Card>();
         foreach (Card c in cards)
         {
+            if (dictionary.ContainsKey(c.id))
+            {
+                Debug.Log("doubled cards in the card codex!");
+            }
             dictionary.Add(c.id, c);
         }
     }

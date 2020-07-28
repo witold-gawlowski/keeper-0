@@ -11,6 +11,7 @@ public class TopBarUIUpdateEvent:IEvent
     public int? targetLevelNumber;
     public int? gemsCollected;
     public int? totalCash;
+
     public TopBarUIUpdateEvent(int? runNumberArg, int? levelNumberArg, int? targetLevelNumberArg, int? gemsCollectedArg, int? totalCahsArg)
     {
         runNumber = runNumberArg;
@@ -109,6 +110,7 @@ public class GlobalUIScript : MonoBehaviour
     {
         inventoryUI.SetActive(true);
         shopUI.SetActive(false);
+        levelUIScript.OnFocus();
     }
 
     void OnLevelRun(GameObject level)

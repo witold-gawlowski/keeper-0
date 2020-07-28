@@ -34,6 +34,7 @@ public class LevelManagerScript : MonoBehaviour
             persistence = persistenceArg;
         }
     }
+    public static LevelManagerScript ins;
 
     public GameObject levelPrefab;
     List<LevelData> levels;
@@ -48,9 +49,12 @@ public class LevelManagerScript : MonoBehaviour
     public int seed = 101;
     bool seedALreadyCompleted;
     Randomizer randomizer;
+    public bool hasBlockInventoryChangedSinceLastLevelUIUpdate;
 
     private void Awake()
     {
+        ins = this;
+
         seed = SeedScript.instance.seed;
         seedALreadyCompleted = SeedScript.instance.alreadyCompleted;
         randomizer = new Randomizer(seed);
@@ -60,6 +64,7 @@ public class LevelManagerScript : MonoBehaviour
         levelsUIScript.SetLevelRemovedEventHandler(RemoveLevel);
         levels = new List<LevelData>();
         levelScheduler.Create();
+        hasBlockInventoryChangedSinceLastLevelUIUpdate = false;
     }
 
 
@@ -71,6 +76,7 @@ public class LevelManagerScript : MonoBehaviour
     public void OnStartNewRound()
     {
         RosterUpdateRoutine();
+        levelsUIScript.UpdateButtonsDoabilityUI();
     }
 
 
@@ -160,7 +166,7 @@ public class LevelManagerScript : MonoBehaviour
             int rawReward = nextLevelParams.GetReward(randomizer);
             int persistence = nextLevelParams.persistenceInterval;
             float newLevelCompletionThresholdFraction = nextLevelParams.GetCompletionThresholdFraction(randomizer);
-            int age = 0; 
+            int age = 0;
             levels.Add(new LevelData(newLevel, newLevelCost, newReturnValue, false, newLevelCompletionThresholdFraction, rawReward, persistence, age));
             GameObject newLevelButton = levelsUIScript.SpawnShopLevelButton(newLevel, newLevelCost, newReturnValue, newLevelCompletionThresholdFraction, rawReward, persistence);
             LevelButtonScript newLevelButtonScript = newLevelButton.GetComponent<LevelButtonScript>();

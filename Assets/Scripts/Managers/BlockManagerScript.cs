@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class BlockManagerScript : MonoBehaviour
 {
+    public static BlockManagerScript ins;
+
     public BlockShopScript blockShopScript;
     public BlocksUIScript blocksUIScript;
     public BlockShuffleContainer blockShuffleContainer;
@@ -14,10 +16,12 @@ public class BlockManagerScript : MonoBehaviour
     public int offersPerRound;
     public int seed = 101;
 
+
     EventManager.EventDelegate deleteEventDelegate;
 
     public void Awake()
     {
+        ins = this;
         blockInventory = new Dictionary<GameObject, int>();
         EventManager.AddListener<SelectedBlockPanelScript.DeleteButtonEvent>(DeleteEventHandler);
     }
@@ -56,6 +60,24 @@ public class BlockManagerScript : MonoBehaviour
         }
         blockUIQueue.Init(blockUIData);
     }
+
+    public int GetTotalInventoryArea()
+    {
+        int result = 0;
+        foreach(KeyValuePair<GameObject, int> bpo in blockInventory){
+            BlockScript bs = bpo.Key.GetComponent<BlockScript>();
+            if (bs == null)
+            {
+                Debug.Log("missing blockscript!");
+            }
+            else
+            {
+                result += bs.GetArea() * bpo.Value;
+            }
+        }
+        return result;
+    }
+
 
     public int GetInventoryBlockCount(GameObject blockObject)
     {

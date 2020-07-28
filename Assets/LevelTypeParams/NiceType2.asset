@@ -67,8 +67,8 @@ MonoBehaviour:
   priceStandardDeviation: 43
   rewardValueMean: 743
   rewardValueDeviation: 141
-  completionsFractionMean: 0.335
-  completionFractionDispersion: 0.094
+  completionsFractionMean: 0.797
+  completionFractionDispersion: 0.145
   persistenceInterval: 3
   minimalMaxCaveSize: 40
   removeSecondaryCaves: 1

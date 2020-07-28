@@ -40,15 +40,29 @@ public class MainMenuScript : MonoBehaviour
         deckEditPanel.SetActive(false);
         hallOfFamePanel.SetActive(false);
         leaderboardsPanel.SetActive(false);
+       
+        EventManager.AddListener<UpdateGemShopUIEvent>(HandleGemUpdate);
+    }
+
+    private void Start()
+    {
         if (RunResultScript.instance == null)
         {
-            seedInputField.text = (Random.Range(0, int.MaxValue).ToString());
+            if (completedLevelsManager.IsTutorialRangeCompleted(maxTutorialLevel))
+            {
+                seedInputField.text = (Random.Range(0, int.MaxValue).ToString());
+            }
+            else
+            {
+                seedInputField.text = completedLevelsManager.GetIncompleteTutorialLevel(maxTutorialLevel).ToString();
+            }
+            
         }
         else
         {
             seedInputField.text = RunResultScript.instance.runNumber.ToString();
         }
-        EventManager.AddListener<UpdateGemShopUIEvent>(HandleGemUpdate);
+       
     }
 
     public void OnInputSeeedSelected()

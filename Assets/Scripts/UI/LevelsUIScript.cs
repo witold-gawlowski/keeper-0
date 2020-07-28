@@ -17,7 +17,8 @@ public class LevelsUIScript : MonoBehaviour
     public SelectedLevelPanelScript selectedLevelPanelScript;
     public Text cashText;
     public Text completedLevelsText;
-
+    public LevelManagerScript levelManagerScript;
+    
     public GameObject lastLevelSelected;
 
     private void Awake()
@@ -26,6 +27,36 @@ public class LevelsUIScript : MonoBehaviour
         selectedLevelPanelScript.LevelBoughtEvent += SelectedLevelBuyButtonTapHandler;
         selectedLevelPanelScript.RunLevelEvent += SelectedLevelBuildButtonTapHandler;
         selectedLevelPanelScript.LevelRemoveEvent += SelectedLevelRemoveButtonTapHandler;
+    }
+
+    public void OnFocus()
+    {
+        UpdateButtonsDoabilityUI();
+    }
+
+    public void UpdateButtonsDoabilityUI()
+    {
+        UpdateButtonsDoabilityUI(shopItemsParent.transform);
+        UpdateButtonsDoabilityUI(inventoryItemsParent.transform);
+    }
+
+    void UpdateButtonsDoabilityUI(Transform parentArg)
+    {
+        foreach(Transform tTemp in parentArg)
+        {
+            LevelButtonScript lbs = tTemp.GetComponent<LevelButtonScript>();
+            int levelArea = lbs.associatedLevel.GetComponent<ProceduralMap>().GetFreeArea();
+            int inventoryTotalArea = blockManagerScript.GetTotalInventoryArea();
+            float completionFraction = levelManagerScript.GetCompletionThreshold(lbs.associatedLevel);
+            if (levelArea* completionFraction <= inventoryTotalArea)
+            {
+                lbs.SetDefaultLook();
+            }
+            else
+            {
+                lbs.SetUnableToCompleteLook();
+            }
+        }
     }
 
     public void SelectedLevelRemoveButtonTapHandler(GameObject level)

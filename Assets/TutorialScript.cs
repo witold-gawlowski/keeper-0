@@ -16,7 +16,7 @@ public class TutorialScript : MonoBehaviour
     public void Init()
     {
         timer = 0;
-        PlayTutorialAnimation();
+        //PlayTutorialAnimation();
         tutorialEnabled = true;
     }
 
@@ -34,7 +34,6 @@ public class TutorialScript : MonoBehaviour
 
     IEnumerator AnimationCoroutine()
     {
-        yield return new WaitForSeconds(0.5f);
         handSprite.transform.position = animationFromObject.transform.position;
         handSprite.SetActive(true);
         yield return new WaitForSeconds(0.3f);

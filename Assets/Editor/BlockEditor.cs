@@ -2,7 +2,7 @@
 using UnityEditor;
 using System.Collections.Generic;
 using System.IO;
-//[CustomEditor(typeof(BlockScript))]
+[CustomEditor(typeof(BlockScript))]
 public class BlockScriptEditor : Editor
 {
     int tileSize = 9;

@@ -62,6 +62,10 @@ public class BlockCodexScript : MonoBehaviour
         dictionary = new Dictionary<string, GameObject>();
         foreach (GameObject blockObjectTemp in blockConfig)
         {
+            if (dictionary.ContainsKey(blockObjectTemp.name))
+            {
+                Debug.Log("doubled blocks for " + blockObjectTemp + "!");
+            }
             dictionary.Add(blockObjectTemp.name, blockObjectTemp.gameObject);
         }
     }
@@ -73,6 +77,10 @@ public class BlockCodexScript : MonoBehaviour
         {
             string blockPrefabName = blockObjectTemp.name;
             Sprite blockSprite = Resources.Load<Sprite>("Blocks/" + blockPrefabName);
+            if(blockSprite == null)
+            {
+                Debug.Log("couldnt load sprite for " + blockPrefabName);
+            }
             blockImages.Add(blockObjectTemp, blockSprite);
         }
     }
