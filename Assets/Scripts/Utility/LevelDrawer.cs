@@ -10,15 +10,20 @@ public class LevelDrawer : MonoBehaviour
     int displayedTypeCount;
     Randomizer randomizer;
     public int seed = 101;
+    private void Awake()
+    {
+        displayedTypeCount = 0;
+        
+    }
     private void Update()
     {
         if(randomizer == null)
         {
             randomizer = new Randomizer(seed);
         }
-        if (Input.GetKeyDown(KeyCode.LeftShift))
+        if (Input.GetKeyDown(KeyCode.LeftAlt))
         {
-            transform.GetChild(displayedTypeCount).gameObject.SetActive(false);
+            transform.GetChild(Mathf.Abs(displayedTypeCount % numberOfTypes)).gameObject.SetActive(false);
             displayedTypeCount = (displayedTypeCount + 1 ) % numberOfTypes;
             transform.GetChild(displayedTypeCount).gameObject.SetActive(true);
         }
@@ -40,9 +45,10 @@ public class LevelDrawer : MonoBehaviour
                 }
                 proceduralMap.Initialize(randomizer, type, 1, 1, false);
                 levelTypeGameObject.SetActive(false);
+                levelTypeGameObject.name = type.name;
             }
             numberOfTypes = levelTypes.Length;
-            displayedTypeCount = 0;
+            displayedTypeCount = -1;
             transform.GetChild(0).gameObject.SetActive(true);
         }
 

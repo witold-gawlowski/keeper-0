@@ -62,7 +62,7 @@ public class GlobalManagerScript : MonoBehaviour
     public void OnRunCompleted()
     {
         runCompletedPanelScript.gameObject.SetActive(true);
-        runCompletedPanelScript.UpdateText(SeedScript.instance.seed, accountManager.GetGems());
+        runCompletedPanelScript.UpdateText(SeedScript.instance.numericalSeed, accountManager.GetGems());
         EventManager.SendEvent(new RunFinishedEvent(accountManager.GetGems(), levelManagerScript.seed, true));
         EventManager.Clear();
     }

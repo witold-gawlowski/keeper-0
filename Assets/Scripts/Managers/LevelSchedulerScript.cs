@@ -2,14 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LevelSchedulerScript : MonoBehaviour
+public class LevelSchedulerScript : MonoBehaviour, ILevelSpecification
 {
     public LevelTypeScriptableObjectScript[] types;
-    public List<int> levelStructure;
-    public List<int> levelMapTypes;
-    public List<int> levelMapNumber;
-    public LevelManagerScript levelManagerScript;
-    public GlobalManagerScript globalManager;
+    List<int> levelStructure;
+    List<int> levelMapTypes;
+    List<int> levelMapNumber;
     public int minLevelGroups = 1;
     public int maxLevelGroups = 4;
     public int minLevelsPerGroup = 1;
@@ -21,6 +19,7 @@ public class LevelSchedulerScript : MonoBehaviour
     public void Init(Randomizer rArg)
     {
         randomizer = rArg;
+        Create();
     }
 
     public int GetNumberOfNewMaps(int roundArg)
@@ -28,7 +27,7 @@ public class LevelSchedulerScript : MonoBehaviour
         return levelMapNumber[roundArg-1];
     }
 
-    public int GetLevelCount()
+    public int GetTotalLevels()
     {
         return levelMapNumber.Count;
     }

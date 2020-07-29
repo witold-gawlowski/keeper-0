@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
 using System.Text.RegularExpressions;
+using seedmapper;
 
 public class MainMenuScript : MonoBehaviour
 {
@@ -101,7 +102,7 @@ public class MainMenuScript : MonoBehaviour
     public void OnStartButtonTap()
     {
         int seedTemp = int.Parse(seedInputField.text);
-        int mappedSeed = seedMapper.Map(seedTemp);
+        
         if (!completedLevelsManager.IsTutorialRangeCompleted(maxTutorialLevel) && (seedTemp <1|| seedTemp > maxTutorialLevel))
         {
             tutorialInfoPanel.SetActive(true);
@@ -114,9 +115,7 @@ public class MainMenuScript : MonoBehaviour
         }
         else
         {
-            StartCoroutine(sceneLoader.FadeAndLoadScene(SceneFader.FadeDirection.In, "MenuScene"));
-            SeedScript.instance.seed = mappedSeed;
-            if (completedLevelsManager.IsSeedCompleted(mappedSeed))
+            if (completedLevelsManager.IsSeedCompleted(seedTemp))
             {
                 SeedScript.instance.alreadyCompleted = true;
             }
@@ -124,6 +123,8 @@ public class MainMenuScript : MonoBehaviour
             {
                 SeedScript.instance.alreadyCompleted = false;
             }
+            SeedScript.instance.seed = seedMapper.GetSeed(seedTemp);
+            StartCoroutine(sceneLoader.FadeAndLoadScene(SceneFader.FadeDirection.In, "MenuScene"));
         }
     }
 

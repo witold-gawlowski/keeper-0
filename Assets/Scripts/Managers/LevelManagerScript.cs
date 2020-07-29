@@ -40,7 +40,7 @@ public class LevelManagerScript : MonoBehaviour
     List<LevelData> levels;
     public LevelsUIScript levelsUIScript;
     public accountManager accountManager;
-    LevelSchedulerScript levelScheduler;
+    ILevelSpecification levelScheduler;
     public GlobalManagerScript globalManager;
     public AnimationCurve levelDifficultyMultiplierCurve;
     public float rewardReductionFraction = 0.9f;
@@ -55,7 +55,7 @@ public class LevelManagerScript : MonoBehaviour
     {
         ins = this;
 
-        seed = SeedScript.instance.seed;
+        seed = SeedScript.instance.numericalSeed;
         seedALreadyCompleted = SeedScript.instance.alreadyCompleted;
         randomizer = new Randomizer(seed);
         levelScheduler = GetComponentInChildren<LevelSchedulerScript>();
@@ -63,14 +63,13 @@ public class LevelManagerScript : MonoBehaviour
         levelsUIScript.SetLevelBoughtEventHandler(BuyLevel);
         levelsUIScript.SetLevelRemovedEventHandler(RemoveLevel);
         levels = new List<LevelData>();
-        levelScheduler.Create();
         hasBlockInventoryChangedSinceLastLevelUIUpdate = false;
     }
 
 
     public int GetLevelTarget()
     {
-        return levelScheduler.GetLevelCount();
+        return levelScheduler.GetTotalLevels();
     }
 
     public void OnStartNewRound()
@@ -151,7 +150,7 @@ public class LevelManagerScript : MonoBehaviour
     public void RosterUpdateRoutine()
     {
         int currentLevel = globalManager.GetCurrentLevel();
-        int totalRoundCount = levelScheduler.GetLevelCount();
+        int totalRoundCount = levelScheduler.GetTotalLevels();
         int newLevelsInCurrentRound = levelScheduler.GetNumberOfNewMaps(currentLevel);
         LevelTypeScriptableObjectScript nextLevelParams = levelScheduler.GetMapType(currentLevel);
         for (int i = 0; i < newLevelsInCurrentRound; i++)

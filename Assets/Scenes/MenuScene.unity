@@ -10687,6 +10687,7 @@ MonoBehaviour:
   rewardReductionFraction: 0.9
   rewardReductionConstant: 200
   seed: 102
+  hasBlockInventoryChangedSinceLastLevelUIUpdate: 0
 --- !u!1 &2066324349
 GameObject:
   m_ObjectHideFlags: 0
