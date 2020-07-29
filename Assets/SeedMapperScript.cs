@@ -11,6 +11,7 @@ public class SeedMapperScript : MonoBehaviour
         public RunSpecification spec;
     }
 
+    [System.Serializable]
     public class IndexedNumericalSeed
     {
         public int index;
@@ -29,7 +30,7 @@ public class SeedMapperScript : MonoBehaviour
                 return spec.spec;
             }
         }
-        int? result = indexArg;
+        int result = indexArg;
         foreach (IndexedNumericalSeed seed in indexedNumericalSeeds)
         {
             if (seed.index == indexArg)

@@ -305,7 +305,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30ce511b9b4140241881ffff5c467f37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  map: 
+  indexedSpecifications:
+  - index: 666
+    spec: {fileID: 11400000, guid: d75537292840e0c42beba6a649f94a43, type: 2}
+  indexedNumericalSeeds: []
 --- !u!4 &12251468
 Transform:
   m_ObjectHideFlags: 0
@@ -6183,7 +6186,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 798fe9fe67644554fb82db472d448ee6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  seed: 0
+  nominalSeed: 0
   alreadyCompleted: 0
 --- !u!114 &1845822428
 MonoBehaviour:
