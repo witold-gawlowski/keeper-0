@@ -14,11 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: firstSpec
   levelStructure:
-  - type: {fileID: 0}
+  - type: {fileID: 11400000, guid: 17fff8055daf8904f9b648c1f58ff870, type: 2}
     specification:
     - type: {fileID: 0}
-      seed: 0
-    - type: {fileID: 0}
-      seed: 0
-  - type: {fileID: 0}
-    specification: []
+      target: 50
+      reward: 50
+      seed: 1572151363

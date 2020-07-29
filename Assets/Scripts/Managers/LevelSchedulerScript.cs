@@ -52,6 +52,7 @@ public class LevelSchedulerScript : MonoBehaviour, ILevelSpecification
     {
         CreateLevelStructure();
         levelMapTypes = new List<int>();
+        levelMapNumber = new List<int>();
         for(int i=0; i<levelStructure.Count; i++)
         {
             int levelTypeIndex = randomizer.Range(0, types.Length);

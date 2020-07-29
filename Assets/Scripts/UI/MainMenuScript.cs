@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
 using System.Text.RegularExpressions;
-using seedmapper;
 
 public class MainMenuScript : MonoBehaviour
 {
@@ -124,6 +123,7 @@ public class MainMenuScript : MonoBehaviour
                 SeedScript.instance.alreadyCompleted = false;
             }
             SeedScript.instance.seed = seedMapper.GetSeed(seedTemp);
+            SeedScript.instance.nominalSeed = seedTemp;
             StartCoroutine(sceneLoader.FadeAndLoadScene(SceneFader.FadeDirection.In, "MenuScene"));
         }
     }

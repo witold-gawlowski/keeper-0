@@ -8,6 +8,8 @@ public class RunSpecification : ScriptableObject, ILevelSpecification
     public class MapSpecification
     {
         public LevelTypeScriptableObjectScript type;
+        public float target;
+        public int reward;
         public int seed;
     }
     [System.Serializable]
@@ -18,12 +20,19 @@ public class RunSpecification : ScriptableObject, ILevelSpecification
     }
     public string id;
     public List<LevelSpecification> levelStructure;
-    public int GetMapsOnLevel(int level)
-    {
-        return levelStructure[level].specification.Count;
-    }
+
     public int GetTotalLevels()
     {
         return levelStructure.Count;
+    }
+
+    public int GetNumberOfNewMaps(int levelArg)
+    {
+        return levelStructure[levelArg-1].specification.Count;
+    }
+
+    public LevelTypeScriptableObjectScript GetMapType(int levelArg)
+    {
+        return levelStructure[levelArg-1].type;
     }
 }

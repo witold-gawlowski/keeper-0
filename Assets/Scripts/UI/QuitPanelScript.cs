@@ -13,7 +13,7 @@ public class QuitPanelScript : MonoBehaviour
 
     public void OnOKTap()
     {
-        EventManager.SendEvent(new RunFinishedEvent(0, SeedScript.instance.numericalSeed, false));
+        EventManager.SendEvent(new RunFinishedEvent(0, SeedScript.instance.nominalSeed, false));
         StartCoroutine(fader.FadeAndLoadScene(SceneFader.FadeDirection.In, "MainMenuScene"));
         EventManager.Clear();
     }

@@ -5,11 +5,13 @@ using UnityEngine;
 public class Randomizer
 {
     Random.State stateSave;
+    public int initialSeed;
 
     public Randomizer(int seed)
     {
         Random.InitState(seed);
         stateSave = Random.state;
+        initialSeed = seed;
     }
 
     public int Range(int  min, int max)

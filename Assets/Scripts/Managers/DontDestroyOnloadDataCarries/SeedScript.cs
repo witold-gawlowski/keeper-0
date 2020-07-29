@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class SeedScript : MonoBehaviour
 {
+    public int nominalSeed;
     public System.Object seed;
     public bool alreadyCompleted;
     public static SeedScript instance;

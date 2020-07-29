@@ -10,17 +10,14 @@ public class LevelDrawer : MonoBehaviour
     int displayedTypeCount;
     Randomizer randomizer;
     public int seed = 101;
+    public bool randomSeed = true;
     private void Awake()
     {
         displayedTypeCount = 0;
-        
+        randomSeed = true;
     }
     private void Update()
     {
-        if(randomizer == null)
-        {
-            randomizer = new Randomizer(seed);
-        }
         if (Input.GetKeyDown(KeyCode.LeftAlt))
         {
             transform.GetChild(Mathf.Abs(displayedTypeCount % numberOfTypes)).gameObject.SetActive(false);
@@ -28,15 +25,31 @@ public class LevelDrawer : MonoBehaviour
             transform.GetChild(displayedTypeCount).gameObject.SetActive(true);
         }
 
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            transform.GetChild(Mathf.Abs(displayedTypeCount % numberOfTypes)).gameObject.SetActive(false);
+            displayedTypeCount = (displayedTypeCount + numberOfTypes-1) % numberOfTypes;
+            transform.GetChild(displayedTypeCount).gameObject.SetActive(true);
+        }
+
+
         if (Input.GetKeyDown(KeyCode.LeftControl))
         {
+            
             foreach(Transform t in transform)
             {
                 Destroy(t.gameObject);
             }
 
+
+            if (randomSeed)
+            {
+                seed = Random.Range(int.MinValue, int.MaxValue);
+            }
+
             foreach (LevelTypeScriptableObjectScript type in levelTypes)
             {
+                randomizer = new Randomizer(seed);
                 GameObject levelTypeGameObject = Instantiate(levelPrefab, transform);
                 ProceduralMap proceduralMap = levelTypeGameObject.GetComponent<ProceduralMap>();
                 foreach(SpriteRenderer sr in levelTypeGameObject.GetComponentsInChildren<SpriteRenderer>())
@@ -50,6 +63,7 @@ public class LevelDrawer : MonoBehaviour
             numberOfTypes = levelTypes.Length;
             displayedTypeCount = -1;
             transform.GetChild(0).gameObject.SetActive(true);
+
         }
 
 

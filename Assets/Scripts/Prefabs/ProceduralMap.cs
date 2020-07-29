@@ -25,6 +25,8 @@ public class ProceduralMap : MonoBehaviour
     bool alreadyCompleted;
     int currentDFSComponent;
 
+    public int seed;
+
     public void Initialize(Randomizer rArg, LevelTypeScriptableObjectScript levelParamsArg, int currentRoundArg, int totalRoundCount, bool alreadyCompltedArg)
     {
         currentRoundNumber = currentRoundArg;

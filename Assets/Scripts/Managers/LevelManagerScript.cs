@@ -40,7 +40,7 @@ public class LevelManagerScript : MonoBehaviour
     List<LevelData> levels;
     public LevelsUIScript levelsUIScript;
     public accountManager accountManager;
-    ILevelSpecification levelScheduler;
+    ILevelSpecification levelDescription;
     public GlobalManagerScript globalManager;
     public AnimationCurve levelDifficultyMultiplierCurve;
     public float rewardReductionFraction = 0.9f;
@@ -54,12 +54,26 @@ public class LevelManagerScript : MonoBehaviour
     private void Awake()
     {
         ins = this;
-
-        seed = SeedScript.instance.numericalSeed;
         seedALreadyCompleted = SeedScript.instance.alreadyCompleted;
-        randomizer = new Randomizer(seed);
-        levelScheduler = GetComponentInChildren<LevelSchedulerScript>();
-        levelScheduler.Init(randomizer);
+        levelDescription = GetComponentInChildren<LevelSchedulerScript>();
+        System.Object seed = SeedScript.instance.seed;
+        if (seed is int)
+        {
+            int seedInt = (int)seed;
+            randomizer = new Randomizer(seedInt);
+            LevelSchedulerScript scheduler = levelDescription as LevelSchedulerScript;
+            scheduler.Init(randomizer);
+        }
+        else if(seed is RunSpecification)
+        {
+            RunSpecification seedSpec = seed as RunSpecification;
+            levelDescription = seedSpec;
+        }
+        else
+        {
+            Debug.Log("Wrong seed type!");
+        }
+
         levelsUIScript.SetLevelBoughtEventHandler(BuyLevel);
         levelsUIScript.SetLevelRemovedEventHandler(RemoveLevel);
         levels = new List<LevelData>();
@@ -69,7 +83,7 @@ public class LevelManagerScript : MonoBehaviour
 
     public int GetLevelTarget()
     {
-        return levelScheduler.GetTotalLevels();
+        return levelDescription.GetTotalLevels();
     }
 
     public void OnStartNewRound()
@@ -150,9 +164,9 @@ public class LevelManagerScript : MonoBehaviour
     public void RosterUpdateRoutine()
     {
         int currentLevel = globalManager.GetCurrentLevel();
-        int totalRoundCount = levelScheduler.GetTotalLevels();
-        int newLevelsInCurrentRound = levelScheduler.GetNumberOfNewMaps(currentLevel);
-        LevelTypeScriptableObjectScript nextLevelParams = levelScheduler.GetMapType(currentLevel);
+        int totalRoundCount = levelDescription.GetTotalLevels();
+        int newLevelsInCurrentRound = levelDescription.GetNumberOfNewMaps(currentLevel);
+        LevelTypeScriptableObjectScript nextLevelParams = levelDescription.GetMapType(currentLevel);
         for (int i = 0; i < newLevelsInCurrentRound; i++)
         {
             GameObject newLevel = Instantiate(levelPrefab, Vector3.zero, Quaternion.identity);
