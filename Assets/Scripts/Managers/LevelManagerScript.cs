@@ -40,7 +40,7 @@ public class LevelManagerScript : MonoBehaviour
     List<LevelData> levels;
     public LevelsUIScript levelsUIScript;
     public accountManager accountManager;
-    ILevelSpecification levelDescription;
+    ILevelSpecification runDescription;
     public GlobalManagerScript globalManager;
     public AnimationCurve levelDifficultyMultiplierCurve;
     public float rewardReductionFraction = 0.9f;
@@ -55,19 +55,19 @@ public class LevelManagerScript : MonoBehaviour
     {
         ins = this;
         seedALreadyCompleted = SeedScript.instance.alreadyCompleted;
-        levelDescription = GetComponentInChildren<LevelSchedulerScript>();
+        runDescription = GetComponentInChildren<LevelSchedulerScript>();
         System.Object seed = SeedScript.instance.seed;
         if (seed is int)
         {
             int seedInt = (int)seed;
             randomizer = new Randomizer(seedInt);
-            LevelSchedulerScript scheduler = levelDescription as LevelSchedulerScript;
+            LevelSchedulerScript scheduler = runDescription as LevelSchedulerScript;
             scheduler.Init(randomizer);
         }
         else if(seed is RunSpecification)
         {
             RunSpecification seedSpec = seed as RunSpecification;
-            levelDescription = seedSpec;
+            runDescription = seedSpec;
         }
         else
         {
@@ -83,7 +83,7 @@ public class LevelManagerScript : MonoBehaviour
 
     public int GetLevelTarget()
     {
-        return levelDescription.GetTotalLevels();
+        return runDescription.GetTotalLevels();
     }
 
     public void OnStartNewRound()
@@ -164,26 +164,28 @@ public class LevelManagerScript : MonoBehaviour
     public void RosterUpdateRoutine()
     {
         int currentLevel = globalManager.GetCurrentLevel();
-        int totalRoundCount = levelDescription.GetTotalLevels();
-        int newLevelsInCurrentRound = levelDescription.GetNumberOfNewMaps(currentLevel);
-        LevelTypeScriptableObjectScript nextLevelParams = levelDescription.GetMapType(currentLevel);
+        int totalRoundCount = runDescription.GetTotalLevels();
+        int newLevelsInCurrentRound = runDescription.GetNumberOfNewMaps(currentLevel);
+        LevelTypeScriptableObjectScript nextLevelParams = runDescription.GetMapType(currentLevel);
         for (int i = 0; i < newLevelsInCurrentRound; i++)
         {
             GameObject newLevel = Instantiate(levelPrefab, Vector3.zero, Quaternion.identity);
             newLevel.name = newLevel.name + i;
             SnapshotCreatorScript snapshotCreatorScript = newLevel.GetComponent<SnapshotCreatorScript>();
             ProceduralMap proceduralMap = newLevel.GetComponent<ProceduralMap>();
-            
-            int newLevelCost = Mathf.RoundToInt(nextLevelParams.GetCost(randomizer) * GetProgressionCostMultiplier()/10)*10;
-            float newReturnValue = nextLevelParams.GetReward(randomizer);
-            int rawReward = nextLevelParams.GetReward(randomizer);
-            int persistence = nextLevelParams.persistenceInterval;
-            float newLevelCompletionThresholdFraction = nextLevelParams.GetCompletionThresholdFraction(randomizer);
+
+            int newLevelCost = 123;
+            float newReturnValue = runDescription.GetReward(currentLevel, i);
+            int rawReward = runDescription.GetReward(currentLevel, i);
+            int persistence = 123; //nextLevelParams.persistenceInterval;
+            float newLevelCompletionThresholdFraction = runDescription.GetTarget(currentLevel, i);
             int age = 0;
+
             levels.Add(new LevelData(newLevel, newLevelCost, newReturnValue, false, newLevelCompletionThresholdFraction, rawReward, persistence, age));
             GameObject newLevelButton = levelsUIScript.SpawnShopLevelButton(newLevel, newLevelCost, newReturnValue, newLevelCompletionThresholdFraction, rawReward, persistence);
             LevelButtonScript newLevelButtonScript = newLevelButton.GetComponent<LevelButtonScript>();
             snapshotCreatorScript.finishedGeneratingSnapshotEvent += newLevelButtonScript.SetSprite;
+            randomizer = runDescription.GetRandomizer(currentLevel, i);
             proceduralMap.Initialize(randomizer, nextLevelParams, currentLevel, totalRoundCount, seedALreadyCompleted);
         }
     }

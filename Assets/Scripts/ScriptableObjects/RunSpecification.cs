@@ -35,4 +35,19 @@ public class RunSpecification : ScriptableObject, ILevelSpecification
     {
         return levelStructure[levelArg-1].type;
     }
+
+    public int GetReward(int levelArg, int mapNumberArg)
+    {
+        return levelStructure[levelArg - 1].specification[mapNumberArg].reward;
+    }
+
+    public float GetTarget(int levelArg, int mapNumberArg)
+    {
+        return levelStructure[levelArg - 1].specification[mapNumberArg].reward;
+    }
+
+    public Randomizer GetRandomizer(int levelArg, int mapNumberArg)
+    {
+        return new Randomizer(levelStructure[levelArg - 1].specification[mapNumberArg].seed);
+    }
 }

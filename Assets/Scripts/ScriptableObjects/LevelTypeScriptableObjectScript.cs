@@ -73,7 +73,7 @@ public class LevelTypeScriptableObjectScript: ScriptableObject
         return Mathf.RoundToInt(unrefinedPrice/10)*10;
     }
 
-    public float GetCompletionThresholdFraction(Randomizer rArg)
+    public float GetTarget(Randomizer rArg)
     {
         float unrefinedFraction = Tools.RandomGaussian01(rArg) * completionFractionDispersion + completionsFractionMean;
         return Mathf.Clamp01(unrefinedFraction);

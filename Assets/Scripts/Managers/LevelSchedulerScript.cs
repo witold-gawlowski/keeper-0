@@ -22,6 +22,8 @@ public class LevelSchedulerScript : MonoBehaviour, ILevelSpecification
         Create();
     }
 
+    
+
     public int GetNumberOfNewMaps(int roundArg)
     {
         return levelMapNumber[roundArg-1];
@@ -66,6 +68,20 @@ public class LevelSchedulerScript : MonoBehaviour, ILevelSpecification
         }
     }
 
+    public int GetReward(int levelArg, int mapNumberArg)
+    {
+        return GetMapType(levelArg).GetCost(randomizer);
+    }
+
+    public float GetTarget(int levelArg, int mapNumberArg)
+    {
+        return GetMapType(levelArg).GetTarget(randomizer);
+    }
+
+    public Randomizer GetRandomizer(int levelArg, int mapNumberArg)
+    {
+        return randomizer;
+    }
 
     //public int GetGroupIndex(int roundArg)
     //{
