@@ -70,7 +70,7 @@ public class LevelSchedulerScript : MonoBehaviour, ILevelSpecification
 
     public int GetReward(int levelArg, int mapNumberArg)
     {
-        return GetMapType(levelArg).GetCost(randomizer);
+        return GetMapType(levelArg).GetReward(randomizer);
     }
 
     public float GetTarget(int levelArg, int mapNumberArg)

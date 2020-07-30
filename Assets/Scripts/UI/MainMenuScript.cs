@@ -40,8 +40,7 @@ public class MainMenuScript : MonoBehaviour
         deckEditPanel.SetActive(false);
         hallOfFamePanel.SetActive(false);
         leaderboardsPanel.SetActive(false);
-       
-        EventManager.AddListener<UpdateGemShopUIEvent>(HandleGemUpdate);
+        menuPanel.SetActive(true);
     }
 
     private void Start()
@@ -86,10 +85,9 @@ public class MainMenuScript : MonoBehaviour
         PlayerPrefs.DeleteAll();
     }
 
-    public void HandleGemUpdate(IEvent evArg)
+    public void UpdateGems(int gemsArg)
     {
-        UpdateGemShopUIEvent evData = evArg as UpdateGemShopUIEvent;
-        gemText.text = "<sprite=\"Gem2\" index=0>" + evData.gems;
+        gemText.text = "<sprite=\"Gem2\" index=0>" + gemsArg;
     }
 
     bool IsMenuSceneLoaded()

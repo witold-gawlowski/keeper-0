@@ -18,9 +18,15 @@ public class BlockButtonScript : MonoBehaviour
     public GameObject blockImagePrefab;
     public GameObject imagesParent;
     public TextMeshProUGUI gemCost;
+    public GameObject overlayImage;
     RectTransform rectTransform;
 
     Sprite blockSprite;
+
+    public void SetDisabled(bool value)
+    {
+        overlayImage.SetActive(value);
+    }
 
     public void InitializeInventoryIIButton(
         Sprite spriteArg,

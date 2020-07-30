@@ -6,59 +6,33 @@ using UnityEngine;
 public class GemShopUIScript : MonoBehaviour
 {
     public GameObject buttonPrefab;
-    public BlockButtonScript buttons;
-    public GameObject buttonsParentI;
-    public GameObject buttonsParentII;
+    public GameObject buttonsParent;
 
-    private void Awake()
+    public void CreateButtons(List<Card> cards)
     {
-        EventManager.AddListener<UpdateGemShopUIEvent>(HandleGemShopUIUpdateEvent);
-    }
-
-    public void HandleGemShopUIUpdateEvent(IEvent eventArg)
-    {
-        UpdateGemShopUIEvent gemShopAwakeEvent = eventArg as UpdateGemShopUIEvent;
-        List<Card> cardsTemp = gemShopAwakeEvent.cards;
-        RepopulateShopUI(cardsTemp);
-    }
-
-    public void RepopulateShopUI(List<Card> cardsArg)
-    {
-        ClearButtons();
-        int parentIchildCount = 0;
-        foreach (Card cTemp in cardsArg)
+        foreach(Card c in cards)
         {
-            if (parentIchildCount < 3)
-            {
-                CreateButton(cTemp, buttonsParentI);
-                parentIchildCount++;
-            }
-            else
-            {
-                CreateButton(cTemp, buttonsParentII);
-            }
+            CreateButton(c, buttonsParent);
         }
     }
 
-
-    void ClearButtons()
+    public void UpdateButtonDisability(int gems)
     {
-        foreach(Transform tLocal in buttonsParentI.transform)
+        foreach (Transform t in buttonsParent.transform)
         {
-            Destroy(tLocal.gameObject);
-        }
-        foreach (Transform tLocal in buttonsParentII.transform)
-        {
-            Destroy(tLocal.gameObject);
+            BlockButtonScript bbs = t.gameObject.GetComponent<BlockButtonScript>();
+            int gemCost = bbs.associatedCard.gemCost;
+            bool disabilityCondition = gemCost > gems;
+            bbs.SetDisabled(disabilityCondition);
         }
     }
-
-    void CreateButton(Card cardArg, GameObject targetParent)
+    
+    void CreateButton(Card card, GameObject targetParent)
     {
         GameObject newBlockButton = Instantiate(buttonPrefab, targetParent.transform);
         BlockButtonScript newBlockButtonScript = newBlockButton.GetComponent<BlockButtonScript>();
-        Sprite spriteTemp = BlockCodexScript.instance.GetSpriteForPrefab(cardArg.block); 
-        newBlockButtonScript.InitializeGemShopButton(spriteTemp, cardArg);
+        Sprite spriteTemp = BlockCodexScript.instance.GetSpriteForPrefab(card.block); 
+        newBlockButtonScript.InitializeGemShopButton(spriteTemp, card);
     }
 
 
