@@ -102,7 +102,7 @@ public class BlockScriptEditor : Editor
     }
     Vector2Int GetTilePositionInPixels(Vector2Int tileRelativePosition)
     {
-        Vector2 abcFloat = GetBlockMiddlePosition() * tileSize;
+        Vector2 abcFloat = GetBlockMiddlePosition2() * tileSize;
         Vector2Int abc = new Vector2Int(Mathf.RoundToInt(abcFloat.x), Mathf.RoundToInt(abcFloat.y));
         return (tileRelativePosition) * tileSize - abc + pixelShift + Vector2Int.one * imageSize / 2;
     }

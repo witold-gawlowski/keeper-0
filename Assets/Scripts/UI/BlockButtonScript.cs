@@ -8,7 +8,7 @@ using TMPro;
 
 public class BlockButtonScript : MonoBehaviour
 {
-    enum ButtonType {Gemshop, InventoryI, InventoryII, Shop, Deck };
+    enum ButtonType {Gemshop, InventoryI, InventoryII, Shop, Deck};
     ButtonType type;
     public System.Action<Card> buttonTapEvent;
     public Card associatedCard;
@@ -19,6 +19,8 @@ public class BlockButtonScript : MonoBehaviour
     public GameObject imagesParent;
     public TextMeshProUGUI gemCost;
     public GameObject overlayImage;
+    public List<float> blockBrightnesDecay;
+    public List<float> pivotShiftTable = new List<float>() {0, 0.06f, 0.11f, 0.15f, 0.18f, 0.20f, 0.22f, 0.24f, 0.25f, 0.26f};
     RectTransform rectTransform;
 
     Sprite blockSprite;
@@ -94,22 +96,24 @@ public class BlockButtonScript : MonoBehaviour
         {
             Destroy(childTransform.gameObject);
         }
+        float maxShift = 0;
 
         for(int i=0; i<newCount; i++)
         {
             GameObject newImageObject = Instantiate(blockImagePrefab, imagesParent.transform);
-            newImageObject.transform.SetAsFirstSibling();
+            //newImageObject.transform.SetAsFirstSibling();
             Image blockImage = newImageObject.GetComponent<Image>();
+            Outline outline = newImageObject.GetComponent<Outline>();
             RectTransform rectTransformTemp = newImageObject.GetComponent<RectTransform>();
             //float buttonDiameter = Tools.GetButtonDiameter();
             //rectTransformTemp.sizeDelta = new Vector2(buttonDiameter, buttonDiameter);
             blockImage.sprite = blockSprite;
             RectTransform newImagerectTransform = newImageObject.GetComponent<RectTransform>();
-            newImagerectTransform.pivot = Vector2.one * (0.5f + 0.1f * (i-newCount/2));
+            newImagerectTransform.pivot = Vector2.one * (0.5f + pivotShiftTable[i]-pivotShiftTable[(newCount-1)/2]);
             Color baseColor = blockImage.color;
             float baseColorHue, basecolorSaturation, baseColorBrightness;
             Color.RGBToHSV(baseColor, out baseColorHue, out basecolorSaturation, out baseColorBrightness);
-            blockImage.color = Color.HSVToRGB(baseColorHue, basecolorSaturation, baseColorBrightness/(i+1));
+            blockImage.color = Color.HSVToRGB(baseColorHue, basecolorSaturation, baseColorBrightness-blockBrightnesDecay[newCount-i-1]);
         }
     }
 

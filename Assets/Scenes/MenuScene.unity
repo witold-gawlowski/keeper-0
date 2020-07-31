@@ -5793,7 +5793,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 932b1d6af418ddc44ad85262ac51e4c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  blockButtonPrefab: {fileID: 866343279126525143, guid: 4bd60c5a60d5018469ca63837b334c3e,
+  blockButtonPrefab: {fileID: 7894967916331156212, guid: 5232bcc8c47fb1a45962d0e38922ac2d,
     type: 3}
   shopItemsParent: {fileID: 1918905202}
   inventoryItemsParent: {fileID: 1138277521}
@@ -6260,6 +6260,7 @@ GameObject:
   - component: {fileID: 1138277524}
   - component: {fileID: 1138277523}
   - component: {fileID: 1138277526}
+  - component: {fileID: 1138277527}
   m_Layer: 5
   m_Name: InventoryBlocksItemsPanel
   m_TagString: Untagged
@@ -6366,6 +6367,20 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
+--- !u!114 &1138277527
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1138277521}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dadd3bfea0c28fa4e8b8cd15aba93039, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  totalButtonScreenFraction: 0.93
+  paddingFraction: 0.03
 --- !u!1 &1147298680
 GameObject:
   m_ObjectHideFlags: 0
@@ -6428,11 +6443,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f05d1e95aed2b6946bb6676e78c0582a, type: 2}
   - {fileID: 11400000, guid: 7f7c8fb546a94184583bb3e9fbbf04ff, type: 2}
   - {fileID: 11400000, guid: 8ac70af16e30bac47a1a58a525311f99, type: 2}
-  levelStructure: 
-  levelMapTypes: 
-  levelMapNumber: 
-  levelManagerScript: {fileID: 2041774212}
-  globalManager: {fileID: 2041666676}
   minLevelGroups: 1
   maxLevelGroups: 4
   minLevelsPerGroup: 1
@@ -8055,6 +8065,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 8ac70af16e30bac47a1a58a525311f99, type: 2}
   numberOfTypes: 0
   seed: 101
+  randomSeed: 1
 --- !u!4 &1482237734
 Transform:
   m_ObjectHideFlags: 0
@@ -10162,6 +10173,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dadd3bfea0c28fa4e8b8cd15aba93039, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  totalButtonScreenFraction: 0.93
+  paddingFraction: 0.03
 --- !u!1 &1941960655
 GameObject:
   m_ObjectHideFlags: 0

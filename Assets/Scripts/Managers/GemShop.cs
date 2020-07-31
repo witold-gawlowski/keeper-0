@@ -26,8 +26,9 @@ public class GemShop : MonoBehaviour
     void Start()
     {
         SetupGemCount();
-        ui.UpdateButtonDisability(gems);
+        mainMenuScript.UpdateGems(gems);
         ui.CreateButtons(cards);
+        ui.UpdateButtonDisability(gems);
     }
 
     void SetupGemCount()

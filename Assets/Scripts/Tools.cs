@@ -36,11 +36,6 @@ public static class Tools
         }
     }
 
-    public static float GetButtonDiameter()
-    {
-        return (Mathf.Min(Screen.width, Screen.height) - 50) / 4;
-    }
-
     public static float RandomGaussian01(Randomizer randomizerArg)
     {
         float v1, v2, s;

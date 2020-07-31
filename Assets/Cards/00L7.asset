@@ -15,4 +15,4 @@ MonoBehaviour:
   gemCost: 2
   block: {fileID: 7452981910437678780, guid: d582846bc43e931448466808eb44aa7e, type: 3}
   cashCost: 500
-  quantity: 7
+  quantity: 5
