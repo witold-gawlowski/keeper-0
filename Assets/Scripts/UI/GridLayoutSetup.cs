@@ -6,7 +6,7 @@ public class GridLayoutSetup : MonoBehaviour
 {
     GridLayoutGroup gridLayout;
     public float totalButtonScreenFraction = 0.7f;
-    public float paddingFraction = 0.08f;
+    public float paddingFraction = 0.03f;
     IEnumerator Setup()
     {
         yield return new WaitForEndOfFrame();
