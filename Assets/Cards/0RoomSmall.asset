@@ -16,3 +16,4 @@ MonoBehaviour:
   block: {fileID: 6903483841013818259, guid: 548916a79548ee1488ac319024c9844e, type: 3}
   cashCost: 200
   quantity: 3
+  cathegoryID: 2

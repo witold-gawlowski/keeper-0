@@ -14,6 +14,7 @@ public class BlockScript : MonoBehaviour
     public bool isStarter = false;
     public bool isDigger = false;
     public DynamicColorScript dynamicColorScript;
+    public string cathegory;
 
 
     void Start()

@@ -37,6 +37,11 @@ PrefabInstance:
       propertyPath: placedColor2.b
       value: 0.5562478
       objectReference: {fileID: 0}
+    - target: {fileID: 227528976595414906, guid: e312e93c2c4a271449e37abd9ef89a49,
+        type: 3}
+      propertyPath: cathegory
+      value: SpecialSmall
+      objectReference: {fileID: 0}
     - target: {fileID: 8853295386183986002, guid: e312e93c2c4a271449e37abd9ef89a49,
         type: 3}
       propertyPath: m_LocalPosition.x

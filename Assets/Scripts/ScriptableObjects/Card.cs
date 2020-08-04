@@ -14,6 +14,7 @@ public class Card: ScriptableObject
     public GameObject block;
     public int cashCost;
     public int quantity;
+    public string cathegoryID;
 
     public Card(GameObject blockArg, int quantityArg, int cashCostArg, int gemCostArg)
     {

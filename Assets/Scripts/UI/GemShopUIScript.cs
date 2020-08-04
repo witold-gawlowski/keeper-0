@@ -6,24 +6,38 @@ using UnityEngine;
 public class GemShopUIScript : MonoBehaviour
 {
     public GameObject buttonPrefab;
-    public GameObject buttonsParent;
+    public GameObject cathegoryPrefab;
+    public GameObject cathegoryParent;
+    public Dictionary<string, Transform> cathegoryDict;
 
     public void CreateButtons(List<Card> cards)
     {
+        cathegoryDict = new Dictionary<string, Transform>();
         foreach(Card c in cards)
         {
-            CreateButton(c, buttonsParent);
+            string newID = c.cathegoryID;
+            Transform newButtonParent = null;
+            if (!cathegoryDict.ContainsKey(newID))
+            {
+                GameObject newCathegoryGO = Instantiate(cathegoryPrefab, cathegoryParent.transform);
+                cathegoryDict.Add(newID, newCathegoryGO.transform); 
+            }
+            newButtonParent = cathegoryDict[newID];
+            CreateButton(c, newButtonParent.gameObject);
         }
     }
 
     public void UpdateButtonDisability(int gems)
     {
-        foreach (Transform t in buttonsParent.transform)
+        foreach (Transform cathegoryTransform in cathegoryDict.Values)
         {
-            BlockButtonScript bbs = t.gameObject.GetComponent<BlockButtonScript>();
-            int gemCost = bbs.associatedCard.gemCost;
-            bool disabilityCondition = gemCost > gems;
-            bbs.SetDisabled(disabilityCondition);
+            foreach (Transform t in cathegoryTransform)
+            {
+                BlockButtonScript bbs = t.gameObject.GetComponent<BlockButtonScript>();
+                int gemCost = bbs.associatedCard.gemCost;
+                bool disabilityCondition = gemCost > gems;
+                bbs.SetDisabled(disabilityCondition);
+            }
         }
     }
     
