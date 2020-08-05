@@ -39,8 +39,23 @@ public class BlockScriptEditor : Editor
 
             string blockName = (target as BlockScript).name;
             File.WriteAllBytes("D:/Documents/Keeper-0/Assets/Resources/Blocks/" + blockName + ".png", bytes);
+        }
 
-
+        EditorGUILayout.LabelField("Setup and create a card:");
+        int blockCount = EditorGUILayout.IntField("Number of clones:", 3);
+        int gemPrice = EditorGUILayout.IntField("Gemprice:", 10);
+        int cashCost = EditorGUILayout.IntField("Cashcost:", 100);
+        string cathegoryID = EditorGUILayout.TextField((target as BlockScript).cathegory);
+        if (GUILayout.Button("Create Card"))
+        {
+            Card asset = ScriptableObject.CreateInstance<Card>();
+            asset.quantity = blockCount;
+            asset.cashCost = cashCost;
+            asset.cathegoryID = cathegoryID;
+            asset.block = (target as BlockScript).gameObject;
+            asset.gemCost = gemPrice;
+            AssetDatabase.CreateAsset(asset, "Assets/Cards/" + target.name + "Test.asset");
+            AssetDatabase.SaveAssets();
         }
     }
 

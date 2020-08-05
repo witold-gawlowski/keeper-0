@@ -2,11 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+
+public class OpenMapEvent: IEvent{
+    public GameObject levelGO;
+    public OpenMapEvent(GameObject levelGOArg)
+    {
+        this.levelGO = levelGOArg;
+    }
+}
+
 public class SelectedLevelPanelScript : MonoBehaviour
 {
     public System.Action<GameObject> LevelBoughtEvent;
     public System.Action<GameObject> LevelRemoveEvent;
-    public System.Action<GameObject> RunLevelEvent;
     public System.Action BackButtonTapEvent;
     private GameObject selectedLevel;
     public GameObject buyButton;
@@ -48,7 +56,7 @@ public class SelectedLevelPanelScript : MonoBehaviour
         }
         else
         {
-            RunLevelEvent(selectedLevel);
+            EventManager.SendEvent(new OpenMapEvent(selectedLevel));
         }
     }
 

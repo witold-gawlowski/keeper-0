@@ -78,7 +78,7 @@ public class BlockCodexScript : MonoBehaviour
             string blockPrefabName = blockObjectTemp.name;
             Sprite blockSprite = Resources.Load<Sprite>("Blocks/" + blockPrefabName);
             if(blockSprite == null)
-            {
+            {   
                 Debug.Log("couldnt load sprite for " + blockPrefabName);
             }
             blockImages.Add(blockObjectTemp, blockSprite);

@@ -13,8 +13,8 @@ public class GridLayoutSetup : MonoBehaviour
         float buttonDiameter = GetButtonDiameter();
         gridLayout.cellSize = new Vector2(buttonDiameter, buttonDiameter);
         int padding = Mathf.RoundToInt(paddingFraction * Screen.width);
-        RectOffset newPadding = new RectOffset(padding, padding, padding, padding);
-        gridLayout.padding = newPadding;
+        RectOffset leftRightPadding = new RectOffset(padding, padding, 0, 0);
+        //gridLayout.padding = leftRightPadding;
         gridLayout.spacing = Vector2.one*((Screen.width - padding*2) * (1 - totalButtonScreenFraction)/3);
     }
 

@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5c54605faf27b0d4584495df237485ea, type: 3}
-  m_Name: 0C
+  m_Name: 0_Starter_Square3x3
   m_EditorClassIdentifier: 
-  gemCost: 2
-  block: {fileID: 8853295386183986003, guid: e312e93c2c4a271449e37abd9ef89a49, type: 3}
-  cashCost: 200
+  gemCost: 0
+  block: {fileID: 6159847631099030018, guid: f95ceb0053e0b744fb024aadd5bbddb6, type: 3}
+  cashCost: 500
   quantity: 3
-  cathegoryID: 1
+  cathegoryID: Starter

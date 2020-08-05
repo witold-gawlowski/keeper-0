@@ -61,7 +61,6 @@ public class LevelButtonScript : MonoBehaviour
 
     public void OnEnable()
     {
-        Debug.Log("Level button script on enable");
         //call event need visuals update
         if (hasSpriteSet)
         {

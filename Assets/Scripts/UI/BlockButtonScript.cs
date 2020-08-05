@@ -96,7 +96,6 @@ public class BlockButtonScript : MonoBehaviour
         {
             Destroy(childTransform.gameObject);
         }
-        float maxShift = 0;
 
         for(int i=0; i<newCount; i++)
         {

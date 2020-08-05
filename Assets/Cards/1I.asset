@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5c54605faf27b0d4584495df237485ea, type: 3}
-  m_Name: 1Funnel
+  m_Name: 1I
   m_EditorClassIdentifier: 
-  gemCost: 2
-  block: {fileID: 198660504889261365, guid: 54a2af52d4be44c42973c4db8693dc5d, type: 3}
-  cashCost: 200
+  gemCost: 6
+  block: {fileID: 6662125635750812651, guid: 02082078acbf6ca49a19f2e795560634, type: 3}
+  cashCost: 400
   quantity: 3
-  cathegoryID: 3
+  cathegoryID: 1

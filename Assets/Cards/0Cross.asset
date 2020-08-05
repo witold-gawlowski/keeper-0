@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: 0Cross
   m_EditorClassIdentifier: 
   gemCost: 2
-  block: {fileID: 4479219219527086337, guid: a8140a6891ea4a3439ba6d602dc30ee7, type: 3}
+  block: {fileID: 6183301510281661211, guid: d31843c9f9b1f0740bda6b19211ee671, type: 3}
   cashCost: 200
   quantity: 3
   cathegoryID: 1

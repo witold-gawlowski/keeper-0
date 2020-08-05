@@ -31,8 +31,8 @@ public class UniversalCheatScript : MonoBehaviour
         {
             if (used == false && timer > 3)
             {
-                fireRunCompleteCheat.Invoke();
                 used = true;
+                fireRunCompleteCheat.Invoke();
             }
             timer -= Time.deltaTime;
         }

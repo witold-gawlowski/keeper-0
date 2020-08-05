@@ -22,7 +22,7 @@ public class GemShopUIScript : MonoBehaviour
                 GameObject newCathegoryGO = Instantiate(cathegoryPrefab, cathegoryParent.transform);
                 cathegoryDict.Add(newID, newCathegoryGO.transform); 
             }
-            newButtonParent = cathegoryDict[newID];
+            newButtonParent = cathegoryDict[newID].Find("ButtonsParent");
             CreateButton(c, newButtonParent.gameObject);
         }
     }
@@ -34,9 +34,12 @@ public class GemShopUIScript : MonoBehaviour
             foreach (Transform t in cathegoryTransform)
             {
                 BlockButtonScript bbs = t.gameObject.GetComponent<BlockButtonScript>();
-                int gemCost = bbs.associatedCard.gemCost;
-                bool disabilityCondition = gemCost > gems;
-                bbs.SetDisabled(disabilityCondition);
+                if (bbs != null)
+                {
+                    int gemCost = bbs.associatedCard.gemCost;
+                    bool disabilityCondition = gemCost > gems;
+                    bbs.SetDisabled(disabilityCondition);
+                }
             }
         }
     }

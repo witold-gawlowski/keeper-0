@@ -25,7 +25,7 @@ public class LevelsUIScript : MonoBehaviour
     {
         selectedLevelPanelScript.BackButtonTapEvent += OnBackButtonTap;
         selectedLevelPanelScript.LevelBoughtEvent += SelectedLevelBuyButtonTapHandler;
-        selectedLevelPanelScript.RunLevelEvent += SelectedLevelBuildButtonTapHandler;
+        EventManager.AddListener<OpenMapEvent>(SelectedLevelBuildButtonTapHandler);
         selectedLevelPanelScript.LevelRemoveEvent += SelectedLevelRemoveButtonTapHandler;
     }
 
@@ -69,7 +69,7 @@ public class LevelsUIScript : MonoBehaviour
         selectedLevelPanelScript.gameObject.SetActive(false);
     }
 
-    public void SelectedLevelBuildButtonTapHandler(GameObject level)
+    public void SelectedLevelBuildButtonTapHandler(IEvent evArg)
     {
         selectedLevelPanelScript.gameObject.SetActive(false); 
     }
@@ -82,11 +82,6 @@ public class LevelsUIScript : MonoBehaviour
     public void SetLevelBoughtEventHandler(System.Action<GameObject> levelBoughtEventHandlerArg)
     {
         selectedLevelPanelScript.LevelBoughtEvent += levelBoughtEventHandlerArg;
-    }
-
-    public void AddRunLevelEventHandler(System.Action<GameObject> RunLevelEventHandlerArg)
-    {
-        selectedLevelPanelScript.RunLevelEvent += RunLevelEventHandlerArg;
     }
 
     public void OnBoughtLevelTapEvent(GameObject level)

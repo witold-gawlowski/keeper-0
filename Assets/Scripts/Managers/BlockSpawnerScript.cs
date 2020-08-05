@@ -11,11 +11,11 @@ public class BlockSpawnerScript : MonoBehaviour
     int rotationCountBeforeSpawning;
     public Color firstBlockColor = Color.white;
 
-    public void Awake()
+    public void OnMapOpen()
     {
         ResetRotation();
     }
-
+        
     public void ResetRotation(int dummyArg = 0, int dummyArg2 = 0)
     {
         rotationCountBeforeSpawning = 0;
