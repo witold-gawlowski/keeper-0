@@ -44,7 +44,6 @@ public class GlobalUIScript : MonoBehaviour
     private void Awake()
     {
         levelUIScript = briefing.GetComponent<LevelsUIScript>();
-        levelUIScript.AddRunLevelEventHandler(OnLevelRun);
         inventoryUI.SetActive(true);
         shopUI.SetActive(false);
         buildingUI.SetActive(false);
@@ -113,7 +112,7 @@ public class GlobalUIScript : MonoBehaviour
         levelUIScript.OnFocus();
     }
 
-    void OnLevelRun(GameObject level)
+    public void OnLevelRun(GameObject level)
     {
         buildingUI.SetActive(true);
         briefing.SetActive(false);

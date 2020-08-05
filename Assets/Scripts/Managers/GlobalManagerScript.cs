@@ -46,7 +46,7 @@ public class GlobalManagerScript : MonoBehaviour
         tutorialScript.Disable();
         summaryUIScript.LevelCompletedEvent += OnLevelCompleted;
         globalUIScript.BuildingCanceledEvent += OnLevelFinished;
-        levelsUIScript.AddRunLevelEventHandler(OnLevelRun);
+        EventManager.AddListener<OpenMapEvent>(OnMapOpen);
         StartNewRoundEvent += OnStartNewRound;
         buildingUIScript.RotateButtonTapEvent += blockSpawnerScript.HandleRotEvent;
         buildingUIScript.RotateButtonTapEvent += blockUIQueue.RotateTop;
@@ -83,12 +83,14 @@ public class GlobalManagerScript : MonoBehaviour
             GetCurrentLevel(),
             levelManagerScript.GetLevelTarget(),
             levelMoneyManagerScript.GetGems(), accountManager.GetMoney()));
-            
         }
     }
 
-    private void OnLevelRun(GameObject level)
+    private void OnMapOpen(IEvent evArg)
     {
+        print("on map open");
+        OpenMapEvent evData = evArg as OpenMapEvent;
+        GameObject level = evData.levelGO;
         OnLevelCompletedActions += () => levelManagerScript.DestroyLevel(level);
         OnLevelFinishedActions += () => level.GetComponent<ProceduralMap>().ClearBlocks();
         blockManagerScript.OnStartBuilding(level);
@@ -106,6 +108,8 @@ public class GlobalManagerScript : MonoBehaviour
         buildingUIScript.OnStartBuilding();
         levelCameraFitter.Setup(level);
         tutorialScript.Init();
+        blockSpawnerScript.OnMapOpen();
+        globalUIScript.OnLevelRun(level);
     }
 
     private void OnLevelCompleted()
