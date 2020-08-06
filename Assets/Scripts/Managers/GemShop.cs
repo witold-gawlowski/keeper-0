@@ -8,9 +8,10 @@ public class ShopCardTappedEvent : IEvent {
 
 public class GemShop : MonoBehaviour
 {
-    public List<Card> cards;
-    int gems;
-    int startingGems = 5;
+    public List<Card> _cards;
+    private int _gems;
+
+    public int startingGems = 5;
     public CompletedLevelsManager completedLevelsManager;
     public CardCodex cardCodex;
     public Inventory inventory;
@@ -18,17 +19,17 @@ public class GemShop : MonoBehaviour
     public GemShopUIScript ui;
 
     void Awake()
-    {
+    {       
         EventManager.AddListener<ShopCardTappedEvent>(CardSoldEventHandler);
-       
     }
 
     void Start()
     {
+        _cards = cardCodex.GetCards();
         SetupGemCount();
-        mainMenuScript.UpdateGems(gems);
-        ui.CreateButtons(cards);
-        ui.UpdateButtonDisability(gems);
+        mainMenuScript.UpdateGems(_gems);
+        ui.CreateButtons(_cards);
+        ui.UpdateButtonDisability(_gems);
     }
 
     void SetupGemCount()
@@ -37,21 +38,21 @@ public class GemShop : MonoBehaviour
         {
             if (PlayerPrefs.HasKey("gems"))
             {
-                gems = PlayerPrefs.GetInt("gems");
+                _gems = PlayerPrefs.GetInt("gems");
             }
             else
             {
-                gems = startingGems;
+                _gems = startingGems;
                 
             }
             SaveGems();
         }
         else
         {
-            gems = PlayerPrefs.GetInt("gems");
+            _gems = PlayerPrefs.GetInt("gems");
             if (RunResultScript.instance.completed)
             {
-                gems += RunResultScript.instance.gems;
+                _gems += RunResultScript.instance.gems;
                 SaveGems();
             }
         }
@@ -59,7 +60,7 @@ public class GemShop : MonoBehaviour
 
     void SaveGems()
     {
-        PlayerPrefs.SetInt("gems", gems);
+        PlayerPrefs.SetInt("gems", _gems);
     }
 
     void CardSoldEventHandler(IEvent evArg)
@@ -70,14 +71,14 @@ public class GemShop : MonoBehaviour
 
     private void TrySell(Card cardArg)
     {
-        if (gems >= cardArg.gemCost)
+        if (_gems >= cardArg.gemCost)
         {
-            gems -= cardArg.gemCost;
-            cards.Remove(cardArg);
+            _gems -= cardArg.gemCost;
+            _cards.Remove(cardArg);
             inventory.Add(cardArg);
             SaveGems();
-            mainMenuScript.UpdateGems(gems);
-            ui.UpdateButtonDisability(gems);
+            mainMenuScript.UpdateGems(_gems);
+            ui.UpdateButtonDisability(_gems);
         }
     }
 }

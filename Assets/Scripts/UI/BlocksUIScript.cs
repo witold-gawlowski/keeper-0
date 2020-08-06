@@ -164,7 +164,7 @@ public class BlocksUIScript : MonoBehaviour
     void InitializeInventoryButtons()
     {
         inventoryButtons = new Dictionary<GameObject, BlockButtonScript>();
-        foreach(GameObject blockObjectTemp in BlockCodexScript.instance.blockConfig)
+        foreach(GameObject blockObjectTemp in BlockCodexScript.instance.GetBlocks())
         {
             Sprite blockSprite = BlockCodexScript.instance.GetSpriteForPrefab(blockObjectTemp);
             GameObject newBlockButton = CreateInventoryButton(blockSprite, blockObjectTemp);

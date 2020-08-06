@@ -6,9 +6,11 @@ public class BlockCodexScript : MonoBehaviour
 {
     public static BlockCodexScript instance;
 
-    Dictionary<GameObject, Sprite> blockImages;
-    public List<GameObject> blockConfig;
-    Dictionary<string, GameObject> dictionary;
+    public List<GameObject> _blockConfig;
+    private Dictionary<GameObject, Sprite> _blockImages;
+    private Dictionary<string, GameObject> _dictionary;
+
+    public string resourcesBlockFolderName = "Blocks";
 
 
     private void Awake()
@@ -22,30 +24,41 @@ public class BlockCodexScript : MonoBehaviour
             Destroy(this.gameObject);
         }
 
+        LoadBlocks();
         InitializeSprites();
         InitializeDictionary();
     }
 
+    void LoadBlocks()
+    {
+        _blockConfig = new List<GameObject>(Resources.LoadAll<GameObject>(resourcesBlockFolderName));
+    }
+
     public GameObject GetRandomBlock(Randomizer rArg)
     {
-        int numberOfBlocks = blockConfig.Count;
+        int numberOfBlocks = _blockConfig.Count;
         int randomIndex = rArg.Range(0, numberOfBlocks);
-        return blockConfig[randomIndex];
+        return _blockConfig[randomIndex];
     }
 
     public Sprite GetSpriteForPrefab(GameObject blockPrefab)
     {
-        if (!blockImages.ContainsKey(blockPrefab))
+        if (!_blockImages.ContainsKey(blockPrefab))
         {
             print("missing  image! " + blockPrefab.name);
         }
-        return blockImages[blockPrefab];
+        return _blockImages[blockPrefab];
+    }
+
+    public List<GameObject> GetBlocks()
+    {
+        return _blockConfig;
     }
 
     public List<GameObject> GetBlockTypes()
     {
         var result = new List<GameObject>();
-        foreach (GameObject blockObjectTemp in blockConfig)
+        foreach (GameObject blockObjectTemp in _blockConfig)
         {
             result.Add(blockObjectTemp);
         }
@@ -54,34 +67,34 @@ public class BlockCodexScript : MonoBehaviour
 
     public GameObject GetBlockObjectForName(string nameArg)
     {
-        return dictionary[nameArg];
+        return _dictionary[nameArg];
     }
 
     void InitializeDictionary()
     {
-        dictionary = new Dictionary<string, GameObject>();
-        foreach (GameObject blockObjectTemp in blockConfig)
+        _dictionary = new Dictionary<string, GameObject>();
+        foreach (GameObject blockObjectTemp in _blockConfig)
         {
-            if (dictionary.ContainsKey(blockObjectTemp.name))
+            if (_dictionary.ContainsKey(blockObjectTemp.name))
             {
                 Debug.Log("doubled blocks for " + blockObjectTemp + "!");
             }
-            dictionary.Add(blockObjectTemp.name, blockObjectTemp.gameObject);
+            _dictionary.Add(blockObjectTemp.name, blockObjectTemp.gameObject);
         }
     }
 
     void InitializeSprites()
     {
-        blockImages = new Dictionary<GameObject, Sprite>();
-        foreach (GameObject blockObjectTemp in blockConfig)
+        _blockImages = new Dictionary<GameObject, Sprite>();
+        foreach (GameObject blockObjectTemp in _blockConfig)
         {
             string blockPrefabName = blockObjectTemp.name;
-            Sprite blockSprite = Resources.Load<Sprite>("Blocks/" + blockPrefabName);
+            Sprite blockSprite = Resources.Load<Sprite>("BlockSprites/" + blockPrefabName);
             if(blockSprite == null)
             {   
                 Debug.Log("couldnt load sprite for " + blockPrefabName);
             }
-            blockImages.Add(blockObjectTemp, blockSprite);
+            _blockImages.Add(blockObjectTemp, blockSprite);
         }
     }
 
