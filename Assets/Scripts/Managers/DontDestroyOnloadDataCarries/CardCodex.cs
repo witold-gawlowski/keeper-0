@@ -27,7 +27,7 @@ public class CardCodex : MonoBehaviour
 
     void LoadCards()
     {
-        Debug.Log("loading cards  to card codex");
+        //Debug.Log("loading cards to card codex");
         _cards = new List<Card>(Resources.LoadAll<Card>(resourcesCardFolderName));
     }
 

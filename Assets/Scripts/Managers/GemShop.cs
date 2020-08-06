@@ -19,16 +19,17 @@ public class GemShop : MonoBehaviour
     public GemShopUIScript ui;
 
     void Awake()
-    {       
-        EventManager.AddListener<ShopCardTappedEvent>(CardSoldEventHandler);
+    {
+        EventManager.AddListener<ShopCardSoldEvent>(CardSoldEventHandler);
+        _cards = cardCodex.GetCards();
+        ui.CreateButtons(_cards);
     }
 
     void Start()
     {
-        _cards = cardCodex.GetCards();
+        
         SetupGemCount();
         mainMenuScript.UpdateGems(_gems);
-        ui.CreateButtons(_cards);
         ui.UpdateButtonDisability(_gems);
     }
 
@@ -65,7 +66,7 @@ public class GemShop : MonoBehaviour
 
     void CardSoldEventHandler(IEvent evArg)
     {
-        ShopCardTappedEvent ev = evArg as ShopCardTappedEvent;
+        ShopCardSoldEvent ev = evArg as ShopCardSoldEvent;
         TrySell(ev.card);
     }
 

@@ -20,14 +20,25 @@ public class BlockButtonScript : MonoBehaviour
     public TextMeshProUGUI gemCost;
     public GameObject overlayImage;
     public List<float> blockBrightnesDecay;
+    public Button _button;
     public List<float> pivotShiftTable = new List<float>() {0, 0.06f, 0.11f, 0.15f, 0.18f, 0.20f, 0.22f, 0.24f, 0.25f, 0.26f};
-    RectTransform rectTransform;
+    public RectTransform _rectTransform;
 
     Sprite blockSprite;
 
+    void Awake()
+    {
+
+    }
+
     public void SetDisabled(bool value)
     {
-        overlayImage.SetActive(value);
+        if(enabled == true)
+        {
+            overlayImage.SetActive(value);
+            _button.interactable = !value;
+        }
+        Debug.Log("buttons set disabled");
     }
 
     public void InitializeInventoryIIButton(
@@ -70,10 +81,7 @@ public class BlockButtonScript : MonoBehaviour
         associatedCard = cardArg;
     }
 
-    public void Awake()
-    {
-        rectTransform = GetComponent<RectTransform>();
-    }
+ 
 
     public void InitializeShopButton(
         Sprite spriteArg,
