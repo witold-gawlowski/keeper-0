@@ -12,6 +12,7 @@ public class CardCodex : MonoBehaviour
 
     private void Awake()
     {
+        Debug.Log("card codex awake");
         if(instance == null)
         {
             instance = this;

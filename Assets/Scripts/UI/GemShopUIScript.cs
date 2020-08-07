@@ -1,7 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
+using TMPro;
 public class ShopCardSoldEvent:IEvent
 {
     public Card card;
@@ -40,23 +41,25 @@ public class GemShopUIScript : MonoBehaviour
     public void CreateButtons(List<Card> cards)
     {
         cathegoryDict = new Dictionary<string, Transform>();
+        foreach(Card.Cathegory cath in System.Enum.GetValues(typeof(Card.Cathegory)))
+        {
+            GameObject newCathegoryGO = Instantiate(cathegoryPrefab, cathegoryParent.transform);
+            Transform buttonsParent = newCathegoryGO.transform.Find("ButtonsParent");
+            TextMeshProUGUI sectionText = newCathegoryGO.GetComponentInChildren<TextMeshProUGUI>();
+            sectionText.text = Card.cathegoryNames[(int)cath];
+            if (buttonsParent != null)
+            {
+                cathegoryDict.Add(cath.ToString(), buttonsParent);
+            }
+            else
+            {
+                Debug.Log("Couldn'd find ButtonsParent!");
+            }
+        }
         foreach(Card c in cards)
         {
-            string newID = c.cathegoryID;
+            string newID = c.cathegoryID.ToString();
             Transform newButtonParent = null;
-            if (!cathegoryDict.ContainsKey(newID))
-            {
-                GameObject newCathegoryGO = Instantiate(cathegoryPrefab, cathegoryParent.transform);
-                Transform buttonsParent = newCathegoryGO.transform.Find("ButtonsParent");
-                if (buttonsParent != null)
-                {
-                    cathegoryDict.Add(newID, buttonsParent);
-                }
-                else
-                {
-                    Debug.Log("Couldn'd find ButtonsParent!");
-                }
-            }
             newButtonParent = cathegoryDict[newID];
             CreateButton(c, newButtonParent.gameObject);
         }

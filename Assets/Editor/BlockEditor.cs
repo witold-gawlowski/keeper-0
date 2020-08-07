@@ -5,8 +5,15 @@ using System.IO;
 [CustomEditor(typeof(BlockScript))]
 public class BlockScriptEditor : Editor
 {
+    
+
     int tileSize = 9;
     int imageSize = 100;
+    int blockCount = 3;
+    int gemPrice = 3;
+    int cashCost = 100;
+    GameObject thisBlockControllField;
+    Card.Cathegory cathegoryID;
     Color separatorColor = new Color(0.9f, 0.9f, 0.9f, 1);
     Vector2Int pixelShift = -Vector2Int.one * 4;
     public List<Vector2Int> relativeTilePositions;
@@ -17,6 +24,8 @@ public class BlockScriptEditor : Editor
         relativeTilePositions = (target as BlockScript).relativeTilePositions;
         Vector2Int boxDiam = (target as BlockScript).GetBoxDiameters();
         imageSize = Mathf.Max(boxDiam.x, boxDiam.y) * 9 + 30;
+        thisBlockControllField = target as GameObject;
+     
     }
 
     public override void OnInspectorGUI()
@@ -38,23 +47,30 @@ public class BlockScriptEditor : Editor
             Object.DestroyImmediate(tex);
 
             string blockName = (target as BlockScript).name;
-            File.WriteAllBytes("D:/Documents/Keeper-0/Assets/Resources/Blocks/" + blockName + ".png", bytes);
+            File.WriteAllBytes("D:/Documents/Keeper-0/Assets/Resources/BlockSprites/" + blockName + ".png", bytes);
         }
 
         EditorGUILayout.LabelField("Setup and create a card:");
-        int blockCount = EditorGUILayout.IntField("Number of clones:", 3);
-        int gemPrice = EditorGUILayout.IntField("Gemprice:", 10);
-        int cashCost = EditorGUILayout.IntField("Cashcost:", 100);
-        string cathegoryID = EditorGUILayout.TextField((target as BlockScript).cathegory);
+        blockCount = EditorGUILayout.IntField("Number of clones:", blockCount);
+        cathegoryID = (Card.Cathegory)EditorGUILayout.EnumPopup(cathegoryID);
+        gemPrice = (int)cathegoryID == 0 ? 15 : Mathf.RoundToInt( Mathf.Pow(((int)cathegoryID+1) * Random.Range(0.85f, 1.15f), 2))*10;
+        cashCost = Mathf.RoundToInt(Mathf.Pow((target as BlockScript).relativeTilePositions.Count * blockCount, 0.75f) * 4.2f) * 10;
+        cashCost = EditorGUILayout.IntField("Cashcost:", cashCost);
+        
+        gemPrice = EditorGUILayout.IntField("Gemprice:", gemPrice);
         if (GUILayout.Button("Create Card"))
         {
-            Card asset = ScriptableObject.CreateInstance<Card>();
-            asset.quantity = blockCount;
-            asset.cashCost = cashCost;
-            asset.cathegoryID = cathegoryID;
-            asset.block = (target as BlockScript).gameObject;
-            asset.gemCost = gemPrice;
-            AssetDatabase.CreateAsset(asset, "Assets/Cards/" + target.name + "Test.asset");
+            Card card = ScriptableObject.CreateInstance<Card>();
+            AssetDatabase.CreateAsset(card, "Assets/Resources/Cards/" + target.name + "_" + blockCount + ".asset");
+            card.quantity = blockCount;
+            card.cashCost = cashCost;
+            card.cathegoryID = cathegoryID;
+            bool allowSceneObjects = !EditorUtility.IsPersistent(target);
+            card.block = (target as BlockScript).gameObject;
+            //card.block = Resources.Load<GameObject>("Blocks/Others/"+target.name);
+            
+            card.gemCost = gemPrice;
+            EditorUtility.SetDirty(card);
             AssetDatabase.SaveAssets();
         }
     }
@@ -182,7 +198,7 @@ public class BlockScriptEditor : Editor
             leftBottomCornerPositionAPixelCoords = temp;
         }
 
-        Debug.Log(leftBottomCornerPositionAPixelCoords);
+        //Debug.Log(leftBottomCornerPositionAPixelCoords);
         Vector2Int AtoBUnitVector = (leftBottomCornerPositionBPixelCoords - leftBottomCornerPositionAPixelCoords) / tileSize;
         Vector2Int AtoBMirroredUnitVector = new Vector2Int(AtoBUnitVector.y, AtoBUnitVector.x);
 

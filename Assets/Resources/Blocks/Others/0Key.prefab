@@ -58,3 +58,4 @@ MonoBehaviour:
   isStarter: 0
   isDigger: 0
   dynamicColorScript: {fileID: 0}
+  cathegory: 

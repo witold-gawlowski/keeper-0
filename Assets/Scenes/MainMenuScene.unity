@@ -4155,8 +4155,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startingCards:
-  - {fileID: 11400000, guid: 22a67382345c54e4cab490e2a0ee4a10, type: 2}
-  - {fileID: 11400000, guid: e6f691b10a82736449449925617d54cb, type: 2}
+  - {fileID: 11400000, guid: 9dafeed73c22e624bab40b85fc798b20, type: 2}
+  - {fileID: 11400000, guid: 9dafeed73c22e624bab40b85fc798b20, type: 2}
+  - {fileID: 11400000, guid: 9dafeed73c22e624bab40b85fc798b20, type: 2}
+  - {fileID: 11400000, guid: 9dafeed73c22e624bab40b85fc798b20, type: 2}
+  - {fileID: 11400000, guid: 9dafeed73c22e624bab40b85fc798b20, type: 2}
   queue: []
 --- !u!4 &1443011650
 Transform:
@@ -4365,9 +4368,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f9e68d7b95f285418de7c742782f964, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingCards:
-  - {fileID: 11400000, guid: 62a841026a8067b4a9e666f5b3b46110, type: 2}
-  - {fileID: 11400000, guid: 5996dac3956e0544a941bfc28d1c6a0c, type: 2}
+  startingCards: []
 --- !u!1 &1523150763
 GameObject:
   m_ObjectHideFlags: 0

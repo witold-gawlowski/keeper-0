@@ -11,6 +11,7 @@ public class Deck : MonoBehaviour
     public static Deck instance;
     private void Awake()
     {
+        Debug.Log("deck awake");    
         if (instance == null)
         {
             instance = this;

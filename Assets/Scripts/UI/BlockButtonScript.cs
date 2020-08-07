@@ -23,6 +23,7 @@ public class BlockButtonScript : MonoBehaviour
     public Button _button;
     public List<float> pivotShiftTable = new List<float>() {0, 0.06f, 0.11f, 0.15f, 0.18f, 0.20f, 0.22f, 0.24f, 0.25f, 0.26f};
     public RectTransform _rectTransform;
+    public Image background;
 
     Sprite blockSprite;
 
@@ -33,12 +34,9 @@ public class BlockButtonScript : MonoBehaviour
 
     public void SetDisabled(bool value)
     {
-        if(enabled == true)
-        {
-            overlayImage.SetActive(value);
-            _button.interactable = !value;
-        }
-        Debug.Log("buttons set disabled");
+        overlayImage.SetActive(value);
+        _rectTransform.localScale = Vector3.one * (value ? 0.9f : 1.0f);
+        _button.interactable = !value;
     }
 
     public void InitializeInventoryIIButton(
@@ -60,6 +58,7 @@ public class BlockButtonScript : MonoBehaviour
         UpdateCount(cardArg.quantity);
         gemCost.gameObject.SetActive(false);
         associatedCard = cardArg;
+        costText.text = "$" + cardArg.cashCost;
     }
 
     public void InitializeDeckButton(Sprite spriteArg, Card cardArg)
@@ -69,6 +68,7 @@ public class BlockButtonScript : MonoBehaviour
         UpdateCount(cardArg.quantity);
         gemCost.gameObject.SetActive(false);
         associatedCard = cardArg;
+        costText.text = "$" + cardArg.cashCost;
     }
 
     public void InitializeGemShopButton(Sprite spriteArg, Card cardArg)
@@ -79,6 +79,7 @@ public class BlockButtonScript : MonoBehaviour
         gemCost.text = "<sprite=\"Gem2\" index=0>" + cardArg.gemCost.ToString();
         gemCost.gameObject.SetActive(true);
         associatedCard = cardArg;
+        costText.text = "$" + cardArg.cashCost;
     }
 
  

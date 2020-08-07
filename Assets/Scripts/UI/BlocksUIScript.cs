@@ -76,6 +76,7 @@ public class BlocksUIScript : MonoBehaviour
             if (itemTemp == item)
             {
                 Destroy(offerButton.gameObject);
+                break;
             }
         }
         if (this.isActiveAndEnabled)
