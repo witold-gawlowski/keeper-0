@@ -42,7 +42,6 @@ public class LevelsUIScript : MonoBehaviour
 
     void UpdateButtonsDoabilityUI(Transform parentArg)
     {
-        bool isAnyLevelDoable = false;
         foreach(Transform tTemp in parentArg)
         {
             LevelButtonScript lbs = tTemp.GetComponent<LevelButtonScript>();
@@ -51,7 +50,6 @@ public class LevelsUIScript : MonoBehaviour
             float completionFraction = levelManagerScript.GetCompletionThreshold(lbs.associatedLevel);
             if (levelArea* completionFraction <= inventoryTotalArea)
             {
-                isAnyLevelDoable = true;
                 lbs.SetDefaultLook();
             }
             else
@@ -59,10 +57,7 @@ public class LevelsUIScript : MonoBehaviour
                 lbs.SetUnableToCompleteLook();
             }
         }
-        if (isAnyLevelDoable)
-        {
 
-        }
     }
 
     public void SelectedLevelRemoveButtonTapHandler(GameObject level)
