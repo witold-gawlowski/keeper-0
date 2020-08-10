@@ -240,7 +240,7 @@ PrefabInstance:
     - target: {fileID: 4269283452716787060, guid: 82ec6128522a5fd44be084faf6d055c1,
         type: 3}
       propertyPath: m_textAlignment
-      value: 516
+      value: 260
       objectReference: {fileID: 0}
     - target: {fileID: 4269283452716787060, guid: 82ec6128522a5fd44be084faf6d055c1,
         type: 3}
@@ -307,7 +307,7 @@ PrefabInstance:
     - target: {fileID: 4725037731691969829, guid: 82ec6128522a5fd44be084faf6d055c1,
         type: 3}
       propertyPath: m_Color.a
-      value: 0.16470589
+      value: 0.7529412
       objectReference: {fileID: 0}
     - target: {fileID: 6718689201724159885, guid: 82ec6128522a5fd44be084faf6d055c1,
         type: 3}
@@ -349,6 +349,11 @@ PrefabInstance:
       propertyPath: background
       value: 
       objectReference: {fileID: 5805763776544340592}
+    - target: {fileID: 8396478715642045142, guid: 82ec6128522a5fd44be084faf6d055c1,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 82ec6128522a5fd44be084faf6d055c1, type: 3}
 --- !u!114 &5805763776544340592 stripped
