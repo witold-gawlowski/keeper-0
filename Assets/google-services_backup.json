@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1095678268271",
+    "firebase_url": "https://keeper-zero-99404430.firebaseio.com",
+    "project_id": "keeper-zero-99404430",
+    "storage_bucket": "keeper-zero-99404430.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1095678268271:android:0a79e8ccd1ef7417154e9a",
+        "android_client_info": {
+          "package_name": "com.WitoloGames.KeeperZero"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1095678268271-ttc84ce4nkf4egoers4jbbhc4s4a32fh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBMqSHKymZgLD9JMqrhu4nGiGJpV4Yym7U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1095678268271-ttc84ce4nkf4egoers4jbbhc4s4a32fh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
