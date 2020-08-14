@@ -7,8 +7,7 @@ public class AdMobManagerScript : MonoBehaviour
     private BannerView bannerView;
     void Start()
     {
-        string appID = "ca-app-pub-1069030067751675~2491247106";
-        MobileAds.Initialize(appID);
+        MobileAds.Initialize(arg=> { });
         this.RequestBanner();
     }
 

@@ -21,7 +21,6 @@ public class MainMenuScript : MonoBehaviour
     public TextMeshProUGUI seedInputText;
     public SeedMapperScript seedMapper;
     public GameObject tutorialInfoPanel;
-    public int maxTutorialLevel = 10;
     GameObject currentPanel;
 
     private void Awake()
@@ -46,16 +45,8 @@ public class MainMenuScript : MonoBehaviour
     private void Start()
     {
         if (RunResultScript.instance == null)
-        {
-            if (completedLevelsManager.IsTutorialRangeCompleted(maxTutorialLevel))
-            {
-                seedInputField.text = (Random.Range(0, int.MaxValue).ToString());
-            }
-            else
-            {
-                seedInputField.text = completedLevelsManager.GetIncompleteTutorialLevel(maxTutorialLevel).ToString();
-            }
-            
+        { 
+            seedInputField.text = (Random.Range(0, int.MaxValue).ToString());
         }
         else
         {
@@ -100,13 +91,14 @@ public class MainMenuScript : MonoBehaviour
     {
         int seedTemp = int.Parse(seedInputField.text);
         
-        if (!completedLevelsManager.IsTutorialRangeCompleted(maxTutorialLevel) && (seedTemp <1|| seedTemp > maxTutorialLevel))
-        {
-            tutorialInfoPanel.SetActive(true);
-            int incompleteLevel = completedLevelsManager.GetIncompleteTutorialLevel(maxTutorialLevel);
-            seedInputField.SetTextWithoutNotify(incompleteLevel.ToString());
-        }
-        else if (Deck.instance.IsDeckEmpty())
+        //if (!completedLevelsManager.IsTutorialRangeCompleted(maxTutorialLevel) && (seedTemp <1|| seedTemp > maxTutorialLevel))
+        //{
+        //    tutorialInfoPanel.SetActive(true);
+        //    int incompleteLevel = completedLevelsManager.GetIncompleteTutorialLevel(maxTutorialLevel);
+        //    seedInputField.SetTextWithoutNotify(incompleteLevel.ToString());
+        //}
+        //else 
+        if (Deck.instance.IsDeckEmpty())
         {
             DeckEmptyInfoPanel.SetActive(true);
         }

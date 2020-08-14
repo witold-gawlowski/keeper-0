@@ -12,7 +12,18 @@ public class UpdateCompletedLevelsUIEvent: IEvent {
 
 public class CompletedLevelsManager : MonoBehaviour
 {
-    List<int> levels;
+    [System.Serializable]
+    public class LevelThreshold
+    {
+        public int maxLevel;
+        public int value;
+    }
+
+    List<int> _levels;
+
+    [SerializeField]
+    List<LevelThreshold> _thresholds;
+    
     const int bigPrime = int.MaxValue;
     
     void Awake()
@@ -22,14 +33,83 @@ public class CompletedLevelsManager : MonoBehaviour
         {
             RegisterLevel(RunResultScript.instance.runNumber);
         }
-        EventManager.SendEvent(new UpdateCompletedLevelsUIEvent(levels));
+        EventManager.SendEvent(new UpdateCompletedLevelsUIEvent(_levels));
+    }
+
+    #region public
+    public int Count()
+    {
+        return _levels.Count;
+    }
+   
+    public int MaxLevel()
+    {
+        int result = _thresholds[0].maxLevel;
+        for(int i=1; i<_thresholds.Count; i++)
+        {
+            if(_thresholds[i].value > Count())
+            {
+                break;
+            }
+            result = _thresholds[i].maxLevel;
+        }
+        return result;
+    }
+
+    public int NearestThreshold()
+    {
+        int i = 0;
+        for (; i<_thresholds.Count; i++)
+        {
+            if(_thresholds[i].value > Count())
+            {
+                break;
+            }
+        }
+        return _thresholds[i].value;
+    }
+
+    public bool IsLevelUnlocked(int number)
+    {
+        if (number <= MaxLevel())
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public void Initialize(string sArg)
+    {
+        _levels = new List<int>();
+        if (sArg != "")
+        {
+            string[] words = sArg.Split(';');
+            foreach (string intString in words)
+            {
+                _levels.Add(int.Parse(intString));
+            }
+        }
+    }
+
+    public override string ToString()
+    {
+        string result = "";
+        foreach (int i in _levels)
+        {
+            result += i + ";";
+        }
+        result = result.TrimEnd(new char[] { ';' });
+        return result;
     }
 
     public bool IsTutorialRangeCompleted(int tutorialRangeMaxLevel)
     {
         for(int i=1; i<=tutorialRangeMaxLevel; i++)
         {
-            if (!levels.Contains(i))
+            if (!_levels.Contains(i))
             {
                 return false;
             }
@@ -41,7 +121,7 @@ public class CompletedLevelsManager : MonoBehaviour
     {
         for (int i = 1; i <= tutorialRangeMaxLevel; i++)
         {
-            if (!levels.Contains(i))
+            if (!_levels.Contains(i))
             {
                 return i;
             }
@@ -49,30 +129,30 @@ public class CompletedLevelsManager : MonoBehaviour
         return 0;
     }
 
+    //public int GetLevelsFootprint()
+    //{
+    //    int result = 1;
+    //    foreach (int levelNumber in _levels)
+    //    {
+    //        result *= levelNumber;
+    //        result %= bigPrime;
+    //    }
+    //    return result;
+    //}
 
-    public int GetLevelsFootprint()
-    {
-        int result = 1;
-        foreach (int levelNumber in levels)
-        {
-            result *= levelNumber;
-            result %= bigPrime;
-        }
-        return result;
-    }
     public void RegisterLevel(int intArg)
     {
-        if (!levels.Contains(intArg))
+        if (!_levels.Contains(intArg))
         {
-            levels.Add(intArg);
+            _levels.Add(intArg);
             Save();
-            EventManager.SendEvent(new UpdateCompletedLevelsUIEvent(levels));
+            EventManager.SendEvent(new UpdateCompletedLevelsUIEvent(_levels));
         }
     }
 
     public bool IsSeedCompleted(int seedArg)
     {
-        if (levels.Contains(seedArg))
+        if (_levels.Contains(seedArg))
         {
             return true;
         }
@@ -81,9 +161,12 @@ public class CompletedLevelsManager : MonoBehaviour
 
     public List<int> GetLevels()
     {
-        return levels;
+        return _levels;
     }
 
+    #endregion public
+
+    #region private
     void Save()
     {
         PlayerPrefs.SetString("completedLevels", ToString());
@@ -100,28 +183,6 @@ public class CompletedLevelsManager : MonoBehaviour
         Initialize(initString);
     }
 
-    public void Initialize(string sArg)
-    {
-        levels = new List<int>();
-        if (sArg != "")
-        {
-            string[] words = sArg.Split(';');
-            foreach (string intString in words)
-            {
-                levels.Add(int.Parse(intString));
-            }
-        }
-    }
-
-    public override string ToString()
-    {
-        string result = "";
-        foreach(int i in levels)
-        {
-            result += i + ";"; 
-        }
-        result = result.TrimEnd(new char[] { ';' });
-        return result;
-    }
+    #endregion private
 
 }
