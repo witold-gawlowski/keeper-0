@@ -37,17 +37,30 @@ public class CompletedLevelsManager : MonoBehaviour
     }
 
     #region public
-    public int Count()
+    public int CompletedLevelsNumber()
     {
         return _levels.Count;
     }
-   
+
+    public int NextMaxLevel()
+    {
+        int i = 0;
+        for (; i < _thresholds.Count; i++)
+        {
+            if (_thresholds[i].value > CompletedLevelsNumber())
+            {
+                break;
+            }
+        }
+        return _thresholds[i].maxLevel;
+    }
+
     public int MaxLevel()
     {
         int result = _thresholds[0].maxLevel;
         for(int i=1; i<_thresholds.Count; i++)
         {
-            if(_thresholds[i].value > Count())
+            if(_thresholds[i].value > CompletedLevelsNumber())
             {
                 break;
             }
@@ -61,7 +74,7 @@ public class CompletedLevelsManager : MonoBehaviour
         int i = 0;
         for (; i<_thresholds.Count; i++)
         {
-            if(_thresholds[i].value > Count())
+            if(_thresholds[i].value > CompletedLevelsNumber())
             {
                 break;
             }
@@ -129,16 +142,17 @@ public class CompletedLevelsManager : MonoBehaviour
         return 0;
     }
 
-    //public int GetLevelsFootprint()
-    //{
-    //    int result = 1;
-    //    foreach (int levelNumber in _levels)
-    //    {
-    //        result *= levelNumber;
-    //        result %= bigPrime;
-    //    }
-    //    return result;
-    //}
+    public int LowestIncompleteLevel()
+    {
+        for(int i=1; i <=MaxLevel(); i++)
+        {
+            if (!_levels.Contains(i))
+            {
+                return i;
+            }
+        }
+        return int.MinValue;
+    }
 
     public void RegisterLevel(int intArg)
     {

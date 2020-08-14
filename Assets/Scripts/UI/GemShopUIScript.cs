@@ -14,7 +14,7 @@ public class ShopCardSoldEvent:IEvent
 
 public class GemShopUIScript : MonoBehaviour
 {
-    public NoBlockInfoPanelScript purchaseConfirmationScript;
+    public InfoPanelScript purchaseConfirmationScript;
     public GameObject buttonPrefab;
     public GameObject cathegoryPrefab;
     public GameObject cathegoryParent;

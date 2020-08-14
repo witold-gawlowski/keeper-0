@@ -2898,6 +2898,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b19105c14c0a479479425cecee695025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _thresholds:
+  - maxLevel: 0
+    value: 0
+  - maxLevel: 0
+    value: 0
+  - maxLevel: 0
+    value: 0
 --- !u!4 &739046196
 Transform:
   m_ObjectHideFlags: 0
@@ -4968,7 +4975,6 @@ MonoBehaviour:
   seedInputText: {fileID: 1950634274}
   seedMapper: {fileID: 12251467}
   tutorialInfoPanel: {fileID: 45113723}
-  maxTutorialLevel: 3
 --- !u!114 &1582698407
 MonoBehaviour:
   m_ObjectHideFlags: 0

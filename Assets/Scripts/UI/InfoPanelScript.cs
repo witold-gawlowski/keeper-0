@@ -1,14 +1,20 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class NoBlockInfoPanelScript : MonoBehaviour
+public class InfoPanelScript : MonoBehaviour
 {
-
+    public Text text;
     System.Action callback;
     public void OnOKTap()
     {
         gameObject.SetActive(false);
+    }
+
+    public void SetText(string textArg)
+    {
+        text.text = textArg;
     }
 
     public void OnYesTap()

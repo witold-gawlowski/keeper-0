@@ -3,24 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
+using UnityEngine.UI;
 using System.Text.RegularExpressions;
 
 public class MainMenuScript : MonoBehaviour
 {
     public GameObject continueButton;
-    public CompletedLevelsManager completedLevelsManager;
     public GameObject leaderboardsPanel;
     public GameObject shopPanel;
     public GameObject deckEditPanel;
     public GameObject hallOfFamePanel;
     public GameObject menuPanel;
-    public GameObject DeckEmptyInfoPanel;
-    public SceneFader sceneLoader;
     public TextMeshProUGUI gemText;
-    public TMP_InputField seedInputField;
-    public TextMeshProUGUI seedInputText;
-    public SeedMapperScript seedMapper;
-    public GameObject tutorialInfoPanel;
     GameObject currentPanel;
 
     private void Awake()
@@ -44,20 +38,8 @@ public class MainMenuScript : MonoBehaviour
 
     private void Start()
     {
-        if (RunResultScript.instance == null)
-        { 
-            seedInputField.text = (Random.Range(0, int.MaxValue).ToString());
-        }
-        else
-        {
-            seedInputField.text = RunResultScript.instance.runNumber.ToString();
-        }
        
-    }
-
-    public void OnInputSeeedSelected()
-    {
-        seedInputField.caretPosition = 2;
+       
     }
 
     private void Update()
@@ -87,41 +69,6 @@ public class MainMenuScript : MonoBehaviour
         return menuSceneCandidate != null && menuSceneCandidate.name == "MenuScene";
     }
 
-    public void OnStartButtonTap()
-    {
-        int seedTemp = int.Parse(seedInputField.text);
-        
-        //if (!completedLevelsManager.IsTutorialRangeCompleted(maxTutorialLevel) && (seedTemp <1|| seedTemp > maxTutorialLevel))
-        //{
-        //    tutorialInfoPanel.SetActive(true);
-        //    int incompleteLevel = completedLevelsManager.GetIncompleteTutorialLevel(maxTutorialLevel);
-        //    seedInputField.SetTextWithoutNotify(incompleteLevel.ToString());
-        //}
-        //else 
-        if (Deck.instance.IsDeckEmpty())
-        {
-            DeckEmptyInfoPanel.SetActive(true);
-        }
-        else
-        {
-            if (completedLevelsManager.IsSeedCompleted(seedTemp))
-            {
-                SeedScript.instance.alreadyCompleted = true;
-            }
-            else
-            {
-                SeedScript.instance.alreadyCompleted = false;
-            }
-            SeedScript.instance.seed = seedMapper.GetSeed(seedTemp);
-            SeedScript.instance.nominalSeed = seedTemp;
-            StartCoroutine(sceneLoader.FadeAndLoadScene(SceneFader.FadeDirection.In, "MenuScene"));
-        }
-    }
-
-    public void OnContinueButtonTap()
-    {
-        SceneManager.UnloadSceneAsync("MainMenuScene");
-    }
 
     public void OnDeckEditButtonTap()
     {
