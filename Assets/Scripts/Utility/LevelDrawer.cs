@@ -51,7 +51,7 @@ public class LevelDrawer : MonoBehaviour
             {
                 randomizer = new Randomizer(seed);
                 GameObject levelTypeGameObject = Instantiate(levelPrefab, transform);
-                ProceduralMap proceduralMap = levelTypeGameObject.GetComponent<ProceduralMap>();
+                Map proceduralMap = levelTypeGameObject.GetComponent<Map>();
                 foreach(SpriteRenderer sr in levelTypeGameObject.GetComponentsInChildren<SpriteRenderer>())
                 {
                     sr.enabled = true;

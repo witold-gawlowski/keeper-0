@@ -45,7 +45,7 @@ public class LevelsUIScript : MonoBehaviour
         foreach(Transform tTemp in parentArg)
         {
             LevelButtonScript lbs = tTemp.GetComponent<LevelButtonScript>();
-            int levelArea = lbs.associatedLevel.GetComponent<ProceduralMap>().GetFreeArea();
+            int levelArea = lbs.associatedLevel.GetComponent<Map>().GetFreeArea();
             int inventoryTotalArea = blockManagerScript.GetTotalInventoryArea();
             float completionFraction = levelManagerScript.GetCompletionThreshold(lbs.associatedLevel);
             if (levelArea* completionFraction <= inventoryTotalArea)

@@ -22,6 +22,54 @@ public static class Tools
         }
     }
 
+    public static Texture2D CreateBackGroundTexture(Map pMap)
+    {
+        int w = pMap.GetWidth();
+        int h = pMap.GetHeight();
+        Texture2D result = new Texture2D(w, h);
+        result.filterMode = FilterMode.Point;
+        Color color;
+        for (int x = 0; x < w; x++)
+        {
+            for (int y = 0; y < h; y++)
+            {
+                result.SetPixel(x, y, Color.white);
+            }
+        }
+        result.Apply();
+        return result;
+    }
+
+    public static Texture2D GetMapTexture(Map pMap)
+    {
+        int w = pMap.GetWidth();
+        int h = pMap.GetHeight();
+        Texture2D result = new Texture2D(w, h);
+        result.filterMode = FilterMode.Point;
+
+        Color color;
+        for (int x = 0; x < w; x++)
+        {
+            for (int y = 0; y < h; y++)
+            {
+                if (pMap.map[x, y] == 0)
+                {
+                    color = Color.clear;
+                }
+                else if (pMap.map[x, y] == 4)
+                {
+                    color = Color.green;
+                }
+                else
+                {
+                    color = Color.black;
+                }
+                result.SetPixel(x, y, color);
+            }
+        }
+        result.Apply();
+        return result;
+    }
 
     public static void Shuffle<T>(this IList<T> list)
     {

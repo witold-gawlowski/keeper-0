@@ -27,7 +27,7 @@ public class SelectedLevelPanelScript : MonoBehaviour
     public void Initialize(GameObject levelArg, bool isBoughtArg, bool isInventoryEmptyArg = false)
     {
         isInventoryEmpty = isInventoryEmptyArg;
-        SnapshotCreatorScript snapshotCreatorScript = levelArg.GetComponent<SnapshotCreatorScript>();
+        MapTextureDrawer snapshotCreatorScript = levelArg.GetComponent<MapTextureDrawer>();
         levelMinimap.sprite = snapshotCreatorScript.GetLevelSprite();
         backgroundImage.sprite = snapshotCreatorScript.GetBackgroundSprite();
         selectedLevel = levelArg;

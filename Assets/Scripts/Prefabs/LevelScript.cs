@@ -9,8 +9,8 @@ public class LevelScript : MonoBehaviour
     public SpriteRenderer spriteRenderer;
     public SpriteRenderer backGroundSpriteRenderer;
     public SpriteRenderer spriteRenderer;
-    public ProceduralMap proceduralMap;
-    public SnapshotCreatorScript snapshotCreatorScript;
+    public Map proceduralMap;
+    public MapTextureDrawer snapshotCreatorScript;
 
 
     public Sprite GetLevelSprite()

@@ -22,14 +22,14 @@ public class DragScript : MonoBehaviour
     public bool useMouse = true;
     bool snapped;
     bool snappedLastFrame;
-    public ProceduralMap map;
+    public Map map;
     public bool firstBlockPlaced;
     public float rotateTimeWindow = 0.5f;
 
 
     public void SetProceduralMap(GameObject levelInstanceObject)
     {
-        map = levelInstanceObject.GetComponent<ProceduralMap>();
+        map = levelInstanceObject.GetComponent<Map>();
     }
 
     public void OnStartBuilding()

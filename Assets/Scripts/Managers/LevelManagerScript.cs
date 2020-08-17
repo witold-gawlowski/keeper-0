@@ -171,8 +171,8 @@ public class LevelManagerScript : MonoBehaviour
         {
             GameObject newLevel = Instantiate(levelPrefab, Vector3.zero, Quaternion.identity);
             newLevel.name = newLevel.name + i;
-            SnapshotCreatorScript snapshotCreatorScript = newLevel.GetComponent<SnapshotCreatorScript>();
-            ProceduralMap proceduralMap = newLevel.GetComponent<ProceduralMap>();
+            MapTextureDrawer snapshotCreatorScript = newLevel.GetComponent<MapTextureDrawer>();
+            Map proceduralMap = newLevel.GetComponent<Map>();
 
             int newLevelCost = 123;
             float newReturnValue = runDescription.GetReward(currentLevel, i);

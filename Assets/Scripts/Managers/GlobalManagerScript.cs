@@ -92,13 +92,13 @@ public class GlobalManagerScript : MonoBehaviour
         OpenMapEvent evData = evArg as OpenMapEvent;
         GameObject level = evData.levelGO;
         OnLevelCompletedActions += () => levelManagerScript.DestroyLevel(level);
-        OnLevelFinishedActions += () => level.GetComponent<ProceduralMap>().ClearBlocks();
+        OnLevelFinishedActions += () => level.GetComponent<Map>().ClearBlocks();
         blockManagerScript.OnStartBuilding(level);
         dragScript.gameObject.SetActive(true);
         dragScript.OnStartBuilding();
         LevelScript levelScritp = level.GetComponent<LevelScript>();
         levelScritp.SetDisplayed(true);
-        ProceduralMap levelMap = level.GetComponent<ProceduralMap>();
+        Map levelMap = level.GetComponent<Map>();
         levelMoneyManagerScript.Initialize(levelMap.GetFreeArea(),
             levelManagerScript.GetCompletionThreshold(level),
             levelManagerScript.GetRawReward(level));

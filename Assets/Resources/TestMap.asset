@@ -12,3 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1df1cbba709fa6048bb32151ed866cc5, type: 3}
   m_Name: TestMap
   m_EditorClassIdentifier: 
+  width: 0
+  height: 0
+  gemID: 3
+  rockID: 1
+  mapDescription: 
+  mapImage: {fileID: 0}
