@@ -4,18 +4,51 @@ using UnityEngine;
 
 public static class ProceduralGeneration
 {
+    static Map map;
+    static int steps;
+    static float initialDensity;
+    static float initialGemDensity = 0.2f;
+    static int dieLimit;
+    static int spawnLimit;
+    static int maxRoundNumber;
+    static int currentRoundNumber;
+    static bool alreadyCompleted;
+    static int currentDFSComponent;
+    static Dictionary<int, int> componentSizes;
+    static int[,] tempMap;
 
-    int steps;
-    float initialDensity;
-    float initialGemDensity = 0.2f;
-    int dieLimit;
-    int spawnLimit;
-    int maxRoundNumber;
-    int currentRoundNumber;
-    bool alreadyCompleted;
-    int currentDFSComponent;
+    public static void Initialize(Randomizer rArg, LevelTypeScriptableObjectScript levelParamsArg, int currentRoundArg, int totalRoundCount, bool alreadyCompltedArg)
+    {
+        currentRoundNumber = currentRoundArg;
+        maxRoundNumber = totalRoundCount;
+        dieLimit = levelParamsArg.deathLimit;
+        spawnLimit = levelParamsArg.lifeLimit;
+        initialDensity = levelParamsArg.initialDensity;
+        steps = levelParamsArg.steps;
+        width = levelParamsArg.width;
+        alreadyCompleted = alreadyCompltedArg;
+        height = levelParamsArg.height;
+        levelSpriteObject.transform.localPosition = GetLevelCenterPosition();
+        levelBackgroundSpriteObject.transform.localPosition = GetLevelCenterPosition();
+        int maxCompNum = -1;
+        do
+        {
+            Generate(rArg);
+            GetComponents();
+            GetComponentSizes();
+            if (levelParamsArg.removeSecondaryCaves)
+            {
+                RemoveSecondaryComponents();
+            }
+            maxCompNum = GetMaxComponentNumber();
+        } while (levelParamsArg.minimalMaxCaveSize > componentSizes[maxCompNum]);
 
-    public void GetComponents()
+        if (!alreadyCompleted)
+        {
+            CreateGems(rArg);
+        }
+    }
+    public static void GetComponents()
     {
         components = new int[width, height];
         for (int i = 0; i < width; i++)
@@ -39,7 +72,7 @@ public static class ProceduralGeneration
 
     }
 
-    void GetComponentSizes()
+    void static GetComponentSizes()
     {
         componentSizes = new Dictionary<int, int>();
         componentSizes.Add(-1, 0);
@@ -63,7 +96,7 @@ public static class ProceduralGeneration
         }
     }
 
-    int GetMaxComponentNumber()
+    int static GetMaxComponentNumber()
     {
 
         int maxComponentNumber = -1;
@@ -77,7 +110,7 @@ public static class ProceduralGeneration
         return maxComponentNumber;
     }
 
-    void RemoveSecondaryComponents()
+    void static RemoveSecondaryComponents()
     {
         int maxComponentNumber = GetMaxComponentNumber();
         for (int i = 0; i < width; i++)
@@ -95,7 +128,7 @@ public static class ProceduralGeneration
         }
     }
 
-    void dfs(int i, int j)
+    void static dfs(int i, int j)
     {
         if (map[i, j] == 1)
         {
@@ -120,7 +153,7 @@ public static class ProceduralGeneration
         }
     }
 
-    public void CreateGems(Randomizer rArg)
+    public static void CreateGems(Randomizer rArg)
     {
         for (int i = 0; i < width; i++)
         {
@@ -134,7 +167,7 @@ public static class ProceduralGeneration
         }
     }
 
-    public void Generate(Randomizer rArg)
+    public static void Generate(Randomizer rArg)
     {
         map = new int[width, height];
         tempMap = new int[width, height];

@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LevelSchedulerScript : MonoBehaviour, ILevelSpecification
+public class RunSpecificationFactory : MonoBehaviour
 {
     public LevelTypeScriptableObjectScript[] types;
-    List<int> levelStructure;
-    List<int> levelMapTypes;
-    List<int> levelMapNumber;
+    private RunSpecification _product;
+    //List<int> levelStructure;
+    //List<int> levelMapTypes;
+    //List<int> levelMapNumber;
     public int minLevelGroups = 1;
     public int maxLevelGroups = 4;
     public int minLevelsPerGroup = 1;
@@ -19,9 +20,13 @@ public class LevelSchedulerScript : MonoBehaviour, ILevelSpecification
     public void Init(Randomizer rArg)
     {
         randomizer = rArg;
-        Create();
     }
 
+    public RunSpecification Get()
+    {
+        Create();
+        return _product;
+    }
     
     public void SaveToRunSpecificationScriptableObject()
     {

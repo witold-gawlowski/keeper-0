@@ -55,13 +55,13 @@ public class LevelManagerScript : MonoBehaviour
     {
         ins = this;
         seedALreadyCompleted = SeedScript.instance.alreadyCompleted;
-        runDescription = GetComponentInChildren<LevelSchedulerScript>();
+        runDescription = GetComponentInChildren<RunSpecificationFactory>();
         System.Object seed = SeedScript.instance.seed;
         if (seed is int)
         {
             int seedInt = (int)seed;
             randomizer = new Randomizer(seedInt);
-            LevelSchedulerScript scheduler = runDescription as LevelSchedulerScript;
+            RunSpecificationFactory scheduler = runDescription as RunSpecificationFactory;
             scheduler.Init(randomizer);
         }
         else if(seed is RunSpecification)
@@ -188,7 +188,7 @@ public class LevelManagerScript : MonoBehaviour
             proceduralMap.Initialize(randomizer, nextLevelParams, currentLevel, totalRoundCount, seedALreadyCompleted);
             snapshotCreatorScript.createSnapshot();
             Sprite levelSprite = snapshotCreatorScript.GetLevelSprite();
-            newLevelButtonScript.SetSprite(levelSprite;);
+            newLevelButtonScript.SetSprite(levelSprite);
         }
     }
 

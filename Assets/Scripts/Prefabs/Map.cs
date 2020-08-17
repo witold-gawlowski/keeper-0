@@ -3,49 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-public class Map : MonoBehaviour
+public class Map : ScriptableObject
 {
     public GameObject levelSpriteObject;
     public GameObject levelBackgroundSpriteObject;
     public int[,] map;
-    int[,] tempMap;
+  
     int[,] components;
-    Dictionary<int, int> componentSizes;
 
     int width;
     int height;
     public int seed;
 
-    public void Initialize(Randomizer rArg, LevelTypeScriptableObjectScript levelParamsArg, int currentRoundArg, int totalRoundCount, bool alreadyCompltedArg)
-    {
-        currentRoundNumber = currentRoundArg;
-        maxRoundNumber = totalRoundCount;
-        dieLimit = levelParamsArg.deathLimit;
-        spawnLimit = levelParamsArg.lifeLimit;
-        initialDensity = levelParamsArg.initialDensity;
-        steps = levelParamsArg.steps;
-        width = levelParamsArg.width;
-        alreadyCompleted = alreadyCompltedArg;
-        height = levelParamsArg.height;
-        levelSpriteObject.transform.localPosition = GetLevelCenterPosition();
-        levelBackgroundSpriteObject.transform.localPosition = GetLevelCenterPosition();
-        int maxCompNum = -1;
-        do {
-            Generate(rArg);
-            GetComponents();
-            GetComponentSizes();
-            if (levelParamsArg.removeSecondaryCaves)
-            {
-                RemoveSecondaryComponents();
-            }
-            maxCompNum = GetMaxComponentNumber();
-        } while (levelParamsArg.minimalMaxCaveSize > componentSizes[maxCompNum]);
-
-        if (!alreadyCompleted)
-        {
-            CreateGems(rArg);
-        }
-    }
+    
 
     public Vector3 GetLevelCenterPosition()
     {
