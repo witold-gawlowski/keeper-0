@@ -23,7 +23,6 @@ public class CompletedLevelsManager : MonoBehaviour
 
     [SerializeField]
     List<LevelThreshold> _thresholds;
-    
     const int bigPrime = int.MaxValue;
     
     void Awake()
@@ -37,7 +36,7 @@ public class CompletedLevelsManager : MonoBehaviour
     }
 
     #region public
-    public int CompletedLevelsNumber()
+    public int GetCompletedLevelsNumber()
     {
         return _levels.Count;
     }
@@ -47,7 +46,7 @@ public class CompletedLevelsManager : MonoBehaviour
         int i = 0;
         for (; i < _thresholds.Count; i++)
         {
-            if (_thresholds[i].value > CompletedLevelsNumber())
+            if (_thresholds[i].value > GetCompletedLevelsNumber())
             {
                 break;
             }
@@ -55,12 +54,12 @@ public class CompletedLevelsManager : MonoBehaviour
         return _thresholds[i].maxLevel;
     }
 
-    public int MaxLevel()
+    public int GetMaxLevel()
     {
         int result = _thresholds[0].maxLevel;
         for(int i=1; i<_thresholds.Count; i++)
         {
-            if(_thresholds[i].value > CompletedLevelsNumber())
+            if(_thresholds[i].value > GetCompletedLevelsNumber())
             {
                 break;
             }
@@ -74,7 +73,7 @@ public class CompletedLevelsManager : MonoBehaviour
         int i = 0;
         for (; i<_thresholds.Count; i++)
         {
-            if(_thresholds[i].value > CompletedLevelsNumber())
+            if(_thresholds[i].value > GetCompletedLevelsNumber())
             {
                 break;
             }
@@ -84,7 +83,7 @@ public class CompletedLevelsManager : MonoBehaviour
 
     public bool IsLevelUnlocked(int number)
     {
-        if (number <= MaxLevel())
+        if (number <= GetMaxLevel())
         {
             return true;
         }
@@ -144,7 +143,7 @@ public class CompletedLevelsManager : MonoBehaviour
 
     public int LowestIncompleteLevel()
     {
-        for(int i=1; i <=MaxLevel(); i++)
+        for(int i=1; i <=GetMaxLevel(); i++)
         {
             if (!_levels.Contains(i))
             {

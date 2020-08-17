@@ -23,6 +23,10 @@ public class LevelSchedulerScript : MonoBehaviour, ILevelSpecification
     }
 
     
+    public void SaveToRunSpecificationScriptableObject()
+    {
+
+    }
 
     public int GetNumberOfNewMaps(int roundArg)
     {

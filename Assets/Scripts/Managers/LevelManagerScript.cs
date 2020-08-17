@@ -184,9 +184,11 @@ public class LevelManagerScript : MonoBehaviour
             levels.Add(new LevelData(newLevel, newLevelCost, newReturnValue, false, newLevelCompletionThresholdFraction, rawReward, persistence, age));
             GameObject newLevelButton = levelsUIScript.SpawnShopLevelButton(newLevel, newLevelCost, newReturnValue, newLevelCompletionThresholdFraction, rawReward, persistence);
             LevelButtonScript newLevelButtonScript = newLevelButton.GetComponent<LevelButtonScript>();
-            snapshotCreatorScript.finishedGeneratingSnapshotEvent += newLevelButtonScript.SetSprite;
             randomizer = runDescription.GetRandomizer(currentLevel, i);
             proceduralMap.Initialize(randomizer, nextLevelParams, currentLevel, totalRoundCount, seedALreadyCompleted);
+            snapshotCreatorScript.createSnapshot();
+            Sprite levelSprite = snapshotCreatorScript.GetLevelSprite();
+            newLevelButtonScript.SetSprite(levelSprite;);
         }
     }
 

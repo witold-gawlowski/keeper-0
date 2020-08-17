@@ -48,7 +48,7 @@ public class StartNewGameButtonScript : MonoBehaviour
     public void OnEditEnd(string value)
     {
         int enteredValue = int.Parse(value);
-        if (enteredValue > completedLevelsManager.MaxLevel())
+        if (enteredValue > completedLevelsManager.GetMaxLevel())
         {
             DisplayThresholdsInfo();
         }
@@ -76,8 +76,8 @@ public class StartNewGameButtonScript : MonoBehaviour
     void DisplayThresholdsInfo()
     {
         int threshold = completedLevelsManager.NearestThreshold();
-        int currentCompleted = completedLevelsManager.CompletedLevelsNumber();
-        int maxLevel = completedLevelsManager.MaxLevel();
+        int currentCompleted = completedLevelsManager.GetCompletedLevelsNumber();
+        int maxLevel = completedLevelsManager.GetMaxLevel();
         int nextTierMax = completedLevelsManager.NextMaxLevel();
         tutorialInfoPanel.SetActive(true);
         InfoPanelScript ips = tutorialInfoPanel.GetComponent<InfoPanelScript>();
@@ -99,7 +99,7 @@ public class StartNewGameButtonScript : MonoBehaviour
     public void OnPlusButtonTap()
     {
         int initialInputFieldValue = int.Parse(seedInputField.text);
-        if(initialInputFieldValue == completedLevelsManager.MaxLevel())
+        if(initialInputFieldValue == completedLevelsManager.GetMaxLevel())
         {
             DisplayThresholdsInfo();
         }
@@ -126,7 +126,7 @@ public class StartNewGameButtonScript : MonoBehaviour
 
     void UpdateLevelSelectionUI()
     {
-        if (int.Parse(seedInputField.text) == completedLevelsManager.MaxLevel())
+        if (int.Parse(seedInputField.text) == completedLevelsManager.GetMaxLevel())
         {
             SetPlusButtonLocked(true);
         }

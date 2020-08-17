@@ -1,10 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 
 public class ProceduralMap : MonoBehaviour
 {
-    public System.Action finishedGeneratingMapEvent;
     public GameObject square;
     public GameObject levelSpriteObject;
     public GameObject levelBackgroundSpriteObject;
@@ -56,9 +56,6 @@ public class ProceduralMap : MonoBehaviour
         {
             CreateGems(rArg);
         }
-
-        finishedGeneratingMapEvent();
-
     }
 
     public Vector3 GetLevelCenterPosition()
@@ -90,6 +87,31 @@ public class ProceduralMap : MonoBehaviour
             }
         }
         return result;
+    }
+
+    public void SaveToScriptableObject()
+    {
+        MapScriptableObject mapSO = ScriptableObject.CreateInstance<MapScriptableObject>();
+        mapSO.height = height;
+        mapSO.width = width;
+
+        string description = "";
+        {
+            for (int i = 0; i < width; i++)
+            {
+                for (int j = 0; j < height; j++)
+                {
+                    description += map[i, j].ToString() + ", ";
+                }
+            }
+            description = description.TrimEnd(',');
+        }
+
+        mapSO.mapDescription = description;
+
+        AssetDatabase.CreateAsset(mapSO, "Assets/Resources/Maps/NewMap.asset");
+        AssetDatabase.SaveAssets();
+
     }
 
     public void GetComponents()

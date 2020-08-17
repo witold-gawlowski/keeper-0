@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="7" height="7" tilewidth="32" tileheight="32" infinite="0" nextlayerid="2" nextobjectid="1">
+ <tileset firstgid="1" source="../Assets/Resources/Keeper-0_tileset.tsx"/>
+ <layer id="1" name="Tile Layer 1" width="7" height="7">
+  <data encoding="csv">
+1,1,1,1,2684354561,2684354561,2684354561,
+1,2684354561,2684354561,2684354561,2684354561,2684354561,2684354561,
+1,2684354561,3,3,2684354561,2684354561,2684354561,
+1,2,3,3,3,2684354561,2684354561,
+1,1,2,2,2,2684354561,2684354561,
+1,2684354561,2684354561,2684354561,2,2684354561,2684354561,
+1,1,1,2684354561,2684354561,2684354561,1
+</data>
+ </layer>
+</map>

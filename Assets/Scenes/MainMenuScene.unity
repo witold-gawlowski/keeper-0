@@ -488,12 +488,6 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 45113721}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &45113723 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3383185644560353615, guid: 56b07961a1344d6499fa0216c00403df,
-    type: 3}
-  m_PrefabInstance: {fileID: 45113721}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &49274443
 GameObject:
   m_ObjectHideFlags: 0
@@ -1298,7 +1292,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.2264151, g: 0.19110234, b: 0.0074759745, a: 1}
+  m_Color: {r: 0.128, g: 0.09671112, b: 0.008533333, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -4962,19 +4956,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   continueButton: {fileID: 1365267348}
-  completedLevelsManager: {fileID: 739046195}
   leaderboardsPanel: {fileID: 715171812}
   shopPanel: {fileID: 1672384014}
   deckEditPanel: {fileID: 915128164191295596}
   hallOfFamePanel: {fileID: 1928171357}
   menuPanel: {fileID: 1046815099}
-  DeckEmptyInfoPanel: {fileID: 2099600062}
-  sceneLoader: {fileID: 421683256}
   gemText: {fileID: 840765873}
-  seedInputField: {fileID: 156541811}
-  seedInputText: {fileID: 1950634274}
-  seedMapper: {fileID: 12251467}
-  tutorialInfoPanel: {fileID: 45113723}
 --- !u!114 &1582698407
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5238,6 +5225,7 @@ GameObject:
   - component: {fileID: 1636140045}
   - component: {fileID: 1636140048}
   - component: {fileID: 1636140050}
+  - component: {fileID: 1636140049}
   m_Layer: 5
   m_Name: StartNewGameButton
   m_TagString: Untagged
@@ -5379,6 +5367,45 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
+--- !u!114 &1636140049
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1636140043}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f47c2e6d4b61a4941a8d9b9490f63bf3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  plusPadlock: {fileID: 0}
+  plusButtonText: {fileID: 0}
+  plusButton: {fileID: 0}
+  minusButton: {fileID: 0}
+  inputFieldCompletedColorBlock:
+    m_NormalColor: {r: 0, g: 0, b: 0, a: 0}
+    m_HighlightedColor: {r: 0, g: 0, b: 0, a: 0}
+    m_PressedColor: {r: 0, g: 0, b: 0, a: 0}
+    m_SelectedColor: {r: 0, g: 0, b: 0, a: 0}
+    m_DisabledColor: {r: 0, g: 0, b: 0, a: 0}
+    m_ColorMultiplier: 0
+    m_FadeDuration: 0
+  inputFiledIncompleteColorBlock:
+    m_NormalColor: {r: 0, g: 0, b: 0, a: 0}
+    m_HighlightedColor: {r: 0, g: 0, b: 0, a: 0}
+    m_PressedColor: {r: 0, g: 0, b: 0, a: 0}
+    m_SelectedColor: {r: 0, g: 0, b: 0, a: 0}
+    m_DisabledColor: {r: 0, g: 0, b: 0, a: 0}
+    m_ColorMultiplier: 0
+    m_FadeDuration: 0
+  seedInputField: {fileID: 0}
+  completedLevelsManager: {fileID: 0}
+  seedInputText: {fileID: 0}
+  tutorialInfoPanel: {fileID: 0}
+  DeckEmptyInfoPanel: {fileID: 0}
+  seedMapper: {fileID: 0}
+  sceneFader: {fileID: 0}
 --- !u!167 &1636140050
 AudioReverbZone:
   m_ObjectHideFlags: 0
@@ -6160,7 +6187,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4278206027
-  m_fontColor: {r: 0.29299998, g: 0.24461468, b: 0, a: 1}
+  m_fontColor: {r: 0.23584908, g: 0.21251634, b: 0.10123711, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -6743,12 +6770,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_HorizontalFit: 0
   m_VerticalFit: 2
---- !u!1 &2099600062 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3383185644560353615, guid: 56b07961a1344d6499fa0216c00403df,
-    type: 3}
-  m_PrefabInstance: {fileID: 1791637767}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &2099600063 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3383185644560353614, guid: 56b07961a1344d6499fa0216c00403df,
