@@ -10,8 +10,6 @@ public class Map : ScriptableObject
     protected int _width;
     protected int _height;
 
-    
-
     public Vector3 GetCenterPosition()
     {
         return new Vector3(_width / 2.0f - 0.5f, _height / 2.0f - 0.5f, 0);

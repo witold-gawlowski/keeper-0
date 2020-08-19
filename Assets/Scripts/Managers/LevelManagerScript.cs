@@ -172,7 +172,7 @@ public class LevelManagerScript : MonoBehaviour
             GameObject newLevel = Instantiate(levelPrefab, Vector3.zero, Quaternion.identity);
             newLevel.name = newLevel.name + i;
             MapTextureDrawer snapshotCreatorScript = newLevel.GetComponent<MapTextureDrawer>();
-            Map proceduralMap = newLevel.GetComponent<Map>();
+            
 
             int newLevelCost = 123;
             float newReturnValue = runDescription.GetReward(currentLevel, i);
@@ -185,6 +185,7 @@ public class LevelManagerScript : MonoBehaviour
             GameObject newLevelButton = levelsUIScript.SpawnShopLevelButton(newLevel, newLevelCost, newReturnValue, newLevelCompletionThresholdFraction, rawReward, persistence);
             LevelButtonScript newLevelButtonScript = newLevelButton.GetComponent<LevelButtonScript>();
             randomizer = runDescription.GetRandomizer(currentLevel, i);
+            Map proceduralMap = runDescription.GetMap(level, index);
             proceduralMap.Initialize(randomizer, nextLevelParams, currentLevel, totalRoundCount, seedALreadyCompleted);
             snapshotCreatorScript.createSnapshot();
             Sprite levelSprite = snapshotCreatorScript.GetLevelSprite();
