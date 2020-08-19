@@ -7,7 +7,7 @@ public class RunSpecification : ScriptableObject, ILevelSpecification
     [System.Serializable]
     public class MapSpecification
     {
-        public LevelTypeScriptableObjectScript type;
+        public MapParams type;
         public float target;
         public int reward;
         public int seed;
@@ -15,7 +15,7 @@ public class RunSpecification : ScriptableObject, ILevelSpecification
     [System.Serializable]
     public class LevelSpecification
     {
-        public LevelTypeScriptableObjectScript type;
+        public MapParams type;
         public List<MapSpecification> specification;
     }
     public string id;
@@ -31,7 +31,7 @@ public class RunSpecification : ScriptableObject, ILevelSpecification
         return levelStructure[levelArg-1].specification.Count;
     }
 
-    public LevelTypeScriptableObjectScript GetMapType(int levelArg)
+    public MapParams GetMapType(int levelArg)
     {
         return levelStructure[levelArg-1].type;
     }

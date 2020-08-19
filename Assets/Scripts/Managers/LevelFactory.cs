@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class RunSpecificationFactory : MonoBehaviour
 {
-    public LevelTypeScriptableObjectScript[] types;
+    public MapParams[] types;
     private RunSpecification _product;
     //List<int> levelStructure;
     //List<int> levelMapTypes;
@@ -43,7 +43,7 @@ public class RunSpecificationFactory : MonoBehaviour
         return levelMapNumber.Count;
     }
 
-    public LevelTypeScriptableObjectScript GetMapType(int roundArg)
+    public MapParams GetMapType(int roundArg)
     {
         return types[levelMapTypes[roundArg - 1]];
     }

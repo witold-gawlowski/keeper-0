@@ -104,7 +104,7 @@ public class GlobalManagerScript : MonoBehaviour
             levelManagerScript.GetRawReward(level));
         levelMoneyManagerScript.SetReturnValue(levelManagerScript.GetReturnValue(level));
         dragScript.SetProceduralMap(level);
-        Camera.main.transform.position = levelMap.GetLevelCenterPosition() - new Vector3(0, 3, 10);
+        Camera.main.transform.position = levelMap.GetCenterPosition() - new Vector3(0, 3, 10);
         buildingUIScript.OnStartBuilding();
         levelCameraFitter.Setup(level);
         tutorialScript.Init();

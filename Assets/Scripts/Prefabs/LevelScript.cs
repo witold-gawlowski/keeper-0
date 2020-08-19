@@ -11,7 +11,13 @@ public class LevelScript : MonoBehaviour
     public SpriteRenderer spriteRenderer;
     public Map proceduralMap;
     public MapTextureDrawer snapshotCreatorScript;
-
+    public GameObject levelSpriteObject;
+    public GameObject levelBackgroundSpriteObject;
+    public void Initialize()
+    {
+        levelSpriteObject.transform.localPosition = GetLevelCenterPosition();
+        levelBackgroundSpriteObject.transform.localPosition = GetLevelCenterPosition();
+    }
 
     public Sprite GetLevelSprite()
     {

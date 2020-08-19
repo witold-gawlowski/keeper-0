@@ -52,11 +52,11 @@ public static class Tools
         {
             for (int y = 0; y < h; y++)
             {
-                if (pMap.map[x, y] == 0)
+                if (pMap._map[x, y] == 0)
                 {
                     color = Color.clear;
                 }
-                else if (pMap.map[x, y] == 4)
+                else if (pMap._map[x, y] == 4)
                 {
                     color = Color.green;
                 }

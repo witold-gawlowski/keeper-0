@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
-[CreateAssetMenu(fileName = "LevelType", menuName = "ScriptableObjects/LevelType", order = 1)]
-public class LevelTypeScriptableObjectScript: ScriptableObject
+[CreateAssetMenu(fileName = "MapParams", menuName = "ScriptableObjects/MapParams", order = 1)]
+public class MapParams
 {
     public string levelName = "LevelName";
 
@@ -12,19 +12,8 @@ public class LevelTypeScriptableObjectScript: ScriptableObject
     public int deathLimit = 2;
     public int lifeLimit = 4;
     public float initialDensity = 0.5f;
-    [Space(20)]
-
-    [Header("Occurence Parameters")]
-    public float probabilityWeight = 1;
-    public int firstAppearanceLevel = 1;
-    public AnimationCurve weightVsLevelCurve;
-    [Space(20)]
-
-    [Header("Price")]
-    [Range(100, 1000)]
-    public int priceMean;
-    [Range(30, 1000)]
-    public int priceStandardDeviation;
+    public bool removeSecondaryCaves;
+    public int minimalMaxCaveSize;
     [Space(20)]
 
     [Header("Reward")]
@@ -41,17 +30,8 @@ public class LevelTypeScriptableObjectScript: ScriptableObject
     public float completionFractionDispersion;
     [Space(20)]
 
-    [Header("Persistence")]
-    [Range(1, 15)]
-    public int persistenceInterval;
-    [Space(20)]
-
-    [Header("Special  Options")]
-    public int minimalMaxCaveSize;
-    public bool removeSecondaryCaves;
-
-
-   
+    [Header("Rarity")]
+    public float rarity = 1;
 
     public int GetReward(Randomizer rArg)
     {
@@ -61,16 +41,6 @@ public class LevelTypeScriptableObjectScript: ScriptableObject
             result = 200;
         }
         return Mathf.RoundToInt(result);
-    }
-
-    public int GetCost(Randomizer rArg)
-    {
-        float unrefinedPrice = Tools.RandomGaussian01(rArg) * priceStandardDeviation + priceMean;
-        if(unrefinedPrice < 0)
-        {
-            unrefinedPrice = 0;
-        }
-        return Mathf.RoundToInt(unrefinedPrice/10)*10;
     }
 
     public float GetTarget(Randomizer rArg)

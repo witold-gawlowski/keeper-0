@@ -9,6 +9,6 @@ public class LevelCameraFitteer : MonoBehaviour
     public void Setup(GameObject levelObjectArg)
     {
         procMap = levelObjectArg.GetComponent<Map>();
-        Vector3 levelCenter = procMap.GetLevelCenterPosition();
+        Vector3 levelCenter = procMap.GetCenterPosition();
     }
 }

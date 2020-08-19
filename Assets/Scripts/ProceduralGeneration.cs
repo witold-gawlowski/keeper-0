@@ -2,107 +2,99 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class ProceduralGeneration
+public class ProceduralMap : Map
 {
-    static Map map;
-    static int steps;
-    static float initialDensity;
-    static float initialGemDensity = 0.2f;
-    static int dieLimit;
-    static int spawnLimit;
-    static int maxRoundNumber;
-    static int currentRoundNumber;
-    static bool alreadyCompleted;
-    static int currentDFSComponent;
-    static Dictionary<int, int> componentSizes;
-    static int[,] tempMap;
+    private int _currentDFSComponent;
+    private Dictionary<int, int> _componentSizes;
+    private int[,] _tempMap;
+    private int[,] _components;
+    private Randomizer _r;
 
-    public static void Initialize(Randomizer rArg, LevelTypeScriptableObjectScript levelParamsArg, int currentRoundArg, int totalRoundCount, bool alreadyCompltedArg)
+    private int _seed;
+    private float _gem_density;
+    private MapParams _mParams;
+
+    public void Init(MapParams mParams, float gem_density, int seed)
     {
-        currentRoundNumber = currentRoundArg;
-        maxRoundNumber = totalRoundCount;
-        dieLimit = levelParamsArg.deathLimit;
-        spawnLimit = levelParamsArg.lifeLimit;
-        initialDensity = levelParamsArg.initialDensity;
-        steps = levelParamsArg.steps;
-        width = levelParamsArg.width;
-        alreadyCompleted = alreadyCompltedArg;
-        height = levelParamsArg.height;
-        levelSpriteObject.transform.localPosition = GetLevelCenterPosition();
-        levelBackgroundSpriteObject.transform.localPosition = GetLevelCenterPosition();
+        _mParams = mParams;
+        _gem_density = gem_density;
+        _r = new Randomizer(seed);
+    }
+
+    public void Generate()
+    {
+        _width = _mParams.width;
+        _height = _mParams.height;
         int maxCompNum = -1;
         do
         {
-            Generate(rArg);
+            GameOfLife();
             GetComponents();
             GetComponentSizes();
-            if (levelParamsArg.removeSecondaryCaves)
+            if (_mParams.removeSecondaryCaves)
             {
                 RemoveSecondaryComponents();
             }
             maxCompNum = GetMaxComponentNumber();
-        } while (levelParamsArg.minimalMaxCaveSize > componentSizes[maxCompNum]);
-
-        if (!alreadyCompleted)
-        {
-            CreateGems(rArg);
-        }
+        } while (_mParams.minimalMaxCaveSize > _componentSizes[maxCompNum]);
+        AddGems();
     }
-    public static void GetComponents()
+
+    private void GetComponents()
     {
-        components = new int[width, height];
-        for (int i = 0; i < width; i++)
+        _components = new int[_width, _height];
+        for (int i = 0; i < _width; i++)
         {
-            for (int j = 0; j < height; j++)
+            for (int j = 0; j < _height; j++)
             {
-                components[i, j] = -1;
+                _components[i, j] = -1;
             }
         }
-        for (int i = 0; i < width; i++)
+        for (int i = 0; i < _width; i++)
         {
-            for (int j = 0; j < height; j++)
+            for (int j = 0; j < _height; j++)
             {
-                if (components[i, j] == -1)
+                if (_components[i, j] == -1)
                 {
-                    dfs(i, j);
-                    currentDFSComponent++;
+                    DFS(i, j);
+                    _currentDFSComponent++;
                 }
             }
         }
 
     }
 
-    void static GetComponentSizes()
+    private void GetComponentSizes()
     {
-        componentSizes = new Dictionary<int, int>();
-        componentSizes.Add(-1, 0);
-        for (int i = 0; i < width; i++)
+        _componentSizes = new Dictionary<int, int>();
+        _componentSizes.Add(-1, 0);
+        for (int i = 0; i < _width; i++)
         {
-            for (int j = 0; j < height; j++)
+            for (int j = 0; j < _height; j++)
             {
-                int component = components[i, j];
+                int component = _components[i, j];
                 if (component != -1)
                 {
-                    if (componentSizes.ContainsKey(component))
+                    if (_componentSizes.ContainsKey(component))
                     {
-                        componentSizes[component]++;
+                        _componentSizes[component]++;
                     }
                     else
                     {
-                        componentSizes.Add(component, 1);
+                        _componentSizes.Add(component, 1);
                     }
                 }
             }
         }
     }
 
-    int static GetMaxComponentNumber()
+    private  int GetMaxComponentNumber()
     {
 
         int maxComponentNumber = -1;
-        foreach (KeyValuePair<int, int> pair in componentSizes)
+        foreach (KeyValuePair<int, int> pair in _componentSizes)
         {
-            if (pair.Value > componentSizes[maxComponentNumber])
+            if (pair.Value > _componentSizes[maxComponentNumber])
             {
                 maxComponentNumber = pair.Key;
             }
@@ -110,131 +102,131 @@ public static class ProceduralGeneration
         return maxComponentNumber;
     }
 
-    void static RemoveSecondaryComponents()
+    private void RemoveSecondaryComponents()
     {
         int maxComponentNumber = GetMaxComponentNumber();
-        for (int i = 0; i < width; i++)
+        for (int i = 0; i < _width; i++)
         {
-            for (int j = 0; j < height; j++)
+            for (int j = 0; j < _height; j++)
             {
-                if (map[i, j] == 0)
+                if (_map[i, j] == 0)
                 {
-                    if (components[i, j] != maxComponentNumber)
+                    if (_components[i, j] != maxComponentNumber)
                     {
-                        map[i, j] = 1;
+                        _map[i, j] = 1;
                     }
                 }
             }
         }
     }
 
-    void static dfs(int i, int j)
+    private void AddGems()
     {
-        if (map[i, j] == 1)
+        for (int i = 0; i < _width; i++)
         {
-            return;
-        }
-        components[i, j] = currentDFSComponent;
-        int[] dx = { -1, 1, 0, 0 };
-        int[] dy = { 0, 0, 1, -1 };
-        for (int l = 0; l < 4; l++)
-        {
-            int newi = i + dx[l];
-            int newj = j + dy[l];
-            if (newi < 0 || newj < 0 || newi == width || newj == height)
+            for (int j = 0; j < _height; j++)
             {
-                continue;
-            }
-
-            if (components[newi, newj] == -1)
-            {
-                dfs(newi, newj);
-            }
-        }
-    }
-
-    public static void CreateGems(Randomizer rArg)
-    {
-        for (int i = 0; i < width; i++)
-        {
-            for (int j = 0; j < height; j++)
-            {
-                if (map[i, j] == 0)
+                if (_map[i, j] == 0)
                 {
-                    map[i, j] = rArg.Range(0.0f, 1.0f) > initialGemDensity * currentRoundNumber / maxRoundNumber ? 0 : 4;
+                    _map[i, j] = _r.Range(0.0f, 1.0f) < _gem_density ? 0 : 4;
                 }
             }
         }
     }
 
-    public static void Generate(Randomizer rArg)
+    public void GameOfLife()
     {
-        map = new int[width, height];
-        tempMap = new int[width, height];
-        for (int i = 0; i < width; i++)
+        _map = new int[_width, _height];
+        _tempMap = new int[_width, _height];
+        for (int i = 0; i < _width; i++)
         {
-            for (int j = 0; j < height; j++)
+            for (int j = 0; j < _height; j++)
             {
-                tempMap[i, j] = 0;
-                map[i, j] = rArg.Range(0.0f, 1.0f) > initialDensity ? 0 : 1;
+                _tempMap[i, j] = 0;
+                _map[i, j] = _r.Range(0.0f, 1.0f) > _mParams.initialDensity ? 0 : 1;
             }
         }
-        for (int i = 0; i < width; i++)
+        for (int i = 0; i < _width; i++)
         {
-            map[i, 0] = 1;
-            map[i, height - 1] = 1;
+            _map[i, 0] = 1;
+            _map[i, _height - 1] = 1;
         }
-        for (int i = 0; i < height; i++)
+        for (int i = 0; i < _height; i++)
         {
-            map[0, i] = 1;
-            map[width - 1, i] = 1;
+            _map[0, i] = 1;
+            _map[_width - 1, i] = 1;
         }
 
-        for (int w = 0; w < steps; w++)
+        for (int w = 0; w < _mParams.steps; w++)
         {
-            for (int i = 1; i < width - 1; i++)
+            for (int i = 1; i < _width - 1; i++)
             {
-                for (int j = 1; j < height - 1; j++)
+                for (int j = 1; j < _height - 1; j++)
                 {
                     int deadCells = 0;
                     for (int k = -1; k <= 1; k++)
                     {
                         for (int q = -1; q <= 1; q++)
                         {
-                            if (map[i + k, j + q] == 0)
+                            if (_map[i + k, j + q] == 0)
                             {
                                 deadCells++;
                             }
                         }
                     }
-                    if (map[i, j] == 0)
+                    if (_map[i, j] == 0)
                     {
-                        tempMap[i, j] = 0;
-                        if (deadCells < spawnLimit)
+                        _tempMap[i, j] = 0;
+                        if (deadCells < _mParams.steps)
                         {
-                            tempMap[i, j] = 1;
+                            _tempMap[i, j] = 1;
                         }
                     }
                     else
                     {
-                        tempMap[i, j] = 1;
-                        if (deadCells > dieLimit)
+                        _tempMap[i, j] = 1;
+                        if (deadCells > _mParams.steps)
                         {
-                            tempMap[i, j] = 0;
+                            _tempMap[i, j] = 0;
                         }
                     }
                 }
             }
-            for (int i = 1; i < width - 1; i++)
+            for (int i = 1; i < _width - 1; i++)
             {
-                for (int j = 1; j < height - 1; j++)
+                for (int j = 1; j < _height - 1; j++)
                 {
-                    map[i, j] = tempMap[i, j];
+                    _map[i, j] = _tempMap[i, j];
                 }
             }
         }
 
 
+    }
+
+    private void DFS(int i, int j)
+    {
+        if (_map[i, j] == 1)
+        {
+            return;
+        }
+        _components[i, j] = _currentDFSComponent;
+        int[] dx = { -1, 1, 0, 0 };
+        int[] dy = { 0, 0, 1, -1 };
+        for (int l = 0; l < 4; l++)
+        {
+            int newi = i + dx[l];
+            int newj = j + dy[l];
+            if (newi < 0 || newj < 0 || newi == _width || newj == _height)
+            {
+                continue;
+            }
+
+            if (_components[newi, newj] == -1)
+            {
+                DFS(newi, newj);
+            }
+        }
     }
 
 

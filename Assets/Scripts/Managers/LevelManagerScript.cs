@@ -166,7 +166,7 @@ public class LevelManagerScript : MonoBehaviour
         int currentLevel = globalManager.GetCurrentLevel();
         int totalRoundCount = runDescription.GetTotalLevels();
         int newLevelsInCurrentRound = runDescription.GetNumberOfNewMaps(currentLevel);
-        LevelTypeScriptableObjectScript nextLevelParams = runDescription.GetMapType(currentLevel);
+        MapParams nextLevelParams = runDescription.GetMapType(currentLevel);
         for (int i = 0; i < newLevelsInCurrentRound; i++)
         {
             GameObject newLevel = Instantiate(levelPrefab, Vector3.zero, Quaternion.identity);
@@ -189,6 +189,7 @@ public class LevelManagerScript : MonoBehaviour
             snapshotCreatorScript.createSnapshot();
             Sprite levelSprite = snapshotCreatorScript.GetLevelSprite();
             newLevelButtonScript.SetSprite(levelSprite);
+            newLevelButtonScript.Initialize();
         }
     }
 

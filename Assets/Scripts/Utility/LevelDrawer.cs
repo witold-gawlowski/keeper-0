@@ -5,7 +5,7 @@ using UnityEngine;
 public class LevelDrawer : MonoBehaviour
 {
     public GameObject levelPrefab;
-    public LevelTypeScriptableObjectScript[] levelTypes;
+    public MapParams[] levelTypes;
     public int numberOfTypes;
     int displayedTypeCount;
     Randomizer randomizer;
@@ -47,7 +47,7 @@ public class LevelDrawer : MonoBehaviour
                 seed = Random.Range(int.MinValue, int.MaxValue);
             }
 
-            foreach (LevelTypeScriptableObjectScript type in levelTypes)
+            foreach (MapParams type in levelTypes)
             {
                 randomizer = new Randomizer(seed);
                 GameObject levelTypeGameObject = Instantiate(levelPrefab, transform);
