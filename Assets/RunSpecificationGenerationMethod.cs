@@ -4,5 +4,5 @@ using UnityEngine;
 
 public abstract class RunSpecificationGenerationMethod : ScriptableObject
 {
-    public abstract void FillInSpecification(RunSpecification specification, MapParams[] mapTypes);
+    public abstract void FillInSpecification(ref RunSpecification specification, MapParams[] mapTypes, int seed);
 }

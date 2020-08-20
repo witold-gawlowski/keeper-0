@@ -84,13 +84,13 @@ public static class Tools
         }
     }
 
-    public static float RandomGaussian01(Randomizer randomizerArg)
+    public static float RandomGaussian01()
     {
         float v1, v2, s;
         do
         {
-            v1 = 2.0f * randomizerArg.Range(0f, 1f) - 1.0f;
-            v2 = 2.0f * randomizerArg.Range(0f, 1f) - 1.0f;
+            v1 = 2.0f * Random.Range(0f, 1f) - 1.0f;
+            v2 = 2.0f * Random.Range(0f, 1f) - 1.0f;
             s = v1 * v1 + v2 * v2;
         } while (s >= 1.0f || s == 0f);
 
@@ -117,7 +117,7 @@ public static class Tools
         return dTemp.d[index].x;
     }
 
-    public static int RandomIntegerFromGaussianWithThreshold(Randomizer randomizerArg, float mean, float stdDev, int rerandomThreshold = 0)
+    public static int RandomIntegerFromGaussianWithThreshold(float mean, float stdDev, int rerandomThreshold = 0)
     {
         int maxRerandomCount = 5;
         int result = 0;
@@ -125,7 +125,7 @@ public static class Tools
         do
         {
             c++;
-            float unrefinedGauss = RandomGaussian01(randomizerArg) * stdDev + mean;
+            float unrefinedGauss = RandomGaussian01() * stdDev + mean;
             result = Mathf.RoundToInt(unrefinedGauss);
         } while (result < rerandomThreshold && c < maxRerandomCount);
 

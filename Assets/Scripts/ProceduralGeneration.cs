@@ -8,17 +8,15 @@ public class ProceduralMap : Map
     private Dictionary<int, int> _componentSizes;
     private int[,] _tempMap;
     private int[,] _components;
-    private Randomizer _r;
 
     private int _seed;
     private float _gem_density;
     private MapParams _mParams;
 
-    public void Init(MapParams mParams, float gem_density, int seed)
+    public void Init(MapParams mParams, float gem_density)
     {
         _mParams = mParams;
         _gem_density = gem_density;
-        _r = new Randomizer(seed);
     }
 
     public void Generate()
@@ -128,7 +126,7 @@ public class ProceduralMap : Map
             {
                 if (_map[i, j] == 0)
                 {
-                    _map[i, j] = _r.Range(0.0f, 1.0f) < _gem_density ? 0 : 4;
+                    _map[i, j] = Random.Range(0.0f, 1.0f) < _gem_density ? 0 : 4;
                 }
             }
         }
@@ -143,7 +141,7 @@ public class ProceduralMap : Map
             for (int j = 0; j < _height; j++)
             {
                 _tempMap[i, j] = 0;
-                _map[i, j] = _r.Range(0.0f, 1.0f) > _mParams.initialDensity ? 0 : 1;
+                _map[i, j] = Random.Range(0.0f, 1.0f) > _mParams.initialDensity ? 0 : 1;
             }
         }
         for (int i = 0; i < _width; i++)

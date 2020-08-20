@@ -5,16 +5,14 @@ using UnityEngine;
 public class RunSpecificationFactory : MonoBehaviour
 {
     public MapParams[] mapTypes;
-    private Randomizer _r;
     private RunSpecification _product;
 
     public RunSpecificationGenerationMethod method;
 
     public RunSpecification Get(int seed)
     {
-        _r = new Randomizer(seed);
         _product = ScriptableObject.CreateInstance<RunSpecification>();
-        method.FillInSpecification(_product, mapTypes);
+        method.FillInSpecification(ref  _product, mapTypes, seed);
         return _product;
     }
 
